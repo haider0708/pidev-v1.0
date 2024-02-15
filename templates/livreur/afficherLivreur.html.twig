@@ -1,0 +1,78 @@
+{% extends 'backTemplate.html.twig' %}
+
+{% block titre %}
+    <h1>Liste Des Livreurs</h1>
+{% endblock %}
+
+{% block content %}
+  
+    	<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+				<a href="{{ path ('app_addLivereur') }}" class="btn-download">
+					<i class='bx bxs-cloud-download' ></i>
+					<span class="text">New Livreur</span>
+				</a>
+			</div>
+
+		
+
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>Recent Orders</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>User</th>
+								<th>Numero Telephone</th>
+								<th>Status</th>
+                                <th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+                         {% for livreur in livreurs %}
+							<tr>
+								<td>
+									 <img src="{{ asset('uploads/livreurs/' ~ livreur.image) }}" alt="Livreur Image">
+									<p>{{ livreur.nom }} {{ livreur.prenom }}</p>
+								</td>
+								<td>{{ livreur.numeroTel }}</td>
+								<td><span class="status completed">Completed</span></td>
+                                <td><a href="{{ path('app_detailLivreur', {'id': livreur.id}) }}" class="card-link"><i class="bi bi-info-circle"></i></a>
+                            <a href="{{ path('app_deleteLivreur', {'id': livreur.id}) }}" class="card-link" onclick="return confirmDelete();"><i class="bi bi-trash"></i></a>
+                            <a href="{{ path('app_addLivereur', {'id': livreur.id}) }}" class="card-link"><i class="bi bi-pencil"></i></a>
+							 <a href="{{path ('livreur_commands',{id:livreur.id})}} " class="card-link">showCommands</a>
+							</td>
+							
+							</tr>
+						  {% endfor %}
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</main>
+        <script>
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this item?");
+    }
+</script>
+
+
+   
+{% endblock %}

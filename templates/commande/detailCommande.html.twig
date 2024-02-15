@@ -1,0 +1,56 @@
+{% extends 'backTemplate.html.twig' %}
+{% block titre %}
+    <h1>Liste Des Livreurs</h1>
+{% endblock %}
+{%  block content %}
+<style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+     
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 20px;
+      text-align: center; /* Centering text */
+    }
+    .card-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .card-text {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
+ <div class="container">
+    <h1 class="text-center mb-5">Command Information</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+         
+          <div class="card-body">
+           
+            
+            <p class="card-text">Nom: {{ commande.nomClient }}</p>
+            <p class="card-text">Addresse: {{ commande.addresseClient }}</p>
+            <p class="card-text">Téléphone: {{ commande.numeroClient }}</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
