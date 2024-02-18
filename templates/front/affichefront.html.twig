@@ -1,0 +1,111 @@
+{#<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Produits</title>
+    
+    <style>
+        /* Style pour la mise en forme */
+        .pharmacie-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .pharmacie {
+            width: calc(25% - 20px);
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .pharmacie img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pharmacie disponible </h1>
+
+    <!-- Conteneur pour les produits avec affichage flexbox -->
+    <div class="pharmacie-container">
+        <!-- Boucle Twig pour afficher les produits -->
+        {% for p in pharmacie %}
+        <div class="pharmacie">
+            <img src="{{ asset(p.image) }}" alt="{{ p.nom }}">
+            <h2>{{ p.nom }}</h2>
+            <p>adresse: {{ p.adresse }}</p>
+            <p>numéro de téléphone: {{ p.numerotelephone }}</p>
+        </div>
+        {% endfor %}
+        <!-- Fin de la boucle Twig -->
+    </div>
+
+</body>
+</html>#}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des pharmacies</title>
+   
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="front/styles.css" />
+    <title>Web Design Mastery | Health Arena</title>
+    
+    <style>
+        /* Style pour la mise en forme */
+        .pharmacie-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .pharmacie {
+            width: calc(25% - 20px);
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .pharmacie img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav__logo">HealthArena</div>
+        <ul class="nav__links">
+            <li class="link"><a href="#">Accueil</a></li>
+            <li class="link"><a href="Affichefr">Pharmacie</a></li>
+            <li class="link"><a href="Afficheo">Ordonnance</a></li>
+            <li class="link"><a href="#">Pages</a></li>
+            <li class="link"><a href="#">Blog</a></li>
+            <li class="link"><a href="#">Contact</a></li>
+        </ul>
+        <button class="btn">login</button>
+    </nav>
+
+
+    <!-- Conteneur pour les produits avec affichage flexbox -->
+    <div class="pharmacie-container">
+        <!-- Boucle Twig pour afficher les produits -->
+        {% for p in pharmacie %}
+        <div class="pharmacie">
+            <img src="{{ asset(p.image) }}" alt="{{ p.nom }}">
+            <h4>{{ p.nom }}</h4>
+            <p>adresse: {{ p.adresse }}</p>
+            <p>numéro de téléphone: {{ p.numerotelephone }}</p>
+        </div>
+        {% endfor %}
+        <!-- Fin de la boucle Twig -->
+    </div>
+
+</body>
+</html>

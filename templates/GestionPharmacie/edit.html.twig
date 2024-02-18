@@ -1,0 +1,38 @@
+{#<h1>Modifier pharmacie</h1>
+{{ form(f) }}#}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous">
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="mt-4 text-center">Modifier une Pharmacie</h1>
+            {{ form_start(form, {'attr': {'class': 'custom-form'}}) }}
+            <table class="table">
+                <tr>
+                    <td>{{ form_label(form.nom, 'Nom Pharmacie') }}</td>
+                    <td>{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_label(form.adresse, 'Adresse') }}</td>
+                    <td>{{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_label(form.numerotelephone, 'Numéro de téléphone') }}</td>
+                    <td>{{ form_widget(form.numerotelephone, {'attr': {'class': 'form-control'}}) }}</td>
+                </tr>
+                 <tr>
+                    <td>{{ form_label(form.image, 'image') }}</td>
+                    <td>{{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}</td>
+                </tr>
+                {# Add more form fields as needed #}
+            </table>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
