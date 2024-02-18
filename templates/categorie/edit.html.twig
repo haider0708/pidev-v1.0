@@ -1,0 +1,49 @@
+   <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="front/styles.css" />
+    <title>Web Design Mastery | MEDIBuddy</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="nav__logo">MEDIBuddy</div>
+        <ul class="nav__links">
+          <li class="link"><a href="#">Home</a></li>
+          <li class="link"><a href="Affiche">Produit</a></li>
+          <li class="link"><a href="Affichec">Categorie</a></li>
+          <li class="link"><a href="#">About Us</a></li>
+          <li class="link"><a href="#">Courses</a></li>
+          <li class="link"><a href="#">Pages</a></li>
+          <li class="link"><a href="#">Blog</a></li>
+          <li class="link"><a href="#">Contact</a></li>
+        </ul>
+        <button type="butn" class="btn btn-outline-success"><a href="Affichec">Retour</a></button>
+      </nav>
+</head>
+{% block body %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+<div class="container">
+    <h1 class="mt-4">Ajouter une Categorie</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {{ form_start(form) }}
+            <table class="table">
+                <tr>
+                    <td>{{ form_label(form.nomcategorie, 'Nom') }}</td>
+                    <td>{{ form_widget(form.nomcategorie, {'attr': {'class': 'form-control'}}) }}</td>
+                </tr>
+            
+            </table>
+            <button type="submit" class="btn btn-success rounded-pill">edit</button> {# Utilisation de btn-success pour la couleur verte et rounded-pill pour la forme ronde #}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
