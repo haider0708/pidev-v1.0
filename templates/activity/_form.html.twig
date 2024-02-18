@@ -1,0 +1,5 @@
+{{ form_start(form, {'attr': {'class': 'event-form'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn" style="background-color: green; color: white; border: none; cursor: pointer; padding: 10px 20px; border-radius: 5px; font-weight: bold;">{{ button_label|default('Save') }} </button>
+{{ form_end(form) }}
+

@@ -1,0 +1,37 @@
+{% extends 'front/front.html.twig' %}
+{% block content %}
+<div class="order">
+					<div class="head">
+						<h3>events</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Date</th>
+                <th>Lieu</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{{ event.titre }}</td>
+                <td>{{ event.date|date('Y-m-d H:00') }}</td>
+                <td>{{ event.lieu }}</td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_event_new_front') }}">Create new</a>
+{% endblock %}
