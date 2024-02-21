@@ -1,0 +1,30 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Rapport{% endblock %}
+
+{% block main %}
+    <h1>Rapport</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ rapport.id }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ rapport.note }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ rapport.type }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_rapport_index') }}">back to list</a>
+
+    <a href="{{ path('app_rapport_edit', {'id': rapport.id}) }}">edit</a>
+
+    {{ include('rapport/_delete_form.html.twig') }}
+{% endblock %}

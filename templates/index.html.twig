@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="{{ asset('back/style.css') }}">
+	<!-- asset() est une fonction Twig pour générer des URL absolues vers les ressources du projet Symfony -->
+	<title>AdminHub</title>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<section id="sidebar">
+	<a href="#" class="brand">
+		<i class='bx bxs-smile'></i>
+		<span class="text">AdminHub</span>
+	</a>
+	<ul class="side-menu top">
+		<li class="active">
+			<a href="#">
+				<i class='bx bxs-dashboard' ></i>
+				<span class="text">Dashboard</span>
+			</a>
+		</li>
+		<li>
+				<a class="nav-link" href="/rapport/">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Rapport</span>
+				</a>
+		</li>
+		<!-- ... (le reste de votre barre latérale) -->
+	</ul>
+</section>
+<!-- SIDEBAR -->
+
+<!-- CONTENT -->
+<section id="content">
+	<!-- NAVBAR -->
+	<nav>
+		<i class='bx bx-menu' ></i>
+		<a href="#" class="nav-link">Categories</a>
+		<form action="#">
+			<div class="form-input">
+				<input type="search" placeholder="Search...">
+				<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+			</div>
+		</form>
+		<input type="checkbox" id="switch-mode" hidden>
+		<label for="switch-mode" class="switch-mode"></label>
+		<a href="#" class="notification">
+			<i class='bx bxs-bell' ></i>
+			<span class="num">8</span>
+		</a>
+		<a href="#" class="profile">
+			<img src="img/people.png">
+		</a>
+	</nav>
+	<!-- NAVBAR -->
+
+	<!-- MAIN -->
+	<main>
+		<!-- Reste du contenu ici -->
+		{% block body %}{% endblock %}
+	</main>
+	<!-- MAIN -->
+</section>
+<!-- CONTENT -->
+
+<script src="{{ asset('back/script.js') }}"></script>
+<!-- Utilisation de asset() pour générer l'URL absolue vers le script JavaScript -->
+</body>
+</html>
