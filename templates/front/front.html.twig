@@ -229,7 +229,7 @@ nav {
         </ul>
         <button class="btn">Register Now</button>
       </nav>
-      {% block content %}
+    {% block content %}
       <header class="header">
         <div class="content">
           <h1><span>Get Quick</span><br />Medical Services</h1>
@@ -244,7 +244,7 @@ nav {
         </div>
         <div class="image">
           <span class="image__bg"></span>
-          <img src="templates/docteur.png" alt="header image" />
+          <img src="https://img.pikbest.com/origin/09/20/30/70tpIkbEsTMzH.png!sw800" alt="header image" />
           <div class="image__content image__content__1">
             <span><i class="ri-user-3-line"></i></span>
             <div class="details">
@@ -266,7 +266,154 @@ nav {
           </div>
         </div>
       </header>
-      {% endblock %}
+     {% endblock %}
     </div>
   </body>
+  <footer class="elegant-footer">
+  <style>.elegant-footer {
+    background: linear-gradient(135deg, #ffff 0%, #28bf96 100%);
+    color: #333;
+    padding: 40px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    position: relative;
+    margin: 20px;
+    padding: 20px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-section h4 {
+    color: #0a9396;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.footer-section p, .footer-section ul, .footer-section form {
+    margin: 10px 0;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-section ul li a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.footer-section ul li a:hover {
+    color: #0a9396;
+}
+
+.footer-section form input, .footer-section form button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.footer-section form input {
+    width: calc(100% - 120px);
+    margin-right: 10px;
+}
+
+.footer-section form button {
+    background-color: #0a9396;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.footer-section form button:hover {
+    background-color: #086f70;
+}
+
+.social-icons a {
+    color: #0a9396;
+    margin: 0 10px;
+    font-size: 24px;
+}
+
+.social-icons a:hover {
+    color: #086f70;
+}
+
+.decorative-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 80%;
+    background-color: #0a9396;
+    border-radius: 1px;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    .footer-section {
+        margin: 10px 0;
+        padding: 20px;
+    }
+
+    .footer-section form input {
+        width: 70%;
+    }
+}
+
+  </style>
+    
+    <div class="footer-content">
+        <div class="footer-section about-us">
+            <h4>About Us</h4>
+            <p>Providing quality health care services since [Year]. Dedicated to improving patient health and well-being.</p>
+            <div class="decorative-line"></div>
+        </div>
+        <div class="footer-section links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/resources">Patient Resources</a></li>
+                <li><a href="/emergency-services">Emergency Services</a></li>
+            </ul>
+            <div class="decorative-line"></div>
+        </div>
+        <div class="footer-section health-tips">
+            <h4>Health Tips</h4>
+            <p>Stay healthy with our daily tips. Sign up for our newsletter for the latest updates.</p>
+            <form>
+                <input type="email" placeholder="Your email address">
+                <button type="submit">Subscribe</button>
+            </form>
+            <div class="decorative-line"></div>
+        </div>
+        <div class="footer-section social-media">
+            <h4>Follow Us</h4>
+            <div class="social-icons">
+               <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m12 0c6.6281 0 12 5.37188 12 12 0 5.9906-4.3875 10.9547-10.125 11.8547v-8.3859h2.7961l.532-3.4688h-3.3281v-2.25c0-.94922.4641-1.875 1.9547-1.875h1.5141v-2.95312s-1.3735-.23438-2.686-.23438c-2.7422 0-4.5328 1.66172-4.5328 4.66875v2.64375h-3.04688v3.4688h3.04688v8.3859c-5.7375-.9-10.125-5.8641-10.125-11.8547 0-6.62812 5.37188-12 12-12z" fill="#0a9396"></path></svg>
+               <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><clipPath id="a"><path d="m0 0h24v24h-24z"></path></clipPath><g clip-path="url(#a)"><path d="m12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="#0a9396"></path></g></svg>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+  
 </html>

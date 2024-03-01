@@ -9,10 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class FrontController extends AbstractController
 {
     #[Route('/', name: 'app_front')]
-    public function index(EventRepository $eventRepository): Response
+    public function index( ): Response
     {
-        return $this->render('front/indexFront.html.twig', [
-            'events' => $eventRepository->findAll(),
-        ]);
+        return $this->render('front/front.html.twig');
     }
 }

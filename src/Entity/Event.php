@@ -18,24 +18,34 @@ class Event
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Nom cannot be blank')]
-    #[Assert\Type(type: 'string', message: 'Nom must be a string')]
-    
+    #[Assert\NotBlank(message: "Le titre de l'événement ne doit pas être vide.")]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: "Le titre doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le titre ne peut pas contenir plus de {{ limit }} caractères.")]
     private ?string $titre = null;
+
 
     #[ORM\Column(type: "datetime")]
     #[Assert\NotBlank()]
-    
     private ?DateTimeInterface    $date = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z0-9\s]+$/",
+        message: "Le lieu ne doit contenir que des lettres, des chiffres et des espaces."
+    )]
     private ?string $lieu = null;
+
 
     #[ORM\OneToMany(targetEntity: Activity::class, mappedBy: 'evenement')]
     private Collection $activities;
 
+    
     public function __construct()
     {
         $this->activities = new ArrayCollection();

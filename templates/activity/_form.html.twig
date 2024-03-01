@@ -1,5 +1,29 @@
 {{ form_start(form, {'attr': {'class': 'event-form'}}) }}
     {{ form_widget(form) }}
-    <button class="btn" style="background-color: green; color: white; border: none; cursor: pointer; padding: 10px 20px; border-radius: 5px; font-weight: bold;">{{ button_label|default('Save') }} </button>
+    <button class="btn">{{ button_label|default('Save') }} </button>
 {{ form_end(form) }}
 
+<style>
+button.btn {
+    background-color: #4CAF50; /* Couleur de fond rouge */
+    color: white; /* Couleur du texte */
+    border: none; /* Aucune bordure */
+    cursor: pointer; /* Curseur en forme de main */
+    padding: 10px 20px; /* Espacement intérieur */
+    border-radius: 5px; /* Bordures arrondies */
+    font-weight: bold; /* Texte en gras */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transition douce pour le fond et l'ombre */
+    outline: none; /* Supprime le contour lors du focus */
+}
+
+/* Effet au survol du bouton */
+button.btn:hover {
+    background-color: #45a049; /* Couleur de fond plus foncée au survol */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre douce pour un effet 3D léger */
+}
+
+/* Style optionnel pour le bouton lorsqu'il est pressé (active) */
+button.btn:active {
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Ombre intérieure pour un effet enfoncé */
+}
+</style>
