@@ -1,0 +1,22 @@
+{% extends 'back/index.html.twig' %}
+
+{% block main %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+        <div class="col">{{ form_row(form.firstname) }}</div>
+        <div class="col">{{ form_row(form.lastname) }}</div>
+        <div class="col">{{ form_row(form.email) }}</div>
+        <div class="col">{{ form_row(form.roles) }}</div>
+        <div class="col">{{ form_row(form.password) }}</div>
+        <div class="col">{{ form_row(form.sexe) }}</div>
+        <div class="col">{{ form_row(form.age) }}</div>
+        <div class="col">{{ form_row(form.number) }}</div>
+        <div class="col">{{ form_row(form.img_path) }}</div>
+        <div class="col">{{ form_row(form.address) }}</div>
+    {{ form_end(form) }}
+    {% else %}
+    <div class="alert alert-danger" role="alert">
+        You do not have permission to access this page.
+    </div>
+{% endif %}
+{% endblock %}

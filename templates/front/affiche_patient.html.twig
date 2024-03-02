@@ -1,0 +1,44 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet" />
+<link rel="stylesheet" href="front/assets/css/profil.css" />
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'style': 'width: 50%; margin: auto;'}}) }}
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="200px" src="{{ asset(app.user.img_path) }}"><span class="font-weight-bold">Edogaru</span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">{{ form_row(form.firstname) }}</div>
+                    <div class="col-md-6">{{ form_row(form.lastname) }}</div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">{{ form_row(form.email) }}</div>
+                    <div class="col-md-12">{{ form_row(form.password, {'value': ''}) }}</div>
+                    <div class="col-md-12">{{ form_row(form.number) }}</div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">{{ form_row(form.address) }}</div>
+                    <div class="col-md-6">{{ form_row(form.img_path) }}</div>
+                </div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit">Save Profile</button></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Edit Personal data</span></div><br>
+                <div class="col-md-12">{{ form_row(form.sexe) }}</div> <br>
+                <div class="col-md-12">{{ form_row(form.age) }}</div>
+                <div class="col-md-12" style="display: none;">{{ form_widget(form.roles, {'attr': {'class': 'hidden'}}) }}</div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+ {{ form_end(form) }}

@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twilio\Rest\Client;
+use App\Repository\LivreurRepository;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
+
 
 class CommandeController extends AbstractController
 {
@@ -139,10 +143,10 @@ class CommandeController extends AbstractController
             $entityManager->persist($commande);
             $entityManager->flush();
 
-            $accountSid='AC8f3d4e9f79cf0bd67b0a93b93b1f36d2';
-            $authToken='f1d87ab9f1c33aaa2220f26c296855c9';
+            $accountSid='AC82a6c5594c34219cb358483dc1e4782d';
+            $authToken='122bb070a4b2a44ed6255a43e7803e48';
             $twilio= new Client($accountSid,$authToken);
-            $message = $twilio->messages->create('+21653587130',array( 'from'=>'+18452432382','body'=>'Votre commande was detected!',));
+            $message = $twilio->messages->create('+21622550734',array( 'from'=>'+16206225746','body'=>'Votre commande was detected!',));
             if ($message->sid) {
                 $sms= 'SMS sent successfully.';
                 $this->addFlash('success', " la commande a ete envoyée avec succeée");
@@ -179,4 +183,31 @@ class CommandeController extends AbstractController
         ]);
 
     }
+
+    #[Route('/stat', name: 'app_stat')]
+    public function showStat(LivreurRepository $livreurRepository, CommandeRepository $commandeRepository, ChartBuilderInterface $chartBuilder): Response
+    {
+        $livreurs = $livreurRepository->findAll();
+
+    $labels = [];
+    $data = [];
+
+    foreach ($livreurs as $livreur) {
+        $labels[] = $livreur->getNom(); // Assuming Nom is the property you want as labels
+
+        // Count the number of commandes for each livreur
+        $commandesCount = $commandeRepository->countByLivreur($livreur); // Assuming you have a custom method in your repository to count commandes by livreur
+        $data[] = $commandesCount;
+    }
+
+    // Create the chart data
+    $chartData = [];
+    foreach ($labels as $index => $label) {
+        $chartData[] = ['label' => $label, 'value' => $data[$index]];
+    }
+
+    return $this->render('commande/stats.html.twig', [
+        'chartData' => $chartData, // Pass the chart data to Twig
+    ]);
+}
 }
