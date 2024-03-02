@@ -1,0 +1,73 @@
+{% extends 'front/index.html.twig' %}
+{% block header %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap');
+
+body {
+    font-family: 'Maven Pro', sans-serif ;
+    background-color: white;  
+
+}
+
+body {
+    background-color: #f3f3f3  ;  
+}
+
+.add {
+    border-radius: 20px
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: all 1s;
+    cursor: pointer
+}
+
+.card:hover {
+    -webkit-box-shadow: 3px 5px 17px -4px #777777;
+    box-shadow: 3px 5px 17px -4px #777777
+}
+
+.ratings i {
+    color: green
+}
+
+.apointment button {
+    border-radius: 20px;
+    background-color: #eee;
+    color: #000;
+    border-color: #eee;
+    font-size: 13px
+}
+.custom-image {
+    width: 6cm;
+    height: 6cm;
+    object-fit: cover;
+    border-radius: 0;
+}
+</style>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet"/>
+<div class="container mt-5 mb-5">
+    <div class="d-flex justify-content-between mb-3"> </div>
+    <div class="row g-2">
+    {% for doctor in doctor %}
+        <div class="col-md-3">
+            <div class="card p-2 py-3 text-center">
+                <div class="img mb-2"> <img src="{{ asset(doctor.img_path) }}" class="custom-image">  </div>
+                <h5 class="mb-0">{{ doctor.firstName }} {{ doctor.lastName }}</h5> <small> {{ doctor.domaine }}</small><small> {{ doctor.address }}</small>
+                <div class="ratings mt-2"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                <div class="mt-4 apointment"> <button class="btn btn-success text-uppercase">Book Appointment</button> </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet"/>
+</script>
+```{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des pharmacies</title>
+   
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
+    <link rel="stylesheet" href="front/styles.css" />
+    <title>Web Design Mastery | Health Arena</title>
+    
+    <style>
+        /* Style pour la mise en forme */
+        .pharmacie-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .pharmacie {
+            width: calc(25% - 20px);
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .pharmacie img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav__logo">HealthArena</div>
+        <ul class="nav__links">
+            <li class="link"><a href="front">Accueil</a></li>
+            <li class="link"><a href="Affichefr">Pharmacie</a></li>
+            <li class="link"><a href="Afficheor">Ordonnance</a></li>
+            <li class="link"><a href="#">Pages</a></li>
+            <li class="link"><a href="#">Blog</a></li>
+            <li class="link"><a href="#">Contact</a></li>
+        </ul>
+        <button class="btn">login</button>
+    </nav>
+
+ <!-- Conteneur pour les produits avec affichage flexbox -->
+<div class="pharmacie-container">
+    <!-- Boucle Twig pour afficher les produits -->
+      
+    {% for p in pharmacie %}
+    <div class="pharmacie">
+        <img src="{{ asset(p.image) }}" alt="{{ p.nom }}">
+        <p style="color: green; font-weight: bold; font-family: 'Roboto', sans-serif;">Nom de la pharmacie:{{ p.nom }}</p>
+        <p>Adresse: {{ p.adresse }}</p>
+        <p>Numéro de téléphone: {{ p.numerotelephone }}</p>
+        
+        <!-- Code du rating -->
+        <div class="rating" data-pharmacie-id="{{ p.id }}">
+            {% for i in range(1, 5) %}
+                <input type="radio" id="star{{ p.id }}_{{ i }}" name="rating{{ p.id }}"style="display: none;" value="{{ i }}">
+                <label for="star{{ p.id }}_{{ i }}"class="star" style="color: red;">&#9733;</label>
+            {% endfor %}
+        </div>
+        
+        <!-- Affichage de la note -->
+        <p id="selectedRating{{ p.id }}">Note de la pharmacie : <span id="ratingValue{{ p.id }}"></span></p>
+    </div>
+    {% endfor %}
+    <!-- Fin de la boucle Twig -->
+</div>
+
+<!-- Inclure jQuery via CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Votre code JavaScript -->
+<script>
+    // Fonction pour envoyer la note au serveur
+    function envoyerNote(pharmacieId, note) {
+        $.ajax({
+            url: '/rate/' + pharmacieId + '/' + note,
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+                // Mettez à jour l'affichage de la note ici (facultatif)
+                $('#ratingValue' + pharmacieId).text(note);
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Gestion des changements de note lors du clic sur une étoile
+    $('.rating input[type="radio"]').on('change', function() {
+        var pharmacieId = $(this).closest('.rating').data('pharmacie-id');
+        var note = $(this).val();
+        envoyerNote(pharmacieId, note);
+    });
+</script>
+</body>
+</html>

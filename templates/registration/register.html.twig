@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="front/login/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+{% block body %}
+    <img class="wave" src="front/login/img/wave.png">
+    <div class="container">
+        <div class="img">
+            <img src="front/login/img/bg.svg">
+        </div>
+        <div class="login-content">
+             {{ form_start(registrationForm,{'attr':{'novalidate':'novalidate'}}) }}
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        {{ form_widget(registrationForm.firstname)}}
+                        {{ form_errors(registrationForm.firstname)}}
+                    </div>
+                    
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        {{ form_widget(registrationForm.lastname)}}
+                        {{ form_errors(registrationForm.lastname)}}
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="div">
+                       {{ form_widget(registrationForm.email)}}
+                        {{ form_errors(registrationForm.email)}}
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        {{ form_widget(registrationForm.plainPassword)}}
+                        {{ form_errors(registrationForm.plainPassword)}}
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                       {{ form_widget(registrationForm.sexe)}}
+                        {{ form_errors(registrationForm.sexe)}}
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                       {{ form_widget(registrationForm.age)}}
+                        {{ form_errors(registrationForm.age)}}
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        {{ form_widget(registrationForm.number)}}
+                        {{ form_errors(registrationForm.number)}}
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        {{ form_widget(registrationForm.img_path)}}
+                        {{ form_errors(registrationForm.img_path)}}
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        {{ form_widget(registrationForm.address)}}
+                        {{ form_errors(registrationForm.address)}}
+                    </div>
+                </div>
+                <input type="submit" class="btn" value="Register">
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+    <script type="text/javascript" src="front/login/js/main.js"></script>
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+{% endblock %}
+</html>

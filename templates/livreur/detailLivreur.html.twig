@@ -1,0 +1,56 @@
+{% extends 'backTemplate.html.twig' %}
+{% block titre %}
+    <h1>Liste Des Livreurs</h1>
+{% endblock %}
+{%  block content %}
+<style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+     
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 20px;
+      text-align: center; /* Centering text */
+    }
+    .card-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .card-text {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+  </style>
+ <div class="container">
+    <h1 class="text-center mb-5">Livreur Information</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <img src="{{ asset('uploads/livreurs/' ~ livreur.image) }}" alt="Livreur Image">
+          <div class="card-body">
+           
+            
+            <p class="card-text">Nom: {{ livreur.nom }}</p>
+            <p class="card-text">Prenon: {{ livreur.prenom }}</p>
+            <p class="card-text">Téléphone: {{ livreur.numeroTel }}</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

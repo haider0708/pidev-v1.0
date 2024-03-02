@@ -1,0 +1,37 @@
+{# templates/addToCart.html.twig #}
+
+{# Étendre le layout principal s'il existe #}
+{% extends 'base.html.twig' %}
+
+{# Bloc de titre #}
+{% block title %}Ajouter au panier{% endblock %}
+
+{# Bloc de contenu #}
+{% block body %}
+    <h1>Ajouter au panier</h1>
+    
+    <button onclick="addToCart({{ produitId }})">Ajouter au panier</button>
+
+    <script>
+        function addToCart(produitId) {
+            fetch('/add-to-cart', {
+                method: 'POST',
+                body: JSON.stringify({ produit_id: produitId }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+            }).then(response => {
+                if (response.ok) {
+                    // Gérer le cas où l'ajout au panier réussit
+                    console.log('Produit ajouté au panier avec succès !');
+                } else {
+                    // Gérer le cas où l'ajout au panier échoue
+                    console.error('Erreur lors de l\'ajout au panier');
+                }
+            }).catch(error => {
+                console.error('Erreur lors de l\'ajout au panier:', error);
+            });
+        }
+    </script>
