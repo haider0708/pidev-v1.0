@@ -1,0 +1,11 @@
+<h1>You're Invited!</h1>
+
+<p>We're excited to invite you to our event: <strong>{{ event.titre }}</strong>.</p>
+
+<p>Details:</p>
+<ul>
+    <li>Date: {{ event.date|date('Y-m-d H:i') }}</li>
+    <li>Location: {{ event.lieu }}</li>
+</ul>
+
+<p>We hope to see you there!</p>

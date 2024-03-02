@@ -26,6 +26,8 @@
                 <td>
                     <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
                     <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
+                    <a href="{{ path('app_event_generate_pdf', {'id': event.id}) }}" class="btn btn-primary">Generate PDF</a>
+
                 </td>
             </tr>
         {% else %}
@@ -37,4 +39,9 @@
     </table>
 
     <a href="{{ path('app_event_new') }}">Create new</a>
+    {{ form_start(form) }}
+        {{ form_row(form.event) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.send) }}
+    {{ form_end(form) }}
 {% endblock %}
