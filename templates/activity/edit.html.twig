@@ -9,4 +9,92 @@
     <a href="{{ path('app_activity_index') }}">Back to list</a>
 
     {{ include('activity/_delete_form.html.twig') }}
+    <style>
+    /* Styles globaux */
+    body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+
+    h1 {
+        color: #007bff;
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Styles pour le formulaire et ses composants */
+    form {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 20px auto;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Styles pour les boutons */
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    /* Styles pour le lien 'Back to list' */
+    a {
+        text-decoration: none;
+        color: #007bff;
+        background-color: transparent;
+    }
+
+    a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+
+    /* Amélioration du formulaire de suppression pour mieux s'intégrer */
+    form[action*="delete"] {
+        display: inline;
+    }
+
+    /* Alignement des éléments */
+    .form-actions {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
+
 {% endblock %}

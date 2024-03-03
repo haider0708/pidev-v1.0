@@ -3,62 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Event Details - {{ event.titre }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'Open Sans', sans-serif;
-            font-style: normal;
-            font-weight: normal;
-            src: url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap') format('truetype');
-        }
         body {
-            font-family: 'Open Sans', sans-serif;
-        }
-        .container {
-            padding: 20px;
-        }
-        .header {
-            background-color: #f0f0f0;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h1 {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
             color: #333;
         }
-        .event-detail, .activities {
-            margin-bottom: 15px;
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .header, .footer {
+            background-color: #009688;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-height: 80px;
+            margin-bottom: 20px;
+        }
+        h1, .footer {
+            margin: 0;
+        }
+        .event-info, .activities {
+            padding: 20px;
+        }
+        .event-info {
+            background-color: #e8f5e9;
+            border-bottom: 2px solid #b2dfdb;
+        }
+        .event-info p, .activity p {
+            margin: 10px 0;
         }
         .activity {
-            margin-left: 20px;
-            margin-top: 5px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-left: 5px solid #009688;
+            margin-bottom: 15px;
         }
         .activity-header {
-            font-weight: bold;
+            font-weight: 700;
+            color: #01579b;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+         <img src="{{ asset('img/logo.png') }}" alt="Logo" style="max-height: 80px;">
             <h1>Event Details - {{ event.titre }}</h1>
-            <p>Date: {{ event.date|date('Y-m-d H:i') }}</p>
-            <p>Location: {{ event.lieu }}</p>
+        </div>
+        <div class="event-info">
+            <p><strong>Date:</strong> {{ event.date|date('Y-m-d H:i') }}</p>
+            <p><strong>Location:</strong> {{ event.lieu }}</p>
         </div>
         <div class="activities">
-            <strong>Activities:</strong>
+            <h2>Activities:</h2>
             {% if event.activities|length > 0 %}
                 {% for activity in event.activities %}
                     <div class="activity">
-                        <span class="activity-header">{{ activity.nom }}</span><br>
-                        <strong>Status:</strong> {{ activity.status }}<br>
-                        <strong>Description:</strong> {{ activity.description }}<br>
-                        <strong>Organizer:</strong> {{ activity.organisateur }}
+                        <p class="activity-header">{{ activity.nom }}</p>
+                        <p><strong>Status:</strong> {{ activity.status }}</p>
+                        <p><strong>Description:</strong> {{ activity.description }}</p>
+                        <p><strong>Organizer:</strong> {{ activity.organisateur }}</p>
                     </div>
                 {% endfor %}
             {% else %}
                 <p>No activities listed for this event.</p>
             {% endif %}
         </div>
+        <div class="footer">
+            <p>Thank you for participating in our health care event!</p>
+        </div>
     </div>
 </body>
 </html>
+

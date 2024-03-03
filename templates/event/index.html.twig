@@ -1,5 +1,6 @@
 {% extends 'back/index.html.twig' %}
 {% block content %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <div class="order">
 					<div class="head">
 						<h3>events</h3>
@@ -39,9 +40,24 @@
     </table>
 
     <a href="{{ path('app_event_new') }}">Create new</a>
-    {{ form_start(form) }}
-        {{ form_row(form.event) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.send) }}
-    {{ form_end(form) }}
+  {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+
+<div class="mb-3">
+    {{ form_label(form.event, 'Select Event', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.event, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.event) }}
+</div>
+
+<div class="mb-3">
+    {{ form_label(form.email, 'Your Email', {'label_attr': {'class': 'form-label'}}) }}
+    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.email) }}
+</div>
+
+<div class="mb-3">
+    {{ form_widget(form.send, {'attr': {'class': 'btn btn-primary'}}) }}
+</div>
+
+{{ form_end(form) }}
+
 {% endblock %}

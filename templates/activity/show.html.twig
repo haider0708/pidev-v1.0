@@ -33,4 +33,62 @@
     <a href="{{ path('app_activity_edit', {'id': activity.id}) }}">edit</a>
 
     {{ include('activity/_delete_form.html.twig') }}
+    <style>
+    .btn {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none; /* Enlève le soulignement des liens */
+    color: #fff; /* Texte blanc pour tous les boutons */
+}
+
+/* Bouton Back to list - Bleu doux */
+.btn-secondary {
+    background-color: #5d8aa8; /* Aviator Blue */
+    border-color: #5d8aa8;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: #4c7088;
+    border-color: #4c7088;
+}
+
+/* Bouton Edit - Bleu vibrant */
+.btn-primary {
+    background-color: #007bff; /* Bleu Bootstrap */
+    border-color: #007bff;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Bouton Delete - Rouge pour l'alerte, mais professionnel */
+.btn-danger {
+    background-color: #dc3545; /* Rouge Bootstrap */
+    border-color: #dc3545;
+}
+
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* Amélioration de l'accessibilité */
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+</style>
+
+    
 {% endblock %}

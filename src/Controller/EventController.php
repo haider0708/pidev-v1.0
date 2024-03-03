@@ -31,11 +31,9 @@ public function index(EventRepository $eventRepository, MailerInterface $mailer,
     if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
         $event = $eventRepository->find($data['event']);
-
-        // Prepare and send the email
         if ($event) {
             $email = (new Email())
-                ->from('youremail@example.com')
+                ->from('jarabnii@gmail.com')
                 ->to($data['email'])
                 ->subject("You're invited to " . $event->getTitre())
                 ->html($this->renderView('event/invitation.html.twig', ['event' => $event]));
