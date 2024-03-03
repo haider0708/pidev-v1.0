@@ -39,6 +39,23 @@ class PATIENTRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->getEntityManager()->flush();
     }
 
+
+    public function triecroissant()
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.firstname', 'ASC')
+
+            ->getQuery()
+            ->getResult();
+
+    }
+    public function triedecroissant()
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.firstname','DESC')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return PATIENT[] Returns an array of PATIENT objects
 //     */

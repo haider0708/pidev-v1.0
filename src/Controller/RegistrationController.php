@@ -58,7 +58,39 @@ class RegistrationController extends AbstractController
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Welcome to our website!';
-            $mail->Body    = 'Thank you for joining our<b>community</b>';
+            $mail->Body = '
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                color: #333;
+            }
+            .container {
+                width: 80%;
+                margin: 0 auto;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+            h1 {
+                text-align: center;
+                color: #4CAF50;
+            }
+            p {
+                font-size: 1.2em;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Welcome to our website!</h1>
+            <p>Thank you for joining our <b>community</b>.</p>
+            <p>Enjoy your time with us!</p>
+        </div>
+    </body>
+    </html>
+';
             $mail->AltBody = 'enjoy your time with us!';
             $mail->send();
             //////////////////////////////////////////////////

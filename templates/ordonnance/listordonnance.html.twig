@@ -1,0 +1,26 @@
+{% block body %}
+    <h2 style="color: #6c5ce7; margin-bottom: 20px;">List des ordonnances</h2>
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #32CD32; color: #ffffff;">
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID_ordonnance</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Nom Medecin</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Nom Patient</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Description</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Date de creation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in ordonnance %}
+                <tr>
+                <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ o.id }}</td>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ o.nommedecin }}</td>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ o.nompatient }}</td>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ o.description }}</td>
+                   <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ o.datedecreation|date('Y-m-d H:i:s') }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

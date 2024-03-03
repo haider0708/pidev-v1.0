@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
@@ -56,8 +58,8 @@ class OrdonnanceController extends AbstractController
             $mailer = new Mailer($transport);
             $email = (new Email())
                 ->from('drissmanel6@gmail.com')
-                ->to('achrefghliss5@gmail.com')
-                ->subject('test')
+                ->to('haydar.boudhrioua@gmail.com')
+                ->subject('l ordonnance est ajouté avec succes')
                 ->html('salut test');
                 
           $mailer->send($email);
@@ -133,6 +135,30 @@ class OrdonnanceController extends AbstractController
             return $this->render('front/affichefrontord.html.twig', [
                 'ordonnance' => $ordonnance,
             ]);
+        }
+        #[Route('/listordonnance', name: 'list_ordonnance')]
+        public function index1(OrdonnanceRepository $repo): Response
+        {
+            $pdfOptions = new Options();
+    
+            $pdfOptions-> set('defaultFont','Arial');
+    
+            $dompdf= new Dompdf($pdfOptions);
+            $ordonnance=$repo->findAll();
+           
+            $html= $this->renderView('ordonnance/listordonnance.html.twig', [
+                'ordonnance'=>$ordonnance,
+                
+        ]);
+    
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4');
+        $dompdf->render();
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="sample.pdf"',
+        ]);
+      
         }
 
     

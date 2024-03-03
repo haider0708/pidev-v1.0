@@ -20,6 +20,7 @@ use App\Repository\ProduitRepository;
 use Knp\Component\Pager\PaginatorInterface;
 
 
+
 class FrontController extends AbstractController
 {
     #[Route('/front', name: 'app_front')]
@@ -85,4 +86,30 @@ class FrontController extends AbstractController
            return $this->render('front/affichefrontord.html.twig',['ordonnance'=>$ordonnance]);
         }
         //fin Gestion manel
+
+
+        /// Gestion ahmed
+        #[Route('/Affichef', name: 'app_affichef')]
+    public function affiche1(ProduitRepository $repository,PaginatorInterface $paginator,Request $request): Response
+    {
+        $produit = $paginator->paginate(
+            $repository->findAll(),
+            $request->query->getInt('page', 1),
+            6
+        );
+        //return $this->render('Produit/Affichef.html.twig', ['produit' => $produit]);
+         return $this->render('front/affichef.html.twig', ['produit' => $produit]);
+    }
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+    
+    public function affichef(ProduitRepository $repository)
+    {
+        $Produit = $repository->findAll(); // Récupérer les Produit depuis le repository
+        return $this->render('front/affichef.html.twig', ['produit' => $Produit]); // Passer les Produit au template Twig
+    }
 }

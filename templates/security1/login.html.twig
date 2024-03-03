@@ -23,7 +23,7 @@
 	        <div class="alert alert-warning alert-dismissible" role="alert">
 		            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		        <div class="alert-message">
-			        <strong>Votre compte n'est pas activé</strong>, <a href="{{ path('resend_verif') }}">renvoyer le lien d'activation</a>
+			        <strong>Votre compte n'est pas activé</strong>, <a href="">renvoyer le lien d'activation</a>
 		        </div>
 	        </div>
         {% endif %}
@@ -60,7 +60,7 @@
                         <input type="password" class="input" name="password" required>
                     </div>
                 </div>
-                <a href="#">Forgot Password?</a>
+                <a href="oubli-pass">Forgot Password?</a>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <input type="submit" class="btn" value="Login">
                 <a href="register"> sign up !</a>

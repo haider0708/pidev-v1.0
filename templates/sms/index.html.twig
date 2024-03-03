@@ -1,0 +1,158 @@
+{# templates/send_sms.html.twig #}
+
+{#{% extends 'rendezvous/index.html.twig' %}#}
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Your CSS styles here */
+    .green-button {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .blue-button {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .take-appointment-button,
+    .chatbot-button {
+      position: fixed;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .take-appointment-button {
+      bottom: 120px;
+    }
+
+    .chatbot-button {
+      bottom: 50px;
+    }
+  </style>
+{% endblock %}
+
+{% block body %}
+  <header class="header">
+    <div class="content">
+      <h1><span>Get Quick</span><br />Medical Services</h1>
+      <p>
+        In today's fast-paced world, access to prompt and efficient medical
+        services is of paramount importance. When faced with a medical
+        emergency or seeking immediate medical attention, the ability to
+        receive quick medical services can significantly impact the outcome
+        of a situation.
+      </p>
+      <button class="btn">Get Services</button>
+    </div>
+    <div class="image">
+      <span class="image__bg"></span>
+      <img src="https://img.pikbest.com/origin/09/20/30/70tpIkbEsTMzH.png!sw800" alt="header image" />
+      <div class="image__content image__content__1">
+        <span><i class="ri-user-3-line"></i></span>
+        <div class="details">
+          <h4>1520+</h4>
+          <p>Active Clients</p>
+        </div>
+      </div>
+      <div class="image__content image__content__2">
+        <ul>
+          <li>
+            <span><i class="ri-check-line"></i></span>
+            Get 20% off on every 1st month
+          </li>
+          <li>
+            <span><i class="ri-check-line"></i></span>
+            Expert Doctors
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Bouton Prendre un rendez-vous via un SMS (vert) -->
+  <div class="take-appointment-button">
+    <a href="{{ path('app_sms_index') }}" class="green-button">Prendre un rendez-vous via un SMS</a>
+  </div>
+
+  <!-- Bouton Chatbot (bleu) -->
+  <div class="chatbot-button">
+    <a href="{{ path('app_bot') }}" class="blue-button">Chatbot</a>
+  </div>
+{% endblock %}
+
+{% block footer %}
+  <footer class="elegant-footer">
+    <!-- Your footer content here -->
+  </footer>
+{% endblock %}
+
+{% block title %}Envoyer un SMS{% endblock %}
+
+{% block content %}
+    {{ parent() }}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h3 class="text-center">Envoyer un SMS</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{{path('send_sms')}}">
+                            <div class="form-group">
+                                <label for="number">Numéro de téléphone :</label>
+                                <input type="text" name="number" id="number" class="form-control" required>
+                            </div>
+
+                            <div class="form-group" id="form-name">
+                                <label for="name">Nom de l'expéditeur :</label>
+                                <input type="text" name="name" id="name" class="form-control" required>
+                            </div>
+                            <div class="form-group" id="form-message">
+                                <label for="text">Text :</label>
+                                <textarea name="text" id="text" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" id="btn">Envoyer le SMS</button>
+                        </form>
+                    </div>
+                </div>
+                {% if smsSent %}
+                    <div class="alert alert-success mt-3 text-center">Le SMS a été envoyé avec succès.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+    
+      .card-body
+      {
+        position: relative;
+        height: 323px;
+      }
+
+      #btn
+      {
+        position: relative;
+        top: 47px;
+        left: 188px;
+      }
+
+      #form-name
+      {
+        position: relative;
+        top: 10px;
+      }
+
+      #form-message
+      {
+        position: relative;
+        top: 27px;
+      }
+    </style>
+{% endblock %}
