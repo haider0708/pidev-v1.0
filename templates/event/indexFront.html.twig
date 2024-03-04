@@ -1,0 +1,93 @@
+{% extends 'front/index.html.twig' %}
+
+{% block header %}
+
+<div class="events-container">
+    {% for event in events %}
+    <div class="event-card">
+        
+        <div class="event-info">
+            <h3>{{ event.titre }}</h3>
+            <p class="event-date">Date: {{ event.date|date('d F Y') }}</p>
+            <p class="event-lieu">Lieu: {{ event.lieu}}</p>
+        </div>
+    </div>
+    {% else %}
+    <div>Pas d'événements à afficher</div>
+    {% endfor %}
+</div>
+
+
+    
+<style>
+:root {
+    --background-color: #fff;
+    --box-shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-box-shadow-color: rgba(0, 0, 0, 0.2);
+    --transition-speed: 0.2s;
+    --border-radius: 8px;
+}
+
+.events-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.event-card {
+    width: 300px;
+    margin: 20px;
+    box-shadow: 0 4px 8px var(--box-shadow-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: box-shadow var(--transition-speed) ease-in-out, transform var(--transition-speed) ease-in-out;
+    background-color: var(--background-color);
+    position: relative;
+}
+
+.event-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0));
+    opacity: 0;
+    border-radius: var(--border-radius);
+    transition: opacity var(--transition-speed) ease-in-out;
+}
+
+.event-card:hover {
+    box-shadow: 0 8px 16px var(--hover-box-shadow-color);
+    transform: translateY(-5px);
+}
+
+.event-card:hover:before {
+    opacity: 1;
+}
+
+.event-info {
+    padding: 15px;
+    position: relative; /* Pour s'assurer que le contenu est au-dessus du pseudo-élément :before */
+}
+
+.event-info h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.event-date, .event-lieu {
+    font-size: 14px;
+    color: var(--secondary-color);
+    margin-top: 5px;
+}
+
+.event-description {
+    font-size: 16px;
+    margin-top: 10px;
+    color: var(--accent-color);
+}
+</style>
+{% endblock %} 

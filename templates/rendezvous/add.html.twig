@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{{ asset('asset/styles.css') }}" rel="stylesheet">
+    
+    <title>Web Design Mastery | Health Arena</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav__logo">Health Arena</div>
+            <ul class="nav__links">
+                <li class="link"><a href="front_doctor">Find a Doctor</a></li>
+                <li class="link"><a href="Affichefr">Pharmacie</a></li>
+                <li class="link"><a href="Afficheor">Ordonnance</a></li>
+                <li class="link"><a href="Affichef">Produit</a></li>
+                <li class="link"><a href="addF">Rendezvous</a></li>
+                <li class="link"><a href="new">courses</a></li>
+            </ul>
+            <button class="btn">retour</button>
+        </nav>
+       <h1><span style="color: green;"> Ajouter un rendez-vous</span> </h1>
+        {{ form(f) }}
+        <!-- Bouton Prendre un rendez-vous via un SMS (vert) -->
+  <div class="take-appointment-button">
+    <a href="{{ path('app_sms_index') }}" class="green-button">Prendre un rendez-vous via un SMS</a>
+  </div>
+
+  <!-- Bouton Chatbot (bleu) -->
+  <div class="chatbot-button">
+    <a href="{{ path('app_bot') }}" class="blue-button">Chatbot</a>
+  </div>
+
+
+{% block footer %}
+  <footer class="elegant-footer">
+    <!-- Your footer content here -->
+  </footer>
+{% endblock %}

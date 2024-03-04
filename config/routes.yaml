@@ -1,0 +1,23 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+app_statistiques:
+    path: /statistiques
+    controller: App\Controller\StatistiqueController::index
+app_rendezvous_stats:
+    path: /statistics
+    controller: App\Controller\RendezvousController::statistics
+    methods: ['GET']
+generate_pdf:
+    path: /generate-pdf
+    controller: App\Controller\VotreController::generatePdf
+    methods: [GET]
+
+rendezvous_chart:
+    path: /chart
+    controller: App\Controller\RendezvousController::chart
+    methods: ['GET']
+
+rendezvous_calendar:
+    path: /rendezvous-calendar/{medecinId}
+    controller: App\Controller\RendezvousController::calendar

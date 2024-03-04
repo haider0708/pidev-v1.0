@@ -1,0 +1,33 @@
+{% extends 'backTemplate.html.twig' %}
+
+{% block titre%}
+    <h1>Liste Des Commandes</h1>
+{% endblock %}
+{% block content %}
+
+<div id="chart-container">Chart will render here</div>
+
+<script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<script>
+    FusionCharts.ready(function () {
+        var chartConfig = {
+            type: 'column2d',
+            renderAt: 'chart-container',
+            width: '600',
+            height: '400',
+            dataSource: {
+                chart: {
+                    caption: 'Nombre de commandes par livreur',
+                    xAxisName: 'Livreur',
+                    yAxisName: 'Nombre de commandes',
+                    theme: 'fusion'
+                },
+                data: {{ chartData | json_encode | raw }}
+            }
+        };
+
+        var chart = new FusionCharts(chartConfig);
+        chart.render();
+    });
+</script>
+{% endblock %}

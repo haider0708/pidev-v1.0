@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques</title>
+    <!-- Liens vers les bibliothèques Chart.js et styles CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css"> <!-- Lien vers votre fichier CSS si nécessaire -->
+    <style>
+        /* Styles CSS pour les statistiques */
+        .statistics-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .statistics-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .chart-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .statistics-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .statistics-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="statistics-container">
+        <h1 class="statistics-title">Statistiques</h1>
+        <!-- Conteneur pour le graphique -->
+        <div class="chart-container">
+            <canvas id="rendezvousChart"></canvas>
+        </div>
+        <p class="statistics-item">Nombre total de rendez-vous : <span>{{ totalRendezvous }}</span></p>
+        <!-- Ajoutez ici d'autres statistiques si nécessaire -->
+        <a href="{{ path('app_statistics') }}" class="statistics-button">Voir les statistiques détaillées</a>
+    </div>
+
+    <script>
+        // Données du graphique (exemple)
+        var rendezvousData = {
+            labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil"],
+            datasets: [{
+                label: 'Rendez-vous',
+                data: [12, 19, 3, 5, 2, 3, 15], // Remplacez par vos données
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Configuration du graphique
+        var rendezvousOptions = {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+
+        // Création du graphique
+        var rendezvousChart = new Chart(document.getElementById('rendezvousChart'), {
+            type: 'bar',
+            data: rendezvousData,
+            options: rendezvousOptions
+        });
+    </script>
+</body>
+</html>

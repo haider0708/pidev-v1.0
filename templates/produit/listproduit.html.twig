@@ -1,0 +1,23 @@
+{% block body %}
+    <h2 style="color: #6c5ce7; margin-bottom: 20px;">List des Produits</h2>
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #0984e3; color: #ffffff;">
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">ID_Produit</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Nom</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Description</th>
+                <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in produit %}
+                <tr>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ p.id }}</td>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ p.nom }}</td>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ p.description }}</td>
+                    <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{ p.prix }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
