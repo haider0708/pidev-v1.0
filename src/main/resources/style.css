@@ -1,0 +1,89 @@
+.root {
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: #f4f4f4;
+}
+
+.table-view {
+    -fx-border-color: silver;
+    -fx-background-color: #ffffff;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);
+}
+
+.table-row-cell {
+    -fx-cell-size: 50px;
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #ecf0f1, #bdc3c7);
+}
+
+.table-row-cell:odd {
+    -fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #ecf0f1, #ffffff);
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #dae0e5;
+    -fx-cursor: hand;
+}
+
+.table-row-cell:filled:selected, .table-row-cell:filled:selected .text {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 0;
+}
+
+.table-column-header {
+    -fx-background-color: linear-gradient(#607D8B, #455A64);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-padding: 5 10;
+}
+
+.table-column {
+    -fx-alignment: center;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+.button {
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-text-fill: white;
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 5 10 5 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+.text-field, .combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #bababa;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+}
+
+.label {
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+.add-button, .update-button, .delete-button {
+    -fx-background-color: linear-gradient(to bottom, #28a745, #155d34);
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+}
+
+.update-button {
+    -fx-background-color: linear-gradient(to bottom, #007bff, #0056b3);
+}
+
+.delete-button {
+    -fx-background-color: linear-gradient(to bottom, #dc3545, #a71d2a);
+}
+
+

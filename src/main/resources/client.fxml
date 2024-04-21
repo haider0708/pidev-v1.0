@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientViewController" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css">
+    <VBox spacing="20" fx:id="mainVBox" style="-fx-padding: 10;">
+        <TableView fx:id="eventTable" prefHeight="200.0" prefWidth="600.0">
+            <columns>
+                <TableColumn text="Title" fx:id="colTitle" prefWidth="150.0" />
+                <TableColumn text="Date" fx:id="colDate" prefWidth="150.0" />
+                <TableColumn text="Location" fx:id="colLocation" prefWidth="300.0" />
+            </columns>
+        </TableView>
+        <Label text="Activities for Selected Event:"/>
+        <ListView fx:id="activityListView" prefHeight="160.0" prefWidth="600.0"/>
+        <Button text="Back" onAction="#handleBackButton" style="-fx-pref-width: 100;"/>
+
+    </VBox>
+</AnchorPane>
+
