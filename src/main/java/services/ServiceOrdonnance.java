@@ -16,12 +16,13 @@ public class ServiceOrdonnance implements CRUDORD<Ordonnance> {
 
     @Override
     public void insertOne(Ordonnance ordonnance) throws SQLException {
-        String req = "INSERT INTO `ordonnance`(`nommedecin`, `nompatient`, `description`, `datecreation`) VALUES (?, ?, ?, ?)";
+        String req = "INSERT INTO `ordonnance`(`nommedecin`, `nompatient`, `description`, `pharmacie_id`) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = cnx.prepareStatement(req);
 
         ps.setString(1, ordonnance.getNommedecin());
         ps.setString(2, ordonnance.getNompatient());
         ps.setString(3, ordonnance.getDescription());
+        ps.setInt(4,ordonnance.getPharmacieid());
        // java.sql.Date sqlDate = java.sql.Date.valueOf(ordonnance.getDatecreation());
 
         // Utiliser sqlDate comme argument pour setDate()
@@ -70,6 +71,7 @@ public class ServiceOrdonnance implements CRUDORD<Ordonnance> {
             ordonnance.setNommedecin(rs.getString("nommedecin"));
             ordonnance.setNompatient(rs.getString("nompatient"));
             ordonnance.setDescription(rs.getString("description"));
+            ordonnance.setPharmacie_id(rs.getInt("pharmacie_id"));
            // ordonnance.setDatecreation(rs.getDate("datecreation").toLocalDate());
             ordonnances.add(ordonnance);
         }
