@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="496.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CategorieFXML">
+   <children>
+      <Label layoutX="19.0" layoutY="142.0" prefHeight="30.0" prefWidth="87.0" text="NomCategorie" />
+      <TextField fx:id="tfnom" layoutX="106.0" layoutY="144.0" />
+      <TableView fx:id="tablec" layoutX="380.0" layoutY="72.0" onMouseClicked="#getDatac" prefHeight="200.0" prefWidth="298.0">
+        <columns>
+          <TableColumn fx:id="colnom" prefWidth="158.4000244140625" text="NomCategorie" />
+            <TableColumn fx:id="colId" minWidth="0.0" prefWidth="0.0" text="Id" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnAjouterc" layoutX="155.0" layoutY="310.0" mnemonicParsing="false" onAction="#Ajouterc" styleClass="form_container" stylesheets="@css/styles.css" text="Ajouter" />
+      <Button fx:id="btnSupprimerc" layoutX="397.0" layoutY="310.0" mnemonicParsing="false" onAction="#Supprimerc" styleClass="form_container" stylesheets="@css/styles.css" text="Supprimer" />
+      <Button fx:id="btnModifierc" layoutX="262.0" layoutY="310.0" mnemonicParsing="false" onAction="#Modifierc" styleClass="form_container" stylesheets="@css/styles.css" text="Modifier" />
+      <Button fx:id="btnClearc" layoutX="497.0" layoutY="310.0" mnemonicParsing="false" onAction="#Clearc" styleClass="form_container" stylesheets="@css/styles.css" text="Clear" />
+   </children>
+</AnchorPane>

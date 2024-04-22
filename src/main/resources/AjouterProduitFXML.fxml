@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="618.0" prefWidth="932.0" styleClass="form_container" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AjouterProduitFXML">
+   <children>
+      <TextField fx:id="tfNom" layoutX="106.0" layoutY="161.0" />
+      <Text layoutX="34.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom" />
+      <Text layoutX="37.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prix" />
+      <TextField fx:id="tfPrix" layoutX="106.0" layoutY="221.0" />
+      <Text layoutX="30.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" />
+      <TextField fx:id="tfDescription" layoutX="106.0" layoutY="290.0" />
+      <Button fx:id="btnajouter" layoutX="146.0" layoutY="429.0" mnemonicParsing="false" onAction="#ajouterProduit" styleClass="form_container" stylesheets="@css/styles.css" text="Ajouter" />
+      <TableView fx:id="table" layoutX="374.0" layoutY="121.0" onMouseClicked="#getData" prefHeight="236.0" prefWidth="544.0">
+        <columns>
+          <TableColumn fx:id="colNom" prefWidth="97.5999755859375" text="Nom" />
+            <TableColumn fx:id="colPrix" prefWidth="100.80001831054688" text="Prix" />
+            <TableColumn fx:id="colDescription" minWidth="0.0" prefWidth="164.800048828125" text="Description" />
+            <TableColumn fx:id="colnomcategorie" prefWidth="189.59991455078125" text="nomcategorie" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnModifier" layoutX="443.0" layoutY="429.0" mnemonicParsing="false" onAction="#Modifier" styleClass="form_container" stylesheets="@css/styles.css" text="Modifier" />
+      <Button fx:id="btnSupprimer" layoutX="561.0" layoutY="429.0" mnemonicParsing="false" onAction="#Supprimer" styleClass="form_container" stylesheets="@css/styles.css" text="Supprimer" textFill="#695353" />
+      <Button fx:id="btnClear" layoutX="674.0" layoutY="429.0" mnemonicParsing="false" onAction="#clearFieled" text="clear" />
+      <Label layoutX="335.0" layoutY="43.0" styleClass="title" stylesheets="@css/styles.css" text="CRUD Produit" />
+      <ComboBox fx:id="combop" layoutX="156.0" layoutY="364.0" prefWidth="150.0" />
+      <Text layoutX="37.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" text="categorie" wrappingWidth="83.36404800415039" />
+   </children>
+</AnchorPane>
