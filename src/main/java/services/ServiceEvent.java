@@ -16,7 +16,7 @@ public class ServiceEvent {
                 throw new SQLException("Failed to establish database connection.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();  // Consider using a logger here
+            e.printStackTrace();
             throw new RuntimeException("Database connection could not be initialized.", e);
         }
     }
@@ -32,7 +32,7 @@ public class ServiceEvent {
             preparedStatement.setString(3, event.getDate());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();  // Consider using a logger
+            e.printStackTrace();
             throw e;
         }
     }

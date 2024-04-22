@@ -15,7 +15,7 @@
         <Label text="Activities for Selected Event:"/>
         <ListView fx:id="activityListView" prefHeight="160.0" prefWidth="600.0"/>
         <Button text="Back" onAction="#handleBackButton" style="-fx-pref-width: 100;"/>
-
+        <Button text="Open Chatbot" onAction="#handleChatbotButton" style="-fx-pref-width: 100;"/>
     </VBox>
 </AnchorPane>
 

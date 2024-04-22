@@ -53,7 +53,6 @@ public class ClientViewController implements Initializable {
 
         loadEventData();
 
-        // Setup the listener for the selected event
         eventTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 loadActivitiesForEvent(newSelection.getId());
@@ -67,7 +66,6 @@ public class ClientViewController implements Initializable {
             eventTable.setItems(data);
         } catch (Exception e) {
             e.printStackTrace();
-            // Show an error message
         }
     }
 
@@ -101,11 +99,10 @@ public class ClientViewController implements Initializable {
     @FXML
     private void handleBackButton() {
         try {
-            // Load the FXML document for the main view
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/file.fxml"));
             Parent root = loader.load();
 
-            // Set the scene to the stage
             Scene scene = new Scene(root);
             Stage stage = (Stage) eventTable.getScene().getWindow();
             stage.setScene(scene);
@@ -113,6 +110,21 @@ public class ClientViewController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Navigation Error", "Cannot navigate back", "Failed to load the initial view.");
+        }
+    }
+    @FXML
+    private void handleChatbotButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Chatbot.fxml")); // Update the FXML file path as necessary
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) eventTable.getScene().getWindow(); // Assuming this is run from the main stage
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Cannot open chatbot", "Failed to load the chatbot view.");
         }
     }
 

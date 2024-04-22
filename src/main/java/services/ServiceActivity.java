@@ -27,7 +27,7 @@ public class ServiceActivity {
                 activity.setDescription(resultSet.getString("description"));
                 activity.setOrganisateur(resultSet.getString("organisateur"));
                 activity.setEvenementId(resultSet.getInt("evenement_id"));
-                activity.setEventName(resultSet.getString("eventName")); // Set the event name from the query
+                activity.setEventName(resultSet.getString("eventName"));
                 activities.add(activity);
             }
         }
@@ -68,7 +68,7 @@ public class ServiceActivity {
     }
 
     public void updateActivity(Activity activity) throws SQLException {
-        // Check if the connection is valid
+
         if (this.connection == null || this.connection.isClosed()) {
             throw new SQLException("Connection is not available.");
         }
@@ -124,7 +124,6 @@ public class ServiceActivity {
                 activity.setDescription(resultSet.getString("description"));
                 activity.setOrganisateur(resultSet.getString("organisateur"));
                 activity.setEvenementId(resultSet.getInt("evenement_id"));
-                // Now correctly fetching the event name from the result set
                 activity.setEventName(resultSet.getString("eventName"));
                 activities.add(activity);
             }

@@ -51,10 +51,10 @@ public class ActivityController implements Initializable {
         serviceActivity = new ServiceActivity();
         serviceEvent = new ServiceEvent();
         try {
-            loadEventNames(); // Ensure events are loaded
-            setupActivityTable(); // Setup table columns before loading data
-            loadActivities(); // Now load activities
-            setupSelectionModel(); // Set up selection model for the table
+            loadEventNames();
+            setupActivityTable();
+            loadActivities();
+            setupSelectionModel();
         } catch (SQLException e) {
             showErrorAlert("Initialization error: " + e.getMessage());
         }
@@ -169,7 +169,7 @@ public class ActivityController implements Initializable {
             Activity activity = new Activity(nom, status, description, organisateur, selectedEvent.getId());
             try {
                 serviceActivity.addActivity(activity);
-                loadActivities();  // Refresh the table view
+                loadActivities();
                 showSuccessAlert("Activity added successfully!");
                 clearFields();
             } catch (SQLException e) {
@@ -228,7 +228,7 @@ public class ActivityController implements Initializable {
             }
 
             serviceActivity.updateActivity(activity);
-            loadActivities();  // Refresh the table view
+            loadActivities();
             showSuccessAlert("Activity updated successfully!");
             clearFields();
         } catch (SQLException e) {
@@ -243,14 +243,13 @@ public class ActivityController implements Initializable {
             return;
         }
 
-        // Optional: Confirm before deleting
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this activity?", ButtonType.YES, ButtonType.NO);
         confirmAlert.showAndWait();
 
         if (confirmAlert.getResult() == ButtonType.YES) {
             try {
                 serviceActivity.deleteActivity(selectedActivity.getId());
-                loadActivities(); // Refresh the table after deletion
+                loadActivities();
                 showSuccessAlert("Activity deleted successfully!");
             } catch (SQLException e) {
                 showErrorAlert("Failed to delete activity: " + e.getMessage());

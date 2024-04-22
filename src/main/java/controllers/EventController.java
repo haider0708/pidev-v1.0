@@ -28,7 +28,7 @@ public class EventController implements Initializable {
     @FXML
     private TextField localisationField;
     @FXML
-    private TextField dateField; // Not used based on provided code, can be removed if DatePicker is used instead
+    private TextField dateField;
     @FXML
     private Button addButton;
 
@@ -50,32 +50,6 @@ public class EventController implements Initializable {
         });
     }
 
-    private boolean validateInput() {
-        StringBuilder errorMessage = new StringBuilder();
-        String titre = titreField.getText();
-        String localisation = localisationField.getText();
-        LocalDate date = datePicker.getValue();
-        String datePattern = "dd/MM/yyyy";
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(datePattern);
-
-        if (titre.isEmpty() || titre.length() < 6 || !titre.matches("^[A-Z].*")) {
-            errorMessage.append("Title must start with an uppercase letter and be at least 6 characters long.\n");
-        }
-        if (localisation.isEmpty() || localisation.length() < 3 || !localisation.matches("^[a-zA-Z0-9]{3,}$")) {
-            errorMessage.append("Location must be at least 3 characters long and contain only letters and numbers.\n");
-        }
-        if (date == null || date.isBefore(LocalDate.now())) {
-            errorMessage.append("Date cannot be in the past and must be in the format: ").append(datePattern).append(".\n");
-        }
-
-        if (errorMessage.length() > 0) {
-            showErrorAlert(errorMessage.toString());
-            return false;
-        }
-        return true;
-    }
-
-
     @FXML
     private void handleAddEvent() {
         if (validateInput()) {
@@ -85,7 +59,7 @@ public class EventController implements Initializable {
                 String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 Event event = new Event(titre, localisation, date);
                 ServiceEvent.addEvent(event);
-                loadEvents();  // Refresh table view
+                loadEvents();
                 clearFields();
                 showSuccessAlert();
             } catch (SQLException e) {
@@ -104,13 +78,31 @@ public class EventController implements Initializable {
                 event.setLocalisation(localisationField.getText());
                 event.setDate(datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                 ServiceEvent.updateEvent(event);
-                loadEvents();  // Refresh table view
+                loadEvents();
                 showSuccessAlert("Event updated successfully!");
                 clearFields();
             } catch (SQLException e) {
                 e.printStackTrace();
                 showErrorAlert("Failed to update event: " + e.getMessage());
             }
+        }
+    }
+
+    @FXML
+    private void handleDeleteEvent() {
+        Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
+        if (selectedEvent != null) {
+            try {
+                ServiceEvent.deleteEvent(selectedEvent.getId());
+                loadEvents();
+                clearFields();
+                showSuccessAlert("Event deleted successfully!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                showErrorAlert("Failed to delete event: " + e.getMessage());
+            }
+        } else {
+            showErrorAlert("No event selected for deletion!");
         }
     }
 
@@ -154,22 +146,30 @@ public class EventController implements Initializable {
         datePicker.setValue(null);
     }
 
-    @FXML
-    private void handleDeleteEvent() {
-        Event selectedEvent = eventTable.getSelectionModel().getSelectedItem();
-        if (selectedEvent != null) {
-            try {
-                ServiceEvent.deleteEvent(selectedEvent.getId());
-                loadEvents();  // Refresh table view
-                clearFields();
-                showSuccessAlert("Event deleted successfully!");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                showErrorAlert("Failed to delete event: " + e.getMessage());
-            }
-        } else {
-            showErrorAlert("No event selected for deletion!");
+
+    private boolean validateInput() {
+        StringBuilder errorMessage = new StringBuilder();
+        String titre = titreField.getText();
+        String localisation = localisationField.getText();
+        LocalDate date = datePicker.getValue();
+        String datePattern = "dd/MM/yyyy";
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(datePattern);
+
+        if (titre.isEmpty() || titre.length() < 6 || !titre.matches("^[A-Z].*")) {
+            errorMessage.append("Title must start with an uppercase letter and be at least 6 characters long.\n");
         }
+        if (localisation.isEmpty() || localisation.length() < 3 || !localisation.matches("^[a-zA-Z0-9]{3,}$")) {
+            errorMessage.append("Location must be at least 3 characters long and contain only letters and numbers.\n");
+        }
+        if (date == null || date.isBefore(LocalDate.now())) {
+            errorMessage.append("Date cannot be in the past and must be in the format: ").append(datePattern).append(".\n");
+        }
+
+        if (errorMessage.length() > 0) {
+            showErrorAlert(errorMessage.toString());
+            return false;
+        }
+        return true;
     }
 
     public void gotoactivity() {
@@ -199,6 +199,8 @@ public class EventController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
 
 }
 
