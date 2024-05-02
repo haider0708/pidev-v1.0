@@ -17,12 +17,13 @@ public class ServicePharmacie implements CRUD<Pharmacie> {
 
     @Override
     public void insertOne(Pharmacie pharmacie) throws SQLException {
-        String req = "INSERT INTO `pharmacie`(`nom`, `adresse`, `numerotelephone`) VALUES (?, ?, ?)";
+        String req = "INSERT INTO `pharmacie`(`nom`, `adresse`, `numerotelephone`,`img`) VALUES (?, ?, ?, ?)";
         PreparedStatement ps = cnx.prepareStatement(req);
 
         ps.setString(1, pharmacie.getNom());
         ps.setString(2, pharmacie.getAdresse());
         ps.setInt(3, pharmacie.getNumeroTelephone());
+        ps.setString(4, pharmacie.getImg());
 
         ps.executeUpdate();
         System.out.println("Pharmacie ajoutée !");
@@ -63,6 +64,7 @@ public class ServicePharmacie implements CRUD<Pharmacie> {
             pharmacie.setNom(rs.getString("nom"));
             pharmacie.setAdresse(rs.getString("adresse"));
             pharmacie.setNumerotelephone(rs.getInt("numerotelephone"));
+            pharmacie.setImg((rs.getString("img")));
             pharmacies.add(pharmacie);
         }
 

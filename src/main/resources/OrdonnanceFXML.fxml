@@ -12,13 +12,6 @@
 
 
     <children>
-
-       <Text layoutX="34.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom Patient" />
-      <TextField fx:id="tfmedecin" layoutX="34.0" layoutY="85.0" />
-      <Text layoutX="40.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom Medecin" />
-      <Text layoutX="42.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Desription" wrappingWidth="75.263671875" />
-      <TextField fx:id="tfdescription" layoutX="34.0" layoutY="226.0" />
-      <TextField fx:id="tfpatient" layoutX="34.0" layoutY="155.0" />
       <TableView fx:id="t" layoutX="280.0" layoutY="90.0" onMouseClicked="#getDataO" prefHeight="200.0" prefWidth="604.0">
         <columns>
           <TableColumn fx:id="colMedecin" prefWidth="99.20001220703125" text="nommedecin" />
@@ -27,11 +20,18 @@
             <TableColumn fx:id="colNompharmacie" minWidth="0.0" prefWidth="158.4000244140625" text="nompharmacie" />
         </columns>
       </TableView>
-      <Button fx:id="btnAjouter" layoutX="141.0" layoutY="399.0" mnemonicParsing="false" onAction="#ajouterOrdonnance" text="Ajouter" />
-      <Button fx:id="clearO" layoutX="567.0" layoutY="322.0" mnemonicParsing="false" onAction="#clearOrd" text="Clear" />
-      <Button fx:id="btnmodifierO" layoutX="448.0" layoutY="322.0" mnemonicParsing="false" onAction="#modifierOrd" text="Mettre a jour" />
-      <Button fx:id="btnsupprimerO" layoutX="327.0" layoutY="322.0" mnemonicParsing="false" onAction="#supprimerord" text="Supprimer" />
-      <ComboBox fx:id="comboph" layoutX="80.0" layoutY="321.0" prefWidth="150.0" />
-      <Text layoutX="57.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacie" />
+      <Button fx:id="btnAjouter" layoutX="99.0" layoutY="350.0" mnemonicParsing="false" onAction="#ajouterOrdonnance" prefHeight="30.0" prefWidth="102.0" text="Ajouter" />
+      <Button fx:id="btnmodifierO" layoutX="294.0" layoutY="322.0" mnemonicParsing="false" onAction="#modifierOrd" prefHeight="30.0" prefWidth="101.0" text="Mettre a jour" />
+      <Button fx:id="btnsupprimerO" layoutX="414.0" layoutY="322.0" mnemonicParsing="false" onAction="#supprimerord" prefHeight="30.0" prefWidth="102.0" text="Supprimer" />
+     
+      <TextField fx:id="tfdescription" layoutX="48.0" layoutY="208.0" promptText="Description" />
+      <TextField fx:id="tfpatient" layoutX="48.0" layoutY="156.0" promptText="Nom Patient" />
+      <TextField fx:id="tfmedecin" layoutX="48.0" layoutY="109.0" promptText="Nom Medecin" />
+      <ComboBox fx:id="comboph" layoutX="57.0" layoutY="296.0" prefWidth="150.0" />
+      <Button fx:id="clearO" layoutX="646.0" layoutY="323.0" mnemonicParsing="false" onAction="#clearOrd" prefHeight="30.0" prefWidth="102.0" text="Clear" />
+      <Text layoutX="57.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pharmacie" />
+      <TextField fx:id="fieldFilter" layoutX="423.0" layoutY="44.0" promptText="Rechercher..." />
+      <Button layoutX="521.0" layoutY="323.0" mnemonicParsing="false" onAction="#handleGeneratePdfButton" prefHeight="30.0" prefWidth="102.0" text="pdf" />
+      <Button fx:id="btnpharmacie" layoutX="781.0" layoutY="548.0" mnemonicParsing="false" onAction="#gotoPharmacie" prefHeight="30.0" prefWidth="102.0" text="Pharmacie" />
    </children>
 </AnchorPane>

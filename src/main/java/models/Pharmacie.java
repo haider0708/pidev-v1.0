@@ -9,6 +9,7 @@ public class Pharmacie {
     private String adresse;
     private int numerotelephone;
 
+    private String img;
 
     // Constructeur
     public Pharmacie() {
@@ -49,6 +50,11 @@ public class Pharmacie {
     public int getNumeroTelephone() {return numerotelephone;
     }
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+    public String getImg() {return img;
+    }
 
 
     public void setNumerotelephone(int numerotelephone) {

@@ -1,18 +1,29 @@
 package controllers;
 
-import javafx.beans.property.SimpleStringProperty;
+//import javafx.beans.property.SimpleStringProperty;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfPCell;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import models.Ordonnance;
 import models.Pharmacie;
+import services.ServiceOrdonnance;
 import utils.DBConnection;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.net.URL;
 import java.sql.Connection;
@@ -23,7 +34,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
+
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileOutputStream;
+import java.util.List;
 public class OrdonnanceFXML implements Initializable {
     /* private Connection cnx;
      private PreparedStatement st;
@@ -69,6 +91,9 @@ public class OrdonnanceFXML implements Initializable {
     private TextField tfpatient;
     @FXML
     private ComboBox<String> comboph;
+    @FXML
+    private TextField fieldFilter;
+
 
     int id = 0;
 
@@ -94,11 +119,7 @@ try{
     }
 
     showOrdonnance();
-    t.getSelectionModel().
-
-    selectedItemProperty().
-
-    addListener((obs, oldSelection, newSelection) ->
+    t.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
 
     {
         if (newSelection != null) {
@@ -109,7 +130,39 @@ try{
             comboph.setValue(newSelection.getNompharmacie());
             comboph.setDisable(true); // Désactiver le champ pour empêcher la modification
         }
-    });}
+    });
+        // Activer le tri sur la TableView
+        t.setSortPolicy(param -> {
+            ObservableList<Ordonnance> items = t.getItems();
+            items.sort((o1, o2) -> {
+                if (o1 == null || o2 == null) {
+                    return 0;
+                }
+                // Modifier cette partie selon la colonne sur laquelle vous voulez trier
+                return o1.getNommedecin().compareTo(o2.getNommedecin());
+            });
+            return true;
+        });
+
+        // Filtrer les données lors de la saisie dans le champ de recherche
+        fieldFilter.textProperty().addListener((observable, oldValue, newValue) -> {
+            t.setItems(filterOrdonnances(newValue));
+        });
+
+    }
+    // Fonction pour filtrer les données des ordonnances en fonction du texte de recherche
+    private ObservableList<Ordonnance> filterOrdonnances(String filterText) {
+        ObservableList<Ordonnance> ordonnances = FXCollections.observableArrayList();
+        for (Ordonnance ordonnance : getOrdonnances()) {
+            if (ordonnance.getNommedecin().toLowerCase().contains(filterText.toLowerCase()) ||
+                    ordonnance.getNompatient().toLowerCase().contains(filterText.toLowerCase()) ||
+                    ordonnance.getDescription().toLowerCase().contains(filterText.toLowerCase()) ||
+                    ordonnance.getNompharmacie().toLowerCase().contains(filterText.toLowerCase())) {
+                ordonnances.add(ordonnance);
+            }
+        }
+        return ordonnances;
+    }
 
 
 
@@ -134,6 +187,7 @@ try{
             ordonnance.setInt(4, 0); // Utilisation de la valeur 0 pour pharmacie_id
             ordonnance.setString(5, comboph.getValue()); // Définir la valeur pour nompharmacie
             ordonnance.executeUpdate();
+            showAlert(Alert.AlertType.INFORMATION, "Ajout réussi", "L'ordonnance a été ajoutée avec succès.");
 
             showOrdonnance();
         } catch (SQLException e) {
@@ -154,32 +208,6 @@ try{
         btnAjouter.setDisable(true);
     }
 
-   /* public void showOrdonnance() {
-        ObservableList<Ordonnance> list = getOrdonnances();
-        t.setItems(list);
-        colMedecin.setCellValueFactory(new PropertyValueFactory<Ordonnance, String>("nommedecin"));
-        colPatient.setCellValueFactory(new PropertyValueFactory<Ordonnance, String>("nompatient"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<Ordonnance, String>("Description"));
-        //colNompharmacie.setCellValueFactory(new PropertyValueFactory<Ordonnance,String>("pharmacie"));
-        colNompharmacie.setCellFactory(param -> new TableCell<Ordonnance, String>() {
-            private final ComboBox<String> comboBox = new ComboBox<>();
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                } else {
-                    comboBox.getItems().addAll(item);
-                    comboBox.setValue(item);
-                    comboBox.setDisable(true); // Désactiver la ComboBox pour empêcher la modification
-                    setGraphic(comboBox);
-                }
-            }
-        });
-
-    }*/
    public void showOrdonnance() {
        ObservableList<Ordonnance> list = getOrdonnances();
        t.setItems(list);
@@ -215,7 +243,7 @@ try{
                 ordonnance.setId(rs.getInt("Id"));
 
                 ordonnances.add(ordonnance);
-                System.out.println(ordonnances);
+                //System.out.println(ordonnances);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -249,6 +277,8 @@ try{
             ordonnance.executeUpdate();
             showOrdonnance();
             clear();
+            showAlert(Alert.AlertType.INFORMATION, "Mise à Jour réussi", "L'ordonnance a étémise à jour avec succès.");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -265,6 +295,8 @@ try{
             pharmacie.executeUpdate();
             showOrdonnance();
             clear();
+            showAlert(Alert.AlertType.INFORMATION, "Suppression réussi", "L'ordonnance a été supprimé avec succès.");
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -309,6 +341,99 @@ try{
         return true; // Retourne true si toutes les validations sont passées avec succès
     }
 
+  @FXML
+  void handleGeneratePdfButton(ActionEvent event) throws DocumentException {
+      try {
+          String dest = "C:\\Users\\DRISS Manel\\Downloads\\simple_table.pdf";
+          Document document = new Document();
+          PdfWriter.getInstance(document, new FileOutputStream(dest));
 
+          document.open();
+          document.add(new Paragraph("Liste des Ordonnances"));
 
+          // Retrieve posts data from the database
+          ServiceOrdonnance serviceordonnance = new ServiceOrdonnance();
+          List<Ordonnance> ordonnances = serviceordonnance.selectAll();
+
+          // Create a table with 4 columns for post information
+          PdfPTable table = new PdfPTable(4);
+
+          // Add table headers with background color and text color
+          addTableHeader(table);
+
+          // Add data to table cells with alternating background colors
+          boolean alternate = false;
+          for (Ordonnance ordonnance : ordonnances) {
+              addDataToTable(table, ordonnance, alternate);
+              alternate = !alternate; // Toggle alternate flag
+          }
+
+          // Add the table to the document
+          document.add(table);
+          document.close();
+          System.out.println("PDF generated successfully!");
+      } catch (SQLException | IOException e) {
+          e.printStackTrace();
+      }
+  }
+
+    // Function to add table headers with background color and text color
+    private void addTableHeader(PdfPTable table) {
+        PdfPCell headerCell;
+        BaseColor headerColor = new BaseColor(173, 216, 230); // Light blue color for header
+        Font headerFont = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK); // Black text color for header
+
+        headerCell = new PdfPCell(new Phrase("nommedecin", headerFont));
+        headerCell.setBackgroundColor(headerColor);
+        table.addCell(headerCell);
+
+        headerCell = new PdfPCell(new Phrase("nompatient", headerFont));
+        headerCell.setBackgroundColor(headerColor);
+        table.addCell(headerCell);
+
+        headerCell = new PdfPCell(new Phrase("Description", headerFont));
+        headerCell.setBackgroundColor(headerColor);
+        table.addCell(headerCell);
+
+        headerCell = new PdfPCell(new Phrase("nompharmacie", headerFont));
+        headerCell.setBackgroundColor(headerColor);
+        table.addCell(headerCell);
+    }
+
+    // Function to add data to table cells with alternating background colors
+    private void addDataToTable(PdfPTable table, Ordonnance ordonnance, boolean alternate) {
+        BaseColor backgroundColor = alternate ? BaseColor.WHITE : new BaseColor(240, 248, 255); // Alternating background colors
+
+        PdfPCell cell;
+
+        cell = new PdfPCell(new Phrase(ordonnance.getNommedecin()));
+        cell.setBackgroundColor(backgroundColor);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase(ordonnance.getNompatient()));
+        cell.setBackgroundColor(backgroundColor);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase(ordonnance.getDescription()));
+        cell.setBackgroundColor(backgroundColor);
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase(ordonnance.getNompharmacie()));
+        cell.setBackgroundColor(backgroundColor);
+        table.addCell(cell);
+    }
+
+    public void gotoPharmacie(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/AjouterPharmacieFXML.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+
+        // Get the controller
+        AjouterPharmacieFXML controller = fxmlLoader.getController();
+
+        // Set the stage
+        Stage stage = new Stage();
+        controller.setStage(stage); // Pass the stage to the controller
+        stage.setScene(new Scene(root1));
+        stage.show();
+    }
 }
