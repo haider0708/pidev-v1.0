@@ -1,6 +1,7 @@
 package Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import com.google.gson.Gson;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -115,7 +116,7 @@ public class AddUser implements Initializable {
 
     private Service Service;
     String query = null;
-    private boolean update;
+    private boolean update = false;
     int PatientId;
 
     public AddUser() {
@@ -135,30 +136,27 @@ public class AddUser implements Initializable {
         String number = numberField.getText();
         String img_path = imageField.getText();
         String address = addressField.getText();
-
         if (validateFields(email, role, password, firstname, lastname, sexe, ageText, number)) {
             try {
-                int age = Integer.parseInt(ageText);
                 String hashedPassword = hashPassword(password);
                 String imagePath = copyAndRenameImage(img_path);
-
                 if (update) {
                     updatePatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
                 } else {
                     addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
                 }
 
-                redirectToView();
             } catch (NumberFormatException | IOException e) {
                 e.printStackTrace();
             }
         }
+        redirectToView();
     }
 
     private void updatePatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {
             int age = Integer.parseInt(ageText);
-            Patient updatedPatient = new Patient(PatientId, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
+            Patient updatedPatient = new Patient(PatientId, email,role , password, firstname, lastname, sexe, age, number, img_path, address, false, null);
             Service.update(updatedPatient);
             System.out.println("Patient updated successfully!");
         } catch (SQLException e) {
@@ -169,13 +167,16 @@ public class AddUser implements Initializable {
     private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {
             int age = Integer.parseInt(ageText);
-            Patient newPatient = new Patient(0, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
+            Gson gson = new Gson();
+            String rolesJson = gson.toJson(new String[]{role});
+            Patient newPatient = new Patient(0, email, rolesJson, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
             Service.ajouter(newPatient);
             System.out.println("Patient added successfully!");
         } catch (SQLException e) {
             System.err.println("Error adding patient: " + e.getMessage());
         }
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

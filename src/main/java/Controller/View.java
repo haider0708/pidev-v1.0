@@ -171,7 +171,6 @@ public class View implements Initializable  {
         manageBtn.setStyle("-fx-alignment:center");
         HBox.setMargin(deleteIcon, new Insets(2, 2, 0, 3));
         HBox.setMargin(editIcon, new Insets(2, 3, 0, 2));
-
         return manageBtn;
     }
 

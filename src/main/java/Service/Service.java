@@ -2,6 +2,7 @@ package Service;
 
 import Model.Patient;
 import Utils.DBConnection;
+import com.google.gson.Gson;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.net.PasswordAuthentication;
@@ -16,14 +17,14 @@ import java.util.Properties;
 
 public class Service {
 
-    private final Connection connection;
+    private static Connection connection = null;
 
     public Service() {
         connection = DBConnection.getInstance().getCnx();
     }
 
     // Méthode pour ajouter un patient
-    public void ajouter(Patient patient) throws SQLException {
+    public static void ajouter(Patient patient) throws SQLException {
         String query = "INSERT INTO patient (email, roles, password, firstname, lastname, sexe, age, number, img_path, address, is_verified, reset_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, patient.getEmail());
@@ -80,9 +81,11 @@ public class Service {
              ResultSet resultSet = statement.executeQuery(query)) {
             while (resultSet.next()) {
                 String[] roles = resultSet.getString("roles").split(",");
+                Gson gson = new Gson();
+                String rolesJson = gson.toJson(roles);
                 Patient patient = new Patient(resultSet.getInt("id"),
                         resultSet.getString("email"),
-                        roles,
+                        rolesJson,
                         resultSet.getString("password"),
                         resultSet.getString("firstname"),
                         resultSet.getString("lastname"),
@@ -93,6 +96,7 @@ public class Service {
                         resultSet.getString("address"),
                         resultSet.getBoolean("is_verified"),
                         resultSet.getString("reset_token"));
+
                 Patients.add(patient);
             }
         }
@@ -140,7 +144,7 @@ public class Service {
                         Patient patient = new Patient();
                         patient.setId(resultSet.getInt("id"));
                         patient.setEmail(resultSet.getString("email"));
-                        patient.setRoles(resultSet.getString("roles").split(","));
+                        patient.setRoles(resultSet.getString("role"));
                         patient.setPassword(resultSet.getString("password"));
                         patient.setFirstname(resultSet.getString("firstname"));
                         patient.setLastname(resultSet.getString("lastname"));

@@ -13,6 +13,7 @@ module devlab.user {
     requires de.jensd.fx.glyphs.fontawesome;
     requires jbcrypt;
     requires javax.mail.api;
+    requires com.google.gson;
 
     opens Test to javafx.fxml;
     exports Test;

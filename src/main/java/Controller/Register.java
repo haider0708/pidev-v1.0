@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Patient;
 import Service.Service;
+import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -175,13 +176,16 @@ public class Register {
     private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {
             int age = Integer.parseInt(ageText);
-            Patient newPatient = new Patient(0, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
-            service.ajouter(newPatient);
+            Gson gson = new Gson();
+            String rolesJson = gson.toJson(new String[]{role});
+            Patient newPatient = new Patient(0, email, rolesJson, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
+            Service.ajouter(newPatient);
             System.out.println("Patient added successfully!");
         } catch (SQLException e) {
             System.err.println("Error adding patient: " + e.getMessage());
         }
     }
+
 
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";

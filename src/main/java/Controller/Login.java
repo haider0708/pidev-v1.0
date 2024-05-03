@@ -1,7 +1,7 @@
 package Controller;
-
 import Model.Patient;
 import Service.Service;
+import Service.EmailService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,9 +46,12 @@ public class Login implements Initializable {
 
     private int captchaNumber;
 
+    private EmailService emailService;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.service = new Service();
+        this.emailService = new EmailService();
         generateCaptcha();
     }
 
@@ -59,7 +62,6 @@ public class Login implements Initializable {
         String email = usernameField.getText();
         String password = passwordField.getText();
         String captcha = captchaField.getText();
-
         if (!String.valueOf(captchaNumber).equals(captcha)) {
             System.out.println("Invalid CAPTCHA. Please try again");
             generateCaptcha();
@@ -68,34 +70,24 @@ public class Login implements Initializable {
 
         try {
             Patient loggedInUser = service.Log(email, password);
-
             if (loggedInUser != null) {
                 System.out.println("Login successful!");
                 SessionManager.startSession(loggedInUser);
-                System.out.println("Logged in user: " + loggedInUser.getEmail());
-
-                FXMLLoader loader = null;
-                if (loggedInUser.hasRole("User")) {
-                    loader = new FXMLLoader(getClass().getResource("/Front.fxml"));
-                } else if (loggedInUser.hasRole("Admin")) {
-                    loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
-                }
-
-                Parent homeRoot = loader.load();
-                Scene homeScene = new Scene(homeRoot);
-
+                Random random = new Random();
+                int twoFactorCode = 100000 + random.nextInt(900000);
+                SessionManager.saveCode(twoFactorCode);
+                emailService.sendEmail(email, twoFactorCode);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/2FA.fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
                 Stage stage = (Stage) usernameField.getScene().getWindow();
-
-                stage.setScene(homeScene);
+                stage.setScene(scene);
                 stage.show();
-            } else {
-                System.out.println("Invalid email or password. Please try again");
             }
         } catch (SQLException | IOException e) {
-            System.err.println("Error during login: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
-
 
 
     @FXML
@@ -131,12 +123,6 @@ public class Login implements Initializable {
             e.printStackTrace();
         }
     }
-
-    private String hashPassword(String plainPassword) {
-        String salt = BCrypt.gensalt();
-        return BCrypt.hashpw(plainPassword, salt);
-    }
-
     private void generateCaptcha() {
         GraphicsContext gc = captchaCanvas.getGraphicsContext2D();
 

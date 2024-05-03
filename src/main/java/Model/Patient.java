@@ -3,7 +3,7 @@ package Model;
 public class Patient {
     private Integer id;
     private String email;
-    private String[] roles;
+    private String roles;
     private String password;
     private String firstname;
     private String lastname;
@@ -16,7 +16,7 @@ public class Patient {
     private String reset_token;
 
 
-    public Patient(Integer id, String email, String[] roles, String password, String firstname, String lastname,
+    public Patient(Integer id, String email, String roles, String password, String firstname, String lastname,
                    String sexe, Integer age, String number, String img_path, String address, Boolean is_verified,
                    String resetToken) {
         this.id = id;
@@ -54,11 +54,11 @@ public class Patient {
         this.email = email;
     }
 
-    public String[] getRoles() {
+    public String getRoles() {
         return roles;
     }
 
-    public void setRoles(String[] roles) {
+    public void setRoles(String roles) {
         this.roles = roles;
     }
 
@@ -142,12 +142,12 @@ public class Patient {
         this.reset_token = resetToken;
     }
 
-    public boolean hasRole(String role) {
+   /* public boolean hasRole(String role) {
         for (String r : roles) {
             if (r.equals(role)) {
                 return true;
             }
         }
         return false;
-    }
+    }*/
 }
