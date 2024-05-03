@@ -2,8 +2,17 @@ package Service;
 
 import Model.Patient;
 import Utils.DBConnection;
+import org.mindrot.jbcrypt.BCrypt;
+
+import java.net.PasswordAuthentication;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Properties;
+
 
 public class Service {
 
@@ -92,15 +101,19 @@ public class Service {
 
     // Méthode pour vérifier les informations de connexion (email et mot de passe)
     public boolean login(String email, String password) throws SQLException {
-        String query = "SELECT * FROM patient WHERE email = ? AND password = ?";
+        String query = "SELECT password FROM patient WHERE email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next(); // If a row is returned, it means user exists with provided email and password
+                if (resultSet.next()) {
+                    String hashedPasswordFromDB = resultSet.getString("password");
+                    return BCrypt.checkpw(password, hashedPasswordFromDB);
+                }
             }
         }
+        return false;
     }
+
 
     public boolean emailExists(String email) throws SQLException {
         String query = "SELECT COUNT(*) AS count FROM patient WHERE email = ?";
@@ -113,7 +126,36 @@ public class Service {
                 }
             }
         }
-        return false; // If an exception occurs or no rows are returned, assume email doesn't exist
+        return false;
     }
 
+    public Patient Log(String email, String password) throws SQLException {
+        String query = "SELECT * FROM patient WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    String hashedPasswordFromDB = resultSet.getString("password");
+                    if (BCrypt.checkpw(password, hashedPasswordFromDB)) {
+                        Patient patient = new Patient();
+                        patient.setId(resultSet.getInt("id"));
+                        patient.setEmail(resultSet.getString("email"));
+                        patient.setRoles(resultSet.getString("roles").split(","));
+                        patient.setPassword(resultSet.getString("password"));
+                        patient.setFirstname(resultSet.getString("firstname"));
+                        patient.setLastname(resultSet.getString("lastname"));
+                        patient.setSexe(resultSet.getString("sexe"));
+                        patient.setAge(resultSet.getInt("age"));
+                        patient.setNumber(resultSet.getString("number"));
+                        patient.setImg_path(resultSet.getString("img_path"));
+                        patient.setAddress(resultSet.getString("address"));
+                        patient.setIs_verified(resultSet.getBoolean("is_verified"));
+                        patient.setResetToken(resultSet.getString("reset_token"));
+                        return patient;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

@@ -34,6 +34,10 @@ public class Patient {
         this.reset_token = resetToken;
     }
 
+    public Patient() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -136,5 +140,14 @@ public class Patient {
 
     public void setResetToken(String resetToken) {
         this.reset_token = resetToken;
+    }
+
+    public boolean hasRole(String role) {
+        for (String r : roles) {
+            if (r.equals(role)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

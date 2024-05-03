@@ -2,8 +2,10 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,19 +20,19 @@
    <right>
       <AnchorPane prefHeight="500.0" prefWidth="538.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="firstnameField" layoutX="18.0" layoutY="123.0" promptText="FirstName" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="passwordField" layoutX="176.0" layoutY="180.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button layoutX="105.0" layoutY="411.0" mnemonicParsing="false" onMouseClicked="#Register" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: #554655;" text="Register" />
+            <TextField fx:id="firstnameField" layoutX="18.0" layoutY="47.0" promptText="FirstName" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="passwordField" layoutX="176.0" layoutY="104.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <Button layoutX="105.0" layoutY="454.0" mnemonicParsing="false" onMouseClicked="#Register" prefHeight="25.0" prefWidth="125.0" style="-fx-background-color: #554655;" text="Register" />
             <Text fill="RED" layoutX="135.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome ">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="emailField" layoutX="18.0" layoutY="180.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField fx:id="lastnameField" layoutX="176.0" layoutY="123.0" promptText="LastName" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField fx:id="numberField" layoutX="135.0" layoutY="237.0" prefHeight="27.0" prefWidth="206.0" promptText="Number" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField fx:id="ageField" layoutX="18.0" layoutY="237.0" prefHeight="27.0" prefWidth="80.0" promptText="Age" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <ChoiceBox fx:id="sexeChoiceBox" layoutX="18.0" layoutY="357.0" prefHeight="25.0" prefWidth="100.0">
+            <TextField fx:id="emailField" layoutX="18.0" layoutY="104.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="lastnameField" layoutX="176.0" layoutY="47.0" promptText="LastName" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="numberField" layoutX="135.0" layoutY="161.0" prefHeight="27.0" prefWidth="206.0" promptText="Number" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="ageField" layoutX="18.0" layoutY="161.0" prefHeight="27.0" prefWidth="80.0" promptText="Age" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <ChoiceBox fx:id="sexeChoiceBox" layoutX="234.0" layoutY="220.0" prefHeight="25.0" prefWidth="100.0">
                <items>
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:value="Male" />
@@ -38,48 +40,52 @@
                   </FXCollections>
                </items>
             </ChoiceBox>
-            <TextField fx:id="addressField" layoutX="15.0" layoutY="293.0" prefHeight="27.0" prefWidth="206.0" promptText="Address" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField fx:id="imageField" layoutX="250.0" layoutY="293.0" prefHeight="27.0" prefWidth="80.0" promptText="Image" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <Text fx:id="FirstnameERR" fill="RED" layoutX="16.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="152.13671875">
+            <TextField fx:id="addressField" layoutX="15.0" layoutY="217.0" prefHeight="27.0" prefWidth="206.0" promptText="Address" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="imageField" layoutX="104.0" layoutY="290.0" prefHeight="27.0" prefWidth="237.0" promptText="Image" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <Text fx:id="FirstnameERR" fill="RED" layoutX="16.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="152.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="EmailERR" fill="RED" layoutX="17.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="150.13671875">
+            <Text fx:id="EmailERR" fill="RED" layoutX="17.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="150.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="ageERR" fill="RED" layoutX="14.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="121.13671875">
+            <Text fx:id="ageERR" fill="RED" layoutX="14.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="121.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="AddressERR" fill="RED" layoutX="17.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="204.13671875">
+            <Text fx:id="AddressERR" fill="RED" layoutX="17.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="204.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="sexeERR" fill="RED" layoutX="125.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="210.13671875">
+            <Text fx:id="sexeERR" fill="RED" layoutX="233.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="102.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="lastnameERR" fill="RED" layoutX="176.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="152.13671875">
+            <Text fx:id="lastnameERR" fill="RED" layoutX="176.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="152.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="PasswordERR" fill="RED" layoutX="175.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="148.13671875">
+            <Text fx:id="PasswordERR" fill="RED" layoutX="175.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="148.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
-            <Text fx:id="NumberERR" fill="RED" layoutX="135.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="206.13671875">
+            <Text fx:id="NumberERR" fill="RED" layoutX="135.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="206.13671875">
                <font>
                   <Font name="System Bold Italic" size="10.0" />
                </font>
             </Text>
+            <Hyperlink fx:id="loginbutton" layoutX="103.0" layoutY="475.0" onMouseClicked="#Login" text="You have an account ? " />
+            <Button layoutX="10.0" layoutY="295.0" mnemonicParsing="false" onAction="#chooseFileButtonClicked" prefHeight="25.0" prefWidth="86.0" text="Upload" />
+            <Canvas fx:id="captchaCanvas" height="75.0" layoutX="10.0" layoutY="348.0" width="200.0" />
+            <TextField fx:id="captchaField" layoutX="221.0" layoutY="364.0" prefHeight="27.0" prefWidth="80.0" promptText="Age" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
          </children>
       </AnchorPane>
    </right>

@@ -1,24 +1,38 @@
 package Controller;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import Model.Patient;
 import Service.Service;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 
 public class AddUser implements Initializable {
 
     @FXML
     private TextField addressField;
-
-    @FXML
-    private Text address_imageERROR;
 
     @FXML
     private TextField ageField;
@@ -64,6 +78,8 @@ public class AddUser implements Initializable {
 
     @FXML
     private Text sexeERROR;
+    @FXML
+    private Pane pnlOrders;
 
     boolean ageValid = true;
     boolean numberValid = true;
@@ -72,8 +88,29 @@ public class AddUser implements Initializable {
     boolean isValid = true;
 
     @FXML
-    void cancel(MouseEvent event) {
+    void chooseFileButtonClicked(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+        );
+        File selectedFile = fileChooser.showOpenDialog(((Stage) imageField.getScene().getWindow()));
 
+        if (selectedFile != null) {
+            imageField.setText(selectedFile.getAbsolutePath());
+        }
+
+    }
+
+    @FXML
+    void cancel(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View.fxml"));
+            Pane addUserView = loader.load();
+            pnlOrders.getChildren().setAll(addUserView);
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Service Service;
@@ -98,12 +135,146 @@ public class AddUser implements Initializable {
         String number = numberField.getText();
         String img_path = imageField.getText();
         String address = addressField.getText();
+
         if (validateFields(email, role, password, firstname, lastname, sexe, ageText, number)) {
-            if (update) {
-                updatePatient(email, role, password, firstname, lastname, sexe, ageText, number, img_path, address);
-            } else {
-                addPatient(email, role, password, firstname, lastname, sexe, ageText, number, img_path, address);
+            try {
+                int age = Integer.parseInt(ageText);
+                String hashedPassword = hashPassword(password);
+                String imagePath = copyAndRenameImage(img_path);
+
+                if (update) {
+                    updatePatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                } else {
+                    addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                }
+
+                redirectToView();
+            } catch (NumberFormatException | IOException e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    private void updatePatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
+        try {
+            int age = Integer.parseInt(ageText);
+            Patient updatedPatient = new Patient(PatientId, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
+            Service.update(updatedPatient);
+            System.out.println("Patient updated successfully!");
+        } catch (SQLException e) {
+            System.err.println("Error updating patient: " + e.getMessage());
+        }
+    }
+
+    private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
+        try {
+            int age = Integer.parseInt(ageText);
+            Patient newPatient = new Patient(0, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
+            Service.ajouter(newPatient);
+            System.out.println("Patient added successfully!");
+        } catch (SQLException e) {
+            System.err.println("Error adding patient: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+    }
+    void setUpdate(boolean b) {
+        this.update = b;
+
+    }
+    void setTextField(int id, String email,String password, String firstname, String lastname,
+                      int age, String number, String img_path, String address) {
+        PatientId = id;
+        addressField.setText(address);
+        ageField.setText(String.valueOf(age));
+        emailField.setText(email);
+        firstnameField.setText(firstname);
+        imageField.setText(img_path);
+        lastnameField.setText(lastname);
+        numberField.setText(number);
+        passwordField.setText(password);
+
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean validatePassword(String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+        boolean hasLower = false;
+        boolean hasUpper = false;
+        boolean hasDigit = false;
+        boolean hasSymbol = false;
+
+        for (char ch : password.toCharArray()) {
+            if (Character.isLowerCase(ch)) {
+                hasLower = true;
+            } else if (Character.isUpperCase(ch)) {
+                hasUpper = true;
+            } else if (Character.isDigit(ch)) {
+                hasDigit = true;
+            } else if (isSymbol(ch)) {
+                hasSymbol = true;
+            }
+        }
+
+        // Check if all required character types are present
+        return hasLower && hasUpper && hasDigit && hasSymbol;
+    }
+
+    private boolean isSymbol(char ch) {
+        String symbols = "!@#$%^&*()-_+=[]{}|;:,.<>?";
+        return symbols.indexOf(ch) != -1;
+    }
+
+    private boolean validateName(String name) {
+        if (name.isEmpty()) {
+            return false;
+        }
+        return name.length() >= 4 && name.matches("[a-zA-Z]+");
+    }
+    private String generateUniqueFileName(String fileName) {
+        // Get file extension
+        String extension = "";
+        int dotIndex = fileName.lastIndexOf(".");
+        if (dotIndex != -1) {
+            extension = fileName.substring(dotIndex);
+        }
+
+        // Generate unique file name using UUID
+        String uniqueFileName = UUID.randomUUID().toString() + extension;
+
+        return uniqueFileName;
+    }
+
+    private String copyAndRenameImage(String imgPath) throws IOException {
+        File selectedFile = new File(imgPath);
+        Path sourcePath = selectedFile.toPath();
+        String fileName = generateUniqueFileName(selectedFile.getName());
+        Path targetPath = new File("src/main/java/Images" + fileName).toPath();
+        Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+        return targetPath.toAbsolutePath().toString();
+    }
+
+    private String hashPassword(String plainPassword) {
+        String salt = BCrypt.gensalt();
+        return BCrypt.hashpw(plainPassword, salt);
+    }
+
+    private void redirectToView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View.fxml"));
+            Pane addUserView = loader.load();
+            pnlOrders.getChildren().setAll(addUserView);
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -245,95 +416,4 @@ public class AddUser implements Initializable {
 
 
     }
-
-    private void updatePatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
-        try {
-            int age = Integer.parseInt(ageText);
-            Patient updatedPatient = new Patient(PatientId, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
-            Service.update(updatedPatient);
-            System.out.println("Patient updated successfully!");
-        } catch (SQLException e) {
-            System.err.println("Error updating patient: " + e.getMessage());
-        }
-    }
-
-    private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
-        try {
-            int age = Integer.parseInt(ageText);
-            Patient newPatient = new Patient(0, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
-            Service.ajouter(newPatient);
-            System.out.println("Patient added successfully!");
-        } catch (SQLException e) {
-            System.err.println("Error adding patient: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
-    void setUpdate(boolean b) {
-        this.update = b;
-
-    }
-    void setTextField(int id, String email,String password, String firstname, String lastname,
-                      int age, String number, String img_path, String address) {
-        PatientId = id;
-        addressField.setText(address);
-        ageField.setText(String.valueOf(age));
-        emailField.setText(email);
-        firstnameField.setText(firstname);
-        imageField.setText(img_path);
-        lastnameField.setText(lastname);
-        numberField.setText(number);
-        passwordField.setText(password);
-
-    }
-
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return email.matches(emailRegex);
-    }
-
-    private boolean validatePassword(String password) {
-        if (password.length() < 8) {
-            return false;
-        }
-        boolean hasLower = false;
-        boolean hasUpper = false;
-        boolean hasDigit = false;
-        boolean hasSymbol = false;
-
-        for (char ch : password.toCharArray()) {
-            if (Character.isLowerCase(ch)) {
-                hasLower = true;
-            } else if (Character.isUpperCase(ch)) {
-                hasUpper = true;
-            } else if (Character.isDigit(ch)) {
-                hasDigit = true;
-            } else if (isSymbol(ch)) {
-                hasSymbol = true;
-            }
-        }
-
-        // Check if all required character types are present
-        return hasLower && hasUpper && hasDigit && hasSymbol;
-    }
-
-    private boolean isSymbol(char ch) {
-        String symbols = "!@#$%^&*()-_+=[]{}|;:,.<>?";
-        return symbols.indexOf(ch) != -1;
-    }
-
-    private boolean validateName(String name) {
-        if (name.isEmpty()) {
-            return false;
-        }
-        return name.length() >= 4 && name.matches("[a-zA-Z]+");
-    }
-
-
-
-
-
 }

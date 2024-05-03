@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditProfil">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="45.0" prefWidth="600.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="74.0" text="Edit Profil">
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ImageView fx:id="image" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#upload" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="260.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@images/jimmy-fallon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="55.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="279.0">
+                     <children>
+                        <Label text="FirstName" />
+                        <TextField fx:id="firstnameField" />
+                        <Text fx:id="firstnameERR" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="279.0">
+                     <children>
+                        <Label text="LastName" />
+                        <TextField fx:id="lastnameField" />
+                        <Text fx:id="lastNameERR" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="56.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="600.0">
+                     <children>
+                        <Label text="Email" />
+                        <TextField fx:id="emailField" />
+                        <Text fx:id="emailERR" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="110.0" prefHeight="56.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="600.0">
+                     <children>
+                        <Label text="Contact number" />
+                        <TextField fx:id="numberField" />
+                        <Text fx:id="numberERR" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="55.0" prefHeight="55.0" prefWidth="600.0">
+               <children>
+                  <VBox prefHeight="55.0" prefWidth="144.0">
+                     <children>
+                        <Label text="Age" />
+                        <TextField fx:id="ageFiled" prefHeight="25.0" prefWidth="181.0" />
+                        <Text fx:id="ageERR" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                  </VBox>
+                  <VBox layoutX="10.0" layoutY="10.0" prefHeight="55.0" prefWidth="450.0">
+                     <children>
+                        <Label text="Address" />
+                        <TextField fx:id="addressField" />
+                        <Text fx:id="addressERR" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onMouseClicked="#Save" text="Save" />
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#Cancel" text="Cancel" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>

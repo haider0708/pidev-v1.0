@@ -13,12 +13,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/register.fxml")); // Assuming login.fxml is in the View package
+        loader.setLocation(getClass().getResource("/login.fxml")); // Assuming login.fxml is in the View package
         Parent root = loader.load();
         primaryStage.setScene(new Scene(root));
 
         //set stage borderless
-        primaryStage.initStyle(StageStyle.UNDECORATED);
+        //primaryStage.initStyle(StageStyle.UNDECORATED);
 
         //drag it here
         root.setOnMousePressed(event -> {

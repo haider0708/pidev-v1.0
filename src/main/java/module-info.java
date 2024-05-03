@@ -11,6 +11,8 @@ module devlab.user {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires de.jensd.fx.glyphs.fontawesome;
+    requires jbcrypt;
+    requires javax.mail.api;
 
     opens Test to javafx.fxml;
     exports Test;

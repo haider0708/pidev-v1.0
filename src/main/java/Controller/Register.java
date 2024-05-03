@@ -6,12 +6,27 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.animation.FadeTransition;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.UUID;
+import org.mindrot.jbcrypt.*;
 
 public class Register {
 
@@ -66,16 +81,65 @@ public class Register {
     @FXML
     private ChoiceBox<?> sexeChoiceBox;
 
-    boolean ageValid = true;
-    boolean numberValid = true;
-    int age = 0;
+    @FXML
+    private Hyperlink loginbutton;
+
     boolean isValid = true;
-    private Service Service;
+    private Service service ;
 
     public Register() {
-        this.Service = new Service();
+        this.service = new Service();
     }
 
+    @FXML
+    void chooseFileButtonClicked(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose Image File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif")
+        );
+        File selectedFile = fileChooser.showOpenDialog(((Stage) imageField.getScene().getWindow()));
+
+        if (selectedFile != null) {
+            imageField.setText(selectedFile.getAbsolutePath());
+        }
+
+    }
+
+    @FXML
+    void Login() {
+        try {
+            // Get the current stage
+            Stage currentStage = (Stage) loginbutton.getScene().getWindow();
+
+            // Close the current stage
+            currentStage.close();
+
+            // Load the FXML file for the new stage
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Parent root = loader.load();
+
+            // Create a new stage
+            Stage registerStage = new Stage();
+            registerStage.setTitle("Register");
+
+            // Set the scene for the new stage
+            Scene scene = new Scene(root);
+            registerStage.setScene(scene);
+
+            // Add animation (fade-in effect)
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+
+            // Show the new stage
+            registerStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @FXML
     void Register(MouseEvent event) {
@@ -90,10 +154,20 @@ public class Register {
         String img_path = imageField.getText();
         String address = addressField.getText();
         if (validateFields(email,password,firstname,lastname,sexe,ageText,number,address)) {
-                addPatient(email, role , password , firstname , lastname , sexe , ageText , number , img_path , address);
+            try {
+                String hashedPassword = hashPassword(password);
+                File selectedFile = new File(img_path);
+                Path sourcePath = selectedFile.toPath();
+                String fileName = generateUniqueFileName(selectedFile.getName());
+                Path targetPath = new File("src/main/java/Images" + fileName).toPath();
+                Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+                // Store the image path in the database
+                String imagePath = targetPath.toAbsolutePath().toString();
+                addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        else {
-            System.out.println("Patient not added");
         }
         }
 
@@ -102,11 +176,74 @@ public class Register {
         try {
             int age = Integer.parseInt(ageText);
             Patient newPatient = new Patient(0, email, new String[]{role}, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
-            Service.ajouter(newPatient);
+            service.ajouter(newPatient);
             System.out.println("Patient added successfully!");
         } catch (SQLException e) {
             System.err.println("Error adding patient: " + e.getMessage());
         }
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean validatePassword(String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+        boolean hasLower = false;
+        boolean hasUpper = false;
+        boolean hasDigit = false;
+        boolean hasSymbol = false;
+
+        for (char ch : password.toCharArray()) {
+            if (Character.isLowerCase(ch)) {
+                hasLower = true;
+            } else if (Character.isUpperCase(ch)) {
+                hasUpper = true;
+            } else if (Character.isDigit(ch)) {
+                hasDigit = true;
+            } else if (isSymbol(ch)) {
+                hasSymbol = true;
+            }
+        }
+
+        // Check if all required character types are present
+        return hasLower && hasUpper && hasDigit && hasSymbol;
+    }
+
+    private boolean isSymbol(char ch) {
+        String symbols = "!@#$%^&*()-_+=[]{}|;:,.<>?";
+        return symbols.indexOf(ch) != -1;
+    }
+
+    private boolean validateName(String name) {
+        if (name.isEmpty()) {
+            return false;
+        }
+        return name.length() >= 4 && name.matches("[a-zA-Z]+");
+    }
+
+
+
+    private String generateUniqueFileName(String fileName) {
+        // Get file extension
+        String extension = "";
+        int dotIndex = fileName.lastIndexOf(".");
+        if (dotIndex != -1) {
+            extension = fileName.substring(dotIndex);
+        }
+
+        // Generate unique file name using UUID
+        String uniqueFileName = UUID.randomUUID().toString() + extension;
+
+        return uniqueFileName;
+    }
+
+    private String hashPassword(String plainPassword) {
+        String salt = BCrypt.gensalt();
+        return BCrypt.hashpw(plainPassword, salt);
     }
 
     private boolean validateFields(String email,String password, String firstname, String lastname, String sexe, String ageText, String number , String address ) {
@@ -120,7 +257,7 @@ public class Register {
             isValid = false;
         } else {
             try {
-                if (Service.emailExists(email)) {
+                if (service.emailExists(email)) {
                     EmailERR.setText("This email exist.");
                     isValid = false;
                 } else {
@@ -213,46 +350,5 @@ public class Register {
 
     }
 
-    private boolean isValidEmail(String email) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        return email.matches(emailRegex);
-    }
-
-    private boolean validatePassword(String password) {
-        if (password.length() < 8) {
-            return false;
-        }
-        boolean hasLower = false;
-        boolean hasUpper = false;
-        boolean hasDigit = false;
-        boolean hasSymbol = false;
-
-        for (char ch : password.toCharArray()) {
-            if (Character.isLowerCase(ch)) {
-                hasLower = true;
-            } else if (Character.isUpperCase(ch)) {
-                hasUpper = true;
-            } else if (Character.isDigit(ch)) {
-                hasDigit = true;
-            } else if (isSymbol(ch)) {
-                hasSymbol = true;
-            }
-        }
-
-        // Check if all required character types are present
-        return hasLower && hasUpper && hasDigit && hasSymbol;
-    }
-
-    private boolean isSymbol(char ch) {
-        String symbols = "!@#$%^&*()-_+=[]{}|;:,.<>?";
-        return symbols.indexOf(ch) != -1;
-    }
-
-    private boolean validateName(String name) {
-        if (name.isEmpty()) {
-            return false;
-        }
-        return name.length() >= 4 && name.matches("[a-zA-Z]+");
-    }
 
 }
