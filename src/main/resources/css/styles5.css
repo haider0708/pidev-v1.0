@@ -1,0 +1,17 @@
+.button-pdf {
+    -fx-background-color: #0D47A1; /* Couleur de fond */
+    -fx-text-fill: white; /* Couleur du texte */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-padding: 10px 20px; /* Rembourrage */
+    -fx-border-radius: 5px; /* Bord arrondi */
+    -fx-border-color: transparent; /* Couleur de la bordure */
+}
+
+.button-pdf:hover {
+    -fx-background-color: #0A3C84; /* Couleur de fond au survol */
+}
+
+.button-pdf:pressed {
+    -fx-background-color: #002171; /* Couleur de fond lorsqu'appuyé */
+}
