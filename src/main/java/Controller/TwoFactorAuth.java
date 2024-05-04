@@ -33,8 +33,6 @@ public class TwoFactorAuth implements Initializable {
 
         if (String.valueOf(savedCode).equals(enteredCode)) {
             System.out.println("2FA code validated successfully!");
-
-            // Proceed with the login...
         } else {
             attempts--;
             if (attempts > 0) {

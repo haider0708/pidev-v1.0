@@ -110,31 +110,18 @@ public class Register {
     @FXML
     void Login() {
         try {
-            // Get the current stage
             Stage currentStage = (Stage) loginbutton.getScene().getWindow();
-
-            // Close the current stage
             currentStage.close();
-
-            // Load the FXML file for the new stage
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
-
-            // Create a new stage
             Stage registerStage = new Stage();
             registerStage.setTitle("Register");
-
-            // Set the scene for the new stage
             Scene scene = new Scene(root);
             registerStage.setScene(scene);
-
-            // Add animation (fade-in effect)
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), root);
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
-
-            // Show the new stage
             registerStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,7 +132,7 @@ public class Register {
     @FXML
     void Register(MouseEvent event) {
         String email = emailField.getText();
-        String role ="USER";
+        String role = "ROLE_USER";
         String password = passwordField.getText();
         String firstname = firstnameField.getText();
         String lastname = lastnameField.getText();
@@ -154,7 +141,7 @@ public class Register {
         String number = numberField.getText();
         String img_path = imageField.getText();
         String address = addressField.getText();
-        if (validateFields(email,password,firstname,lastname,sexe,ageText,number,address)) {
+        if (validateFields(email, password, firstname, lastname, sexe, ageText, number, address)) {
             try {
                 String hashedPassword = hashPassword(password);
                 File selectedFile = new File(img_path);
@@ -162,16 +149,13 @@ public class Register {
                 String fileName = generateUniqueFileName(selectedFile.getName());
                 Path targetPath = new File("src/main/java/Images" + fileName).toPath();
                 Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
-
-                // Store the image path in the database
                 String imagePath = targetPath.toAbsolutePath().toString();
                 addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        }
-
+    }
 
     private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {
@@ -212,8 +196,6 @@ public class Register {
                 hasSymbol = true;
             }
         }
-
-        // Check if all required character types are present
         return hasLower && hasUpper && hasDigit && hasSymbol;
     }
 
@@ -232,14 +214,11 @@ public class Register {
 
 
     private String generateUniqueFileName(String fileName) {
-        // Get file extension
         String extension = "";
         int dotIndex = fileName.lastIndexOf(".");
         if (dotIndex != -1) {
             extension = fileName.substring(dotIndex);
         }
-
-        // Generate unique file name using UUID
         String uniqueFileName = UUID.randomUUID().toString() + extension;
 
         return uniqueFileName;

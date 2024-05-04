@@ -1,4 +1,5 @@
 package Model;
+import com.google.gson.Gson;
 
 public class Patient {
     private Integer id;
@@ -142,12 +143,14 @@ public class Patient {
         this.reset_token = resetToken;
     }
 
-   /* public boolean hasRole(String role) {
-        for (String r : roles) {
+    public boolean hasRole(String role) {
+        Gson gson = new Gson();
+        String[] rolesArray = gson.fromJson(roles, String[].class);
+        for (String r : rolesArray) {
             if (r.equals(role)) {
                 return true;
             }
         }
         return false;
-    }*/
+    }
 }

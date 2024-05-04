@@ -205,13 +205,11 @@ public class View implements Initializable  {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddUser.fxml"));
             Pane addUserView = loader.load();
-
             AddUser addpatient = loader.getController();
             addpatient.setUpdate(true);
             addpatient.setTextField(
                     patient.getId(),
                     patient.getEmail(),
-                    patient.getPassword(),
                     patient.getFirstname(),
                     patient.getLastname(),
                     patient.getAge(),

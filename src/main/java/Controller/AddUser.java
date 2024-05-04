@@ -4,11 +4,9 @@ import javafx.fxml.FXML;
 import com.google.gson.Gson;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +18,6 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import Model.Patient;
 import Service.Service;
 import javafx.scene.layout.Pane;
@@ -88,6 +85,14 @@ public class AddUser implements Initializable {
 
     boolean isValid = true;
 
+    private Service Service;
+    private boolean update;
+    int PatientId;
+
+    public AddUser() {
+        this.Service = new Service();
+    }
+
     @FXML
     void chooseFileButtonClicked(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -113,17 +118,6 @@ public class AddUser implements Initializable {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    private Service Service;
-    String query = null;
-    private boolean update = false;
-    int PatientId;
-
-    public AddUser() {
-        this.Service = new Service();
-    }
-
-
     @FXML
     void save(MouseEvent event) {
         String email = emailField.getText();
@@ -136,34 +130,38 @@ public class AddUser implements Initializable {
         String number = numberField.getText();
         String img_path = imageField.getText();
         String address = addressField.getText();
+
+        // Validate fields before proceeding
         if (validateFields(email, role, password, firstname, lastname, sexe, ageText, number)) {
             try {
                 String hashedPassword = hashPassword(password);
                 String imagePath = copyAndRenameImage(img_path);
                 if (update) {
+                    System.out.println("updating");
                     updatePatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                    redirectToView();
                 } else {
                     addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                    redirectToView();
                 }
-
             } catch (NumberFormatException | IOException e) {
-                e.printStackTrace();
+                System.err.println("An error occurred: " + e.getMessage());
             }
         }
-        redirectToView();
     }
 
     private void updatePatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {
             int age = Integer.parseInt(ageText);
-            Patient updatedPatient = new Patient(PatientId, email,role , password, firstname, lastname, sexe, age, number, img_path, address, false, null);
+            Gson gson = new Gson();
+            String rolesJson = gson.toJson(new String[]{role});
+            Patient updatedPatient =  new Patient(PatientId, email, rolesJson, password, firstname, lastname, sexe, age, number, img_path, address, false, null);
             Service.update(updatedPatient);
             System.out.println("Patient updated successfully!");
         } catch (SQLException e) {
             System.err.println("Error updating patient: " + e.getMessage());
         }
     }
-
     private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {
             int age = Integer.parseInt(ageText);
@@ -176,17 +174,14 @@ public class AddUser implements Initializable {
             System.err.println("Error adding patient: " + e.getMessage());
         }
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
     void setUpdate(boolean b) {
         this.update = b;
-
     }
-    void setTextField(int id, String email,String password, String firstname, String lastname,
+    void setTextField(int id, String email,String firstname, String lastname,
                       int age, String number, String img_path, String address) {
         PatientId = id;
         addressField.setText(address);
@@ -196,15 +191,12 @@ public class AddUser implements Initializable {
         imageField.setText(img_path);
         lastnameField.setText(lastname);
         numberField.setText(number);
-        passwordField.setText(password);
 
     }
-
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);
     }
-
     private boolean validatePassword(String password) {
         if (password.length() < 8) {
             return false;
@@ -213,7 +205,6 @@ public class AddUser implements Initializable {
         boolean hasUpper = false;
         boolean hasDigit = false;
         boolean hasSymbol = false;
-
         for (char ch : password.toCharArray()) {
             if (Character.isLowerCase(ch)) {
                 hasLower = true;
@@ -225,8 +216,6 @@ public class AddUser implements Initializable {
                 hasSymbol = true;
             }
         }
-
-        // Check if all required character types are present
         return hasLower && hasUpper && hasDigit && hasSymbol;
     }
 
@@ -234,7 +223,6 @@ public class AddUser implements Initializable {
         String symbols = "!@#$%^&*()-_+=[]{}|;:,.<>?";
         return symbols.indexOf(ch) != -1;
     }
-
     private boolean validateName(String name) {
         if (name.isEmpty()) {
             return false;
@@ -254,7 +242,6 @@ public class AddUser implements Initializable {
 
         return uniqueFileName;
     }
-
     private String copyAndRenameImage(String imgPath) throws IOException {
         File selectedFile = new File(imgPath);
         Path sourcePath = selectedFile.toPath();
@@ -263,12 +250,10 @@ public class AddUser implements Initializable {
         Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
         return targetPath.toAbsolutePath().toString();
     }
-
     private String hashPassword(String plainPassword) {
         String salt = BCrypt.gensalt();
         return BCrypt.hashpw(plainPassword, salt);
     }
-
     private void redirectToView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View.fxml"));
@@ -278,20 +263,18 @@ public class AddUser implements Initializable {
             Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     private boolean validateFields(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number) {
-
-
-        if (email.isEmpty())  {
+        boolean isValid = true;
+        if (email.isEmpty()) {
             emailERROR.setText("Please enter an email address.");
             isValid = false;
         } else if (!isValidEmail(email)) {
             emailERROR.setText("Please enter a valid email address.");
             isValid = false;
-        } else {
+        } else if (!update) {
             try {
                 if (Service.emailExists(email)) {
-                    emailERROR.setText("This email exist.");
+                    emailERROR.setText("This email exists.");
                     isValid = false;
                 } else {
                     emailERROR.setText("");
@@ -302,14 +285,12 @@ public class AddUser implements Initializable {
             }
         }
 
-
         if (role == null) {
             roleERROR.setText("Please select a role.");
             isValid = false;
         } else {
             roleERROR.setText("");
         }
-
         if (password.isEmpty()) {
             passwordERROR.setText("Please enter a password.");
             isValid = false;
@@ -320,37 +301,19 @@ public class AddUser implements Initializable {
             passwordERROR.setText("");
         }
 
-        if (!firstname.isEmpty()) {
-            if (!validateName(firstname)) {
-                nameERROR.setText("First name must be at least 4 characters long and contain only alphabetic characters.");
-                isValid = false;
-            } else {
-                nameERROR.setText("");
-            }
+        if (!validateName(firstname)) {
+            nameERROR.setText("First name must be at least 4 characters long and contain only alphabetic characters.");
+            isValid = false;
+        } else {
+            nameERROR.setText("");
         }
 
-        if (!lastname.isEmpty()) {
-            if (!validateName(lastname)) {
-                if (!firstname.isEmpty() && !nameERROR.getText().isEmpty()) {
-                    nameERROR.setText(nameERROR.getText() + "\nLast name must be at least 4 characters long and contain only alphabetic characters.");
-                } else {
-                    nameERROR.setText("Last name must be at least 4 characters long and contain only alphabetic characters.");
-                }
-                isValid = false;
-            } else {
-                if (!firstname.isEmpty() && !nameERROR.getText().isEmpty()) {
-                    nameERROR.setText(nameERROR.getText() + "\n");
-                } else {
-                    nameERROR.setText("");
-                }
-            }
+        if (!validateName(lastname)) {
+            nameERROR.setText("Last name must be at least 4 characters long and contain only alphabetic characters.");
+            isValid = false;
+        } else {
+            nameERROR.setText("");
         }
-
-        if (firstname.isEmpty() && lastname.isEmpty()) {
-            nameERROR.setText("please provide your first and last names");
-        }
-
-
 
         if (sexe == null) {
             sexeERROR.setText("Please select a gender.");
@@ -359,62 +322,27 @@ public class AddUser implements Initializable {
             sexeERROR.setText("");
         }
         try {
-            age = Integer.parseInt(ageText);
+            int age = Integer.parseInt(ageText);
+            if (age <= 0 || age < 10 || age > 99) {
+                age_numberERROR.setText("Please enter a valid age between 10 and 99.");
+                isValid = false;
+            } else {
+                age_numberERROR.setText("");
+            }
         } catch (NumberFormatException e) {
-            ageValid = false;
+            age_numberERROR.setText("Please enter a valid age.");
+            isValid = false;
         }
-
-        if (age <= 0 && number.isEmpty()) {
-            age_numberERROR.setText("Please enter your age and phone number.");
+        if (number.isEmpty()) {
+            age_numberERROR.setText("Please enter a phone number.");
+            isValid = false;
+        } else if (!number.matches("\\d{8}")) {
+            age_numberERROR.setText("Phone number must be exactly 8 digits.");
             isValid = false;
         } else {
-            if (age <= 0) {
-                age_numberERROR.setText("Please enter a valid age.");
-                ageValid = false;
-                isValid = false;
-            } else {
-                if (age < 10 || age > 99) {
-                    age_numberERROR.setText("Age must be between 10 and 99.");
-                    ageValid = false;
-                    isValid = false;
-                } else {
-                    age_numberERROR.setText("");
-                }
-            }
-
-            if (number.isEmpty()) {
-                if (age_numberERROR.getText().isEmpty()) {
-                    age_numberERROR.setText("Please enter a phone number.");
-                } else {
-                    age_numberERROR.setText(age_numberERROR.getText() + " Please enter a phone number.");
-                }
-                numberValid = false;
-                isValid = false;
-            } else {
-                if (!number.matches("\\d{8}")) {
-                    age_numberERROR.setText("");
-                    if (age_numberERROR.getText().isEmpty()) {
-                        age_numberERROR.setText("Phone number must be exactly 8 digits.");
-                    } else {
-                        age_numberERROR.setText(age_numberERROR.getText() + " Phone number must be exactly 8 digits.");
-                    }
-                    numberValid = false;
-                    isValid = false;
-                } else {
-                    age_numberERROR.setText("");
-                }
-            }
-        }
-
-        if (ageValid && numberValid) {
             age_numberERROR.setText("");
         }
-
-
-
-
         return isValid;
-
-
     }
+
 }

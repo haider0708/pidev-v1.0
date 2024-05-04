@@ -7,16 +7,28 @@
         <list>
           <option value="USER" />
           <option value="USER" />
+          <option value="USER" />
+          <option value="USER" />
+          <option value="USER" />
+          <option value="USER" />
         </list>
       </option>
       <option name="ignoredPackages">
         <list>
           <option value="org.mindrot:jbcrypt:0.3m" />
           <option value="com.google.protobuf:protobuf-java:3.11.4" />
+          <option value="com.google.guava:guava:29.0-android" />
+          <option value="com.google.oauth-client:google-oauth-client:1.31.1" />
+          <option value="commons-codec:commons-codec:1.11" />
+          <option value="com.google.guava:guava:31.1-jre" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
         </list>

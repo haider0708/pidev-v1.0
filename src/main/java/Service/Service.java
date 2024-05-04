@@ -4,15 +4,8 @@ import Model.Patient;
 import Utils.DBConnection;
 import com.google.gson.Gson;
 import org.mindrot.jbcrypt.BCrypt;
-
-import java.net.PasswordAuthentication;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.Properties;
 
 
 public class Service {
@@ -23,7 +16,6 @@ public class Service {
         connection = DBConnection.getInstance().getCnx();
     }
 
-    // Méthode pour ajouter un patient
     public static void ajouter(Patient patient) throws SQLException {
         String query = "INSERT INTO patient (email, roles, password, firstname, lastname, sexe, age, number, img_path, address, is_verified, reset_token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -43,7 +35,6 @@ public class Service {
         }
     }
 
-    // Méthode pour mettre à jour les informations d'un patient
     public void update(Patient updatedPatient) throws SQLException {
         String query = "UPDATE patient SET email = ?, roles = ?, password = ?, firstname = ?, lastname = ?, sexe = ?, age = ?, number = ?, img_path = ?, address = ?, is_verified = ?, reset_token = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -64,7 +55,6 @@ public class Service {
         }
     }
 
-    // Méthode pour supprimer un patient par son ID
     public void delete(int id) throws SQLException {
         String query = "DELETE FROM patient WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -72,8 +62,6 @@ public class Service {
             preparedStatement.executeUpdate();
         }
     }
-
-    // Méthode pour récupérer tous les patients
     public ArrayList<Patient> afficherAll() throws SQLException {
         ArrayList<Patient> Patients = new ArrayList<>();
         String query = "SELECT * FROM patient";
@@ -103,8 +91,7 @@ public class Service {
         return Patients;
     }
 
-    // Méthode pour vérifier les informations de connexion (email et mot de passe)
-    public boolean login(String email, String password) throws SQLException {
+  /*  public boolean login(String email, String password) throws SQLException {
         String query = "SELECT password FROM patient WHERE email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
@@ -116,7 +103,7 @@ public class Service {
             }
         }
         return false;
-    }
+    }*/
 
 
     public boolean emailExists(String email) throws SQLException {
@@ -126,7 +113,8 @@ public class Service {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int count = resultSet.getInt("count");
-                    return count > 0; // If count is greater than 0, email exists in the database
+                    System.out.println(count);
+                    return count > 0;
                 }
             }
         }
@@ -137,14 +125,17 @@ public class Service {
         String query = "SELECT * FROM patient WHERE email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
+            System.out.println("1");
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     String hashedPasswordFromDB = resultSet.getString("password");
+                    System.out.println("2");
                     if (BCrypt.checkpw(password, hashedPasswordFromDB)) {
+                        System.out.println("login");
                         Patient patient = new Patient();
                         patient.setId(resultSet.getInt("id"));
                         patient.setEmail(resultSet.getString("email"));
-                        patient.setRoles(resultSet.getString("role"));
+                        patient.setRoles(resultSet.getString("roles"));
                         patient.setPassword(resultSet.getString("password"));
                         patient.setFirstname(resultSet.getString("firstname"));
                         patient.setLastname(resultSet.getString("lastname"));
@@ -157,6 +148,7 @@ public class Service {
                         patient.setResetToken(resultSet.getString("reset_token"));
                         return patient;
                     }
+                    else System.out.println("LOGIN FAILED");
                 }
             }
         }
