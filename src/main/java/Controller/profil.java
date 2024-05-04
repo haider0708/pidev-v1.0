@@ -40,17 +40,8 @@ public class profil implements Initializable {
 
     @FXML
     void Back(MouseEvent event) {
-        /*
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Profile.fxml"));
-            Pane addUserView = loader.load();
-            pane2.getChildren().setAll(addUserView);
-            pane2.toFront();
-        } catch (IOException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-
+        Pane.setVisible(false);
+        // pane2.getChildren().clear();
     }
 
     @FXML

@@ -3,23 +3,30 @@ import Model.Patient;
 import Service.Service;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -29,6 +36,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Callback;
 
 public class View implements Initializable  {
+    private Service Service;
 
     @FXML
     private TableView<Patient> PatientTable;
@@ -78,7 +86,76 @@ public class View implements Initializable  {
     @FXML
     private Pane pnlOverview;
 
-    private Service Service;
+    @FXML
+    private ImageView ascending;
+
+    @FXML
+    private ImageView descending;
+
+    @FXML
+    private Label numbersofusers;
+
+    private ObservableList<Patient> patients = FXCollections.observableArrayList();
+
+
+    @FXML
+    void ascending(MouseEvent event) {
+        sortTable(true);
+    }
+
+    @FXML
+    void descending(MouseEvent event) {
+        sortTable(false);
+    }
+
+    private void sortTable(boolean ascending) {
+        Comparator<Patient> comparator = Comparator.comparing(Patient::getFirstname);
+        if (!ascending) {
+            comparator = comparator.reversed();
+        }
+        List<Patient> sortedPatients = PatientTable.getItems().stream().sorted(comparator).collect(Collectors.toList());
+        PatientTable.getItems().clear();
+        PatientTable.getItems().addAll(sortedPatients);
+    }
+
+
+    @FXML
+    private TextField search;
+
+    @FXML
+    void search(KeyEvent event) {
+        String searchText = search.getText().toLowerCase().trim();
+
+        if (searchText.isEmpty()) {
+            PatientTable.setItems(patients);
+        } else {
+            ObservableList<Patient> filteredList = patients.filtered(patient -> patientMatchesSearch(patient, searchText));
+            PatientTable.setItems(filteredList);
+        }
+
+        // Refresh the table
+        PatientTable.refresh();
+    }
+
+
+
+
+    private boolean patientMatchesSearch(Patient patient, String searchText) {
+        String[] searchWords = searchText.split("\\s+");
+        String firstName = patient.getFirstname().toLowerCase();
+        String lastName = patient.getLastname().toLowerCase();
+
+        for (String word : searchWords) {
+            if (firstName.contains(word) || lastName.contains(word)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
 
 
 
@@ -87,6 +164,7 @@ public class View implements Initializable  {
         Service = new Service();
         initializeColumns();
         loadData();
+
 
     }
 
@@ -178,6 +256,7 @@ public class View implements Initializable  {
         try {
             ArrayList<Patient> patientList = Service.afficherAll();
             PatientTable.getItems().setAll(patientList);
+            numbersofusers.setText(""+patientList.size());
         } catch (SQLException e) {
             e.printStackTrace();
         }

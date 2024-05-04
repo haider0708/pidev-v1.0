@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -129,7 +128,6 @@
          </children>
       </StackPane>
       <FontAwesomeIconView fill="WHITE" glyphName="CLOSE" layoutX="1312.0" layoutY="23.0" />
-      <TextField layoutX="1138.0" layoutY="55.0" prefHeight="27.0" prefWidth="183.0" promptText="search" style="-fx-background-color: transparent; -fx-border-color: #9b9b9d; -fx-border-radius: 2em;" />
    </children>
    <effect>
       <DropShadow color="#1b1eeb" />

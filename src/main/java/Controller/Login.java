@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -124,6 +125,28 @@ public class Login implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void ForgetPassword(MouseEvent event) {
+        try {
+            Stage currentStage = (Stage) registerButton.getScene().getWindow();
+            currentStage.close();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ForgetPassword.fxml"));
+            Parent root = loader.load();
+            Stage registerStage = new Stage();
+            registerStage.setTitle("Register");
+            Scene scene = new Scene(root);
+            registerStage.setScene(scene);
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), root);
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+            registerStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
     private void generateCaptcha() {
         GraphicsContext gc = captchaCanvas.getGraphicsContext2D();

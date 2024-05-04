@@ -64,6 +64,8 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnlOverview;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Patient currentPatient = SessionManager.getCurrentSession();

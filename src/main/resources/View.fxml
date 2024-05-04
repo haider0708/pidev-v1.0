@@ -5,6 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -21,7 +24,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="22000" textFill="#2a73ff">
+                  <Label fx:id="numbersofusers" text="22000" textFill="#2a73ff">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font>
@@ -45,16 +48,16 @@
                   <Label text="Refresh" />
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="780" textFill="#de0000">
-                     <font>
-                        <Font name="System Bold" size="26.0" />
-                     </font>
-                  </Label>
-                  <Label text="USERS" />
-               </children>
-            </VBox>
+            <ImageView fx:id="ascending" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#ascending" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/up-arrow.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="descending" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#descending" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/download.png" />
+               </image>
+            </ImageView>
          </children>
       </HBox>
       <TableView fx:id="PatientTable" layoutX="31.0" layoutY="155.0" prefHeight="398.0" prefWidth="1039.0" styleClass="table_view" stylesheets="@style.css">
@@ -75,5 +78,6 @@
             <TableColumn fx:id="editCol" prefWidth="85.0" style="-fx-alignment: center;" text="Edit" />
          </columns>
       </TableView>
+      <TextField fx:id="search" layoutX="921.0" layoutY="106.0" onKeyReleased="#search" />
    </children>
 </Pane>

@@ -86,20 +86,14 @@ public class EditProfil implements Initializable {
             boolean isValid = validateFields(email, firstname, lastname, ageText, number, address);
 
             if (isValid) {
-
                 Patient currentPatient = SessionManager.getCurrentSession();
-
                 if (currentPatient != null) {
-
                     currentPatient.setEmail(email);
                     currentPatient.setFirstname(firstname);
                     currentPatient.setLastname(lastname);
                     currentPatient.setAge(Integer.parseInt(ageText));
                     currentPatient.setNumber(number);
                     currentPatient.setAddress(address);
-
-
-
                     Service.update(currentPatient);
                 }
             }
@@ -125,14 +119,12 @@ public class EditProfil implements Initializable {
                 System.err.println("Error during file copy: " + e.getMessage());
             }
             String imagePath = targetPath.toAbsolutePath().toString();
-            Patient currentUser = SessionManager.getCurrentSession(); // replace with your method to get the current user
+            Patient currentUser = SessionManager.getCurrentSession();
 
             if (currentUser != null) {
                 currentUser.setImg_path(imagePath);
                 Service.update(currentUser);
             }
-
-            // Reload the image in the ImageView
             Image newImage = new Image(new FileInputStream(imagePath));
             image.setImage(newImage);
         }
@@ -142,7 +134,6 @@ public class EditProfil implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Patient currentPatient = SessionManager.getCurrentSession();
-
         if (currentPatient != null) {
             addressField.setText(currentPatient.getAddress());
             ageFiled.setText(String.valueOf(currentPatient.getAge()));
@@ -231,8 +222,6 @@ public class EditProfil implements Initializable {
 
         return isValid;
     }
-
-
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);

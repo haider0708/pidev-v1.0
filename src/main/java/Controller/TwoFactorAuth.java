@@ -9,13 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class TwoFactorAuth implements Initializable {
 
+    @FXML
+    private Text errorTEXT;
 
     @FXML
     private Button loginButton;
@@ -36,6 +38,7 @@ public class TwoFactorAuth implements Initializable {
             attempts--;
             if (attempts > 0) {
                 System.out.println("Invalid 2FA code. Please try again. You have " + attempts + " attempts left.");
+                errorTEXT.setText("Invalid 2FA code." + attempts + " attempts left.");
             } else {
                 System.out.println("Invalid 2FA code. Redirecting to login page...");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));

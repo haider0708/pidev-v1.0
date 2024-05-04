@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -20,10 +22,8 @@
          <children>
             <TextField fx:id="usernameField" layoutX="106.0" layoutY="196.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
             <PasswordField fx:id="passwordField" layoutX="106.0" layoutY="233.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <FontAwesomeIconView glyphName="USER" layoutX="78.0" layoutY="220.0" size="20" />
-            <FontAwesomeIconView glyphName="KEY" layoutX="77.0" layoutY="257.0" size="20" />
-            <Button fx:id="loginButton" layoutX="151.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" style="-fx-background-color: #554655;" text="Login" />
-            <Hyperlink layoutX="106.0" layoutY="375.0" text="Forget your password ?" />
+            <Button fx:id="loginButton" layoutX="151.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleLoginButtonAction" style="-fx-background-color: #03fce3;" text="Login" />
+            <Hyperlink layoutX="106.0" layoutY="375.0" onMouseClicked="#ForgetPassword" text="Forget your password ?" />
             <Hyperlink fx:id="registerButton" layoutX="109.0" layoutY="398.0" onMouseClicked="#Register" text="don't have an account" />
             <FontAwesomeIconView glyphName="USERS" layoutX="156.0" layoutY="165.0" size="35" />
             <Text fill="RED" layoutX="115.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back ">
@@ -33,6 +33,16 @@
             </Text>
             <Canvas fx:id="captchaCanvas" height="79.0" layoutX="9.0" layoutY="272.0" width="200.0" />
             <TextField fx:id="captchaField" layoutX="222.0" layoutY="287.0" prefHeight="27.0" prefWidth="101.0" promptText="Recapthca" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="68.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/employee.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="68.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/password.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </right>
