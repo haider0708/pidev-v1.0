@@ -91,6 +91,7 @@ public class Service {
         return Patients;
     }
 
+
   /*  public boolean login(String email, String password) throws SQLException {
         String query = "SELECT password FROM patient WHERE email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -125,11 +126,9 @@ public class Service {
         String query = "SELECT * FROM patient WHERE email = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, email);
-            System.out.println("1");
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     String hashedPasswordFromDB = resultSet.getString("password");
-                    System.out.println("2");
                     if (BCrypt.checkpw(password, hashedPasswordFromDB)) {
                         System.out.println("login");
                         Patient patient = new Patient();
@@ -154,4 +153,32 @@ public class Service {
         }
         return null;
     }
+
+    public Patient getPatientByEmail(String email) throws SQLException {
+        String query = "SELECT * FROM patient WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Patient patient = new Patient();
+                    patient.setId(resultSet.getInt("id"));
+                    patient.setEmail(resultSet.getString("email"));
+                    patient.setRoles(resultSet.getString("roles"));
+                    patient.setPassword(resultSet.getString("password"));
+                    patient.setFirstname(resultSet.getString("firstname"));
+                    patient.setLastname(resultSet.getString("lastname"));
+                    patient.setSexe(resultSet.getString("sexe"));
+                    patient.setAge(resultSet.getInt("age"));
+                    patient.setNumber(resultSet.getString("number"));
+                    patient.setImg_path(resultSet.getString("img_path"));
+                    patient.setAddress(resultSet.getString("address"));
+                    patient.setIs_verified(resultSet.getBoolean("is_verified"));
+                    patient.setResetToken(resultSet.getString("reset_token"));
+                    return patient;
+                }
+            }
+        }
+        return null;
+    }
+
 }

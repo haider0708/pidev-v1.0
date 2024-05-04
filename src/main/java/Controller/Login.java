@@ -1,6 +1,7 @@
 package Controller;
 import Model.Patient;
 import Service.Service;
+import Service.GMailer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -44,12 +45,16 @@ public class Login implements Initializable {
 
     private int captchaNumber;
 
-    //private EmailService emailService;
+    private GMailer emailService;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.service = new Service();
-       // this.emailService = new EmailService();
+        try {
+            this.emailService = new GMailer();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         generateCaptcha();
     }
 
@@ -60,31 +65,44 @@ public class Login implements Initializable {
         String email = usernameField.getText();
         String password = passwordField.getText();
         String captcha = captchaField.getText();
+
         if (!String.valueOf(captchaNumber).equals(captcha)) {
             System.out.println("Invalid CAPTCHA. Please try again");
             generateCaptcha();
             return;
         }
+
         try {
             Patient loggedInUser = service.Log(email, password);
+
             if (loggedInUser != null) {
                 System.out.println("Login successful!");
                 SessionManager.startSession(loggedInUser);
-                Random random = new Random();
-                int twoFactorCode = 100000 + random.nextInt(900000);
-                SessionManager.saveCode(twoFactorCode);
-               // emailService.sendEmail(email, twoFactorCode);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/2FA.fxml"));
+
+                FXMLLoader loader;
+                if (loggedInUser.hasRole("ROLE_ADMIN")) {
+                    loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
+                } else {
+                    Random random = new Random();
+                    int twoFactorCode = 100000 + random.nextInt(900000);
+                    SessionManager.saveCode(twoFactorCode);
+                    emailService.sendMail("2 FACTOR AUTHENTICATOR CODE","here is your code to authenticate :"+twoFactorCode,email);
+                    loader = new FXMLLoader(getClass().getResource("/2FA.fxml"));
+                }
+
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 Stage stage = (Stage) usernameField.getScene().getWindow();
                 stage.setScene(scene);
                 stage.show();
+            } else {
+                System.out.println("Invalid email or password. Please try again");
             }
-        } catch (SQLException | IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
 
 
     @FXML

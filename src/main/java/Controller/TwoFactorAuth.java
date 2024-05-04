@@ -30,7 +30,6 @@ public class TwoFactorAuth implements Initializable {
     void handleLoginButtonAction(ActionEvent event) throws IOException {
         String enteredCode = twoFAfield.getText();
         int savedCode = SessionManager.getCode();
-
         if (String.valueOf(savedCode).equals(enteredCode)) {
             System.out.println("2FA code validated successfully!");
         } else {
@@ -39,8 +38,6 @@ public class TwoFactorAuth implements Initializable {
                 System.out.println("Invalid 2FA code. Please try again. You have " + attempts + " attempts left.");
             } else {
                 System.out.println("Invalid 2FA code. Redirecting to login page...");
-
-                // Redirect to login page
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
@@ -49,6 +46,7 @@ public class TwoFactorAuth implements Initializable {
                 stage.show();
             }
         }
+        SessionManager.endCode();
     }
 
     @Override

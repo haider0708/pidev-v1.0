@@ -23,6 +23,8 @@ module devlab.user {
     requires com.google.api.client.json.gson;
     requires org.apache.commons.codec;
     requires mail;
+    requires infobip.api.java.client;
+    requires okhttp3;
 
     opens Test to javafx.fxml;
     exports Test;
