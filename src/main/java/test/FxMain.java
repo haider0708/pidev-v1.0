@@ -13,22 +13,25 @@ public class FxMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterProduitFXML.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Front.fxml"));//Front
         Parent parent = loader.load();
-        FXMLLoader Categorieloader = new FXMLLoader(getClass().getResource("/CategorieFXML.fxml"));
-        Parent Categorieparent = Categorieloader.load();
+       // FXMLLoader Categorieloader = new FXMLLoader(getClass().getResource("/CategorieFXML.fxml"));
+        //Parent Categorieparent = Categorieloader.load();
+
 
         Scene scene = new Scene(parent);
-        Scene Categoriescene = new Scene(Categorieparent);
+        //Scene Categoriescene = new Scene(Categorieparent);
+
 
         stage.setTitle("Ajouter un produit");
         stage.setScene(scene);
 
         Stage Categoriestage = new Stage();
-
-        Categoriestage.setScene(Categoriescene);
+        Stage FrontPstage = new Stage();
+        //Categoriestage.setScene(Categoriescene);
 
         stage.show();
-        Categoriestage.show();
+        //Categoriestage.show();
+
     }
 }

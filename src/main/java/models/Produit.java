@@ -7,16 +7,20 @@ public class Produit {
     private String description;
     private int categorie_id;
     private String nomcategorie;
+    private String img;
+
 
 
     // Constructeur
     public Produit() {}
-    public Produit(String nom, float prix, String description,int categorie_id,String nomcategorie) {
+    public Produit(String nom, float prix, String description,int categorie_id,String nomcategorie,String img) {
         this.nom = nom;
         this.prix = prix;
         this.description = description;
         this.categorie_id = categorie_id;
         this.nomcategorie = nomcategorie;
+        this.img = img;
+
     }
 
     // Méthodes d'accès (getters) et de modification (setters)
@@ -51,6 +55,15 @@ public class Produit {
         this.description = description;
 
     }
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+
+    }
+
     public String getNomcategorie() {
         return nomcategorie;
     }
@@ -66,7 +79,9 @@ public class Produit {
                 ", description='" + description+ '\'' +
                 ", prix=" + prix +'\''  +
                 ", categorie_id=" + categorie_id +'\''  +
-                ", nomcategorie=" + nomcategorie +
+                ", nomcategorie=" + nomcategorie +'\''  +
+                ", img=" + img +'\''  +
+
                 '}';
     }
 }

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import models.Categorie;
 import models.Produit;
@@ -27,6 +28,8 @@ public class CategorieFXML implements Initializable {
     PreparedStatement st =null;
     ResultSet rs = null;
 
+    @FXML
+    private TextField filtrer;
 
     @FXML
     private Button btnAjouterc;
@@ -93,7 +96,38 @@ public class CategorieFXML implements Initializable {
         cnx = DBConnection.getInstance().getCnx();
         showCategorie();
 
+        // Activer le tri sur la TableView
+        tablec.setSortPolicy(param -> {
+            ObservableList<Categorie> items = tablec.getItems();
+            items.sort((o1, o2) -> {
+                if (o1 == null || o2 == null) {
+                    return 0;
+                }
+                // Modifier cette partie selon la colonne sur laquelle vous voulez trier
+                return o1.getNomcategorie().compareTo(o2.getNomcategorie());
+            });
+            return true;
+        });
+
+        // Ajouter le gestionnaire d'événements pour le filtrage
+        filtrer.setOnKeyReleased(this::filtrerTexte);
     }
+    @FXML
+    void filtrerTexte(KeyEvent event) {
+        String filtre = filtrer.getText().trim();
+        ObservableList<Categorie> categoriesFiltrees = filterCategories(filtre);
+        tablec.setItems(categoriesFiltrees);
+    }
+    private ObservableList<Categorie> filterCategories(String filterText) {
+        ObservableList<Categorie> categories = FXCollections.observableArrayList();
+        for (Categorie categorie : getcategories()) {
+            if (categorie.getNomcategorie().toLowerCase().contains(filterText.toLowerCase())) {
+                categories.add(categorie);
+            }
+        }
+        return categories;
+    }
+
     public int id = 0;
     public ObservableList<Categorie> getcategories() {
         ObservableList<Categorie> categories= FXCollections.observableArrayList();

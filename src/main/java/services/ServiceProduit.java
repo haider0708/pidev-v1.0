@@ -18,15 +18,14 @@ public class ServiceProduit implements CRUD<Produit> {
     @Override
     public void insertOne(Produit produit) throws SQLException {
 
-        String req = "INSERT INTO produit (nom, prix, description) VALUES (?, ?, ?)";
+        String req = "INSERT INTO produit (nom, prix, description,img) VALUES (?, ?, ?, ?)";
 
         PreparedStatement ps = cnx.prepareStatement(req);
 
         ps.setString(1, produit.getNom());
         ps.setFloat(2, produit.getPrix());
         ps.setString(3, produit.getDescription());
-
-
+        ps.setString(4, produit.getImg());
         ps.executeUpdate();
         System.out.println("Produit ajouté !");
     }
@@ -57,8 +56,8 @@ public class ServiceProduit implements CRUD<Produit> {
 
 
     @Override
-    public List<Produit> selectAll() throws SQLException {
-        List<Produit> produits = new ArrayList<>();
+    public ArrayList<Produit> selectAll() throws SQLException {
+        ArrayList<Produit> produits = new ArrayList<>();
         String req = "SELECT * FROM produit";
         Statement st = cnx.createStatement();
         ResultSet rs = st.executeQuery(req);
@@ -68,6 +67,7 @@ public class ServiceProduit implements CRUD<Produit> {
             produit.setNom(rs.getString("nom"));
             produit.setDescription(rs.getString("description"));
             produit.setPrix(rs.getFloat("prix"));
+            produit.setImg(rs.getString("img"));
             produits.add(produit);
         }
 

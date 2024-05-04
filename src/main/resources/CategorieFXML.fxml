@@ -6,20 +6,23 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="496.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CategorieFXML">
+<AnchorPane prefHeight="496.0" prefWidth="760.0" styleClass="form_container" stylesheets="@table.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CategorieFXML">
    <children>
       <Label layoutX="19.0" layoutY="142.0" prefHeight="30.0" prefWidth="87.0" text="NomCategorie" />
       <TextField fx:id="tfnom" layoutX="106.0" layoutY="144.0" />
-      <TableView fx:id="tablec" layoutX="380.0" layoutY="72.0" onMouseClicked="#getDatac" prefHeight="200.0" prefWidth="298.0">
+      <TableView fx:id="tablec" layoutX="380.0" layoutY="95.0" onMouseClicked="#getDatac" prefHeight="200.0" prefWidth="298.0">
         <columns>
           <TableColumn fx:id="colnom" prefWidth="158.4000244140625" text="NomCategorie" />
             <TableColumn fx:id="colId" minWidth="0.0" prefWidth="0.0" text="Id" />
         </columns>
       </TableView>
-      <Button fx:id="btnAjouterc" layoutX="155.0" layoutY="310.0" mnemonicParsing="false" onAction="#Ajouterc" styleClass="form_container" stylesheets="@css/styles.css" text="Ajouter" />
-      <Button fx:id="btnSupprimerc" layoutX="397.0" layoutY="310.0" mnemonicParsing="false" onAction="#Supprimerc" styleClass="form_container" stylesheets="@css/styles.css" text="Supprimer" />
-      <Button fx:id="btnModifierc" layoutX="262.0" layoutY="310.0" mnemonicParsing="false" onAction="#Modifierc" styleClass="form_container" stylesheets="@css/styles.css" text="Modifier" />
-      <Button fx:id="btnClearc" layoutX="497.0" layoutY="310.0" mnemonicParsing="false" onAction="#Clearc" styleClass="form_container" stylesheets="@css/styles.css" text="Clear" />
+      <Button fx:id="btnAjouterc" layoutX="155.0" layoutY="310.0" mnemonicParsing="false" onAction="#Ajouterc" style="-fx-background-color: #2f3593; -fx-text-fill: white;" text="Ajouter" />
+      <Button fx:id="btnSupprimerc" layoutX="397.0" layoutY="310.0" mnemonicParsing="false" onAction="#Supprimerc" style="-fx-background-color: #2f3593; -fx-text-fill: white;" text="Supprimer" />
+      <Button fx:id="btnModifierc" layoutX="262.0" layoutY="310.0" mnemonicParsing="false" onAction="#Modifierc" style="-fx-background-color: #2f3593; -fx-text-fill: white;" text="Modifier" />
+      <Button fx:id="btnClearc" layoutX="521.0" layoutY="310.0" mnemonicParsing="false" onAction="#Clearc" style="-fx-background-color: #2f3593; -fx-text-fill: white;" text="Clear" />
+       <Text layoutX="207.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: #2f3593;" text="Crud Categorie" textAlignment="CENTER" wrappingWidth="233.55938720703125" />
+      <TextField fx:id="filtrer" layoutX="543.0" layoutY="28.0" />
    </children>
 </AnchorPane>
