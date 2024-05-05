@@ -77,6 +77,7 @@ public class EventController implements Initializable {
         eventTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 try {
+                    populateFieldsWithEvent(newSelection); // Populate fields with the selected event
                     Image qrCode = generateQRCodeImage(newSelection.getTitre() + " - " + newSelection.getLocalisation() + " - " + newSelection.getDate(), 250, 250);
                     qrCodeView.setImage(qrCode);
                 } catch (WriterException | IOException e) {
@@ -85,6 +86,15 @@ public class EventController implements Initializable {
             }
         });
     }
+
+    private void populateFieldsWithEvent(Event event) {
+        titreField.setText(event.getTitre());
+        localisationField.setText(event.getLocalisation());
+        // Assuming that dateField is a TextField, you need to convert the date string to LocalDate and set it to the date picker
+        LocalDate date = LocalDate.parse(event.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        datePicker.setValue(date);
+    }
+
 
     private String loadHtmlContent(String filePath) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -103,9 +113,13 @@ public class EventController implements Initializable {
             try {
                 String titre = titreField.getText();
                 String localisation = localisationField.getText();
-                String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
                 Event event = new Event(titre, localisation, date);
                 ServiceEvent.addEvent(event);
+
+                // Regenerate QR code with new event details
+                Image qrCode = generateQRCodeImage(event.getTitre() + " - " + event.getLocalisation() + " - " + event.getDate(), 250, 250);
+                qrCodeView.setImage(qrCode);
 
                 // Load HTML content from file
                 String htmlContent = loadHtmlContent("src/main/resources/Email.html");
@@ -124,12 +138,13 @@ public class EventController implements Initializable {
                 loadEvents();
                 clearFields();
                 showSuccessAlert();
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | WriterException e) {
                 e.printStackTrace();
                 showErrorAlert(e.getMessage());
             }
         }
     }
+
 
 
     @FXML
@@ -312,7 +327,7 @@ public class EventController implements Initializable {
     public class SmsSender {
 
         public static final String ACCOUNT_SID = "AC99dc6c7cd0949b302b1e14812ff4e247";
-        public static final String AUTH_TOKEN = "bc75308b2170cb7b2ab0a8d1389c9531";
+        public static final String AUTH_TOKEN = "13c31ebfba7732aebf0d41fa0dedffde";
         public static final String FROM_NUMBER = "+12562864029";
 
         static {

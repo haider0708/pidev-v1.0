@@ -39,7 +39,7 @@
         <StackPane layoutX="258.0" layoutY="0.0" style="-fx-background-color: #ffffff;">
             <children>
                 <!-- Event Management Pane from event.fxml -->
-                <Pane fx:id="pnlEventManagement" prefHeight="871.0" prefWidth="1079.0" visible="true">
+                <Pane fx:id="pnlEventManagement" prefHeight="871.0" prefWidth="1500.0" visible="true">
                     <Label layoutX="218.0" layoutY="21.0" styleClass="label" text="Event Management" />
                     <TableView fx:id="eventTable" layoutX="50.0" layoutY="120.0" prefHeight="300.0" prefWidth="500.0" styleClass="table-view">
                         <columns>
@@ -58,19 +58,19 @@
                         </columns>
                     </TableView>
                     <TextField fx:id="titreField" layoutX="50.0" layoutY="50.0" prefWidth="150.0" promptText="Titre" styleClass="text-field" />
-                  <PieChart fx:id="pieChart" layoutX="579.0" layoutY="224.0" prefHeight="300" prefWidth="300" />
+                    <PieChart fx:id="pieChart" layoutX="579.0" layoutY="224.0" prefHeight="300" prefWidth="300" />
+                    <ImageView fx:id="qrCodeView" layoutX="568.5" layoutY="100" fitWidth="200" fitHeight="200" preserveRatio="true"/>
                     <TextField fx:id="localisationField" layoutX="220.0" layoutY="50.0" prefWidth="150.0" promptText="Localisation" styleClass="text-field" />
                     <DatePicker fx:id="datePicker" layoutX="390.0" layoutY="50.0" prefWidth="150.0" styleClass="text-field" />
                     <Button layoutX="50.0" layoutY="85.0" onAction="#handleAddEvent" styleClass="add-button" text="Add Event" />
                     <Button fx:id="updateButton" layoutX="150.0" layoutY="85.0" onAction="#handleUpdateEvent" styleClass="update-button" text="Update Event" />
                     <Button fx:id="deleteButton" layoutX="275.0" layoutY="85.0" onAction="#handleDeleteEvent" styleClass="delete-button" text="Delete Event" />
                     <Button fx:id="redirectActivity" layoutX="459.0" layoutY="450.0" onAction="#gotoactivity" styleClass="button" text="Go to Activity" />
-                    <Button fx:id="switchToClientButton" layoutX="30.0" layoutY="450.0" onAction="#handleSwitchToClientView" text="Switch to Client View" />
+                    <Button fx:id="switchToClientButton" layoutX="30.0" layoutY="470.0" onAction="#handleSwitchToClientView" text="Switch to Client View" />
                     <TextField fx:id="phoneNumberField" layoutX="50.0" layoutY="430.0" prefWidth="200.0" promptText="Enter Phone Number" styleClass="text-field" />
                     <Button layoutX="260.0" layoutY="430.0" onAction="#handleSendSms" styleClass="button" text="Send SMS" />
-                    <Button fx:id="generatePdfButton" onAction="#handleGenerateStyledPdf" text="Generate PDF" />
+                    <Button fx:id="generatePdfButton" layoutX="45.0" layoutY="500.0" onAction="#handleGenerateStyledPdf" text="Generate PDF" />
                 </Pane>
-                <ImageView fx:id="qrCodeView" layoutX="568.5" layoutY="100" fitWidth="200" fitHeight="200" preserveRatio="true"/>
             </children>
         </StackPane>
     </children>
