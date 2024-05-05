@@ -113,7 +113,7 @@ public class EventController implements Initializable {
             try {
                 String titre = titreField.getText();
                 String localisation = localisationField.getText();
-                String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+                String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 Event event = new Event(titre, localisation, date);
                 ServiceEvent.addEvent(event);
 
@@ -144,8 +144,6 @@ public class EventController implements Initializable {
             }
         }
     }
-
-
 
     @FXML
     private void handleUpdateEvent() {
@@ -223,7 +221,6 @@ public class EventController implements Initializable {
         localisationField.clear();
         datePicker.setValue(null);
     }
-
 
     private boolean validateInput() {
         StringBuilder errorMessage = new StringBuilder();
@@ -345,7 +342,6 @@ public class EventController implements Initializable {
         }
     }
 
-
     @FXML
     private void handleGenerateStyledPdf() {
         String filePath = "StyledEventsReport.pdf";
@@ -430,7 +426,6 @@ public class EventController implements Initializable {
         // Additional styling (optional)
         for (PieChart.Data data : pieChartData) {
             Node node = data.getNode();
-            node.setStyle("-fx-pie-color: #somecolor;"); // Set color for each section
         }
     }
 

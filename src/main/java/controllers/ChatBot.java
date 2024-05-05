@@ -2,10 +2,16 @@ package controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ChatBot {
 
@@ -26,6 +32,9 @@ public class ChatBot {
 
     @FXML
     private Button sendButton;
+
+    @FXML
+    private Button backButton;
 
     @FXML
     private void initialize() {
@@ -72,6 +81,19 @@ public class ChatBot {
             return "Our events include a variety of activities. Are you looking for something specific?";
         } else {
             return "I'm not sure how to help with that. Can you try asking something else about our events or activities?";
+        }
+    }
+
+    @FXML
+    private void handleBack(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Client.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

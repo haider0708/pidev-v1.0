@@ -39,6 +39,7 @@
             <children>
                 <TextField fx:id="messageField" promptText="Type your message here..." HBox.hgrow="ALWAYS" styleClass="input-field" />
                 <Button fx:id="sendButton" text="Send" onAction="#sendMessage" styleClass="send-button"/>
+                <Button fx:id="backButton" text="Back" onAction="#handleBack" styleClass="back-button"/>
             </children>
         </HBox>
     </bottom>
