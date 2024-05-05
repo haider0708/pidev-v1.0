@@ -38,7 +38,7 @@
             <Font name="System Bold" size="80.0" />
          </font>
       </Label>
-      <ButtonBar layoutX="331.0" layoutY="490.0" prefHeight="91.0" prefWidth="386.0" stylesheets="@../css/styles2.css">
+      <ButtonBar layoutX="331.0" layoutY="490.0" prefHeight="91.0" prefWidth="366.0" stylesheets="@../css/styles2.css">
         <buttons>
           <Button fx:id="btnSave2" alignment="CENTER" mnemonicParsing="false" onAction="#CreateRapport" text="Save" textAlignment="CENTER" />
             <Button fx:id="btnUpdate2" layoutX="135.0" layoutY="17.0" mnemonicParsing="false" onAction="#UpdateRapport" text="Update" />
@@ -47,7 +47,7 @@
       </ButtonBar>
       <Button fx:id="btnSearch" layoutX="623.0" layoutY="91.0" mnemonicParsing="false" onAction="#searchRapports" stylesheets="@../css/styles4.css" text="Rechercher" />
       <TextField fx:id="textFieldSearch" layoutX="435.0" layoutY="91.0" prefHeight="38.0" prefWidth="178.0" promptText="Entrez le mot-clé de recherche" />
-      <Button fx:id="tPdf" layoutX="730.0" layoutY="475.0" mnemonicParsing="false" onAction="#generatePDF" prefHeight="38.0" prefWidth="135.0" styleClass="button-pdf" stylesheets="@../css/styles5.css" text="generate pdf " />
+      <Button fx:id="tPdf" layoutX="732.0" layoutY="475.0" mnemonicParsing="false" onAction="#generatePDF" prefHeight="42.0" prefWidth="133.0" styleClass="button-pdf" stylesheets="@../css/styles5.css" text="generate pdf " />
        <PieChart fx:id="pieChart" layoutX="113.0" layoutY="443.0" prefHeight="159.0" prefWidth="210.0" />
      
    </children>
