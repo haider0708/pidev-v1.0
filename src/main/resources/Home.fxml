@@ -23,7 +23,7 @@
                     <Insets bottom="20.0" />
                 </VBox.margin>
             </Label>
-            <Button fx:id="btnOverview" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@back.css" text="Overview" textFill="#e7e5e5">
+            <Button fx:id="btnOverview" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@back.css" textFill="#e7e5e5">
                 <graphic>
                     <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                         <image>
