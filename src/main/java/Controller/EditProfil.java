@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import tray.notification.NotificationType;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -88,6 +89,7 @@ public class EditProfil implements Initializable {
             if (isValid) {
                 Patient currentPatient = SessionManager.getCurrentSession();
                 if (currentPatient != null) {
+                    NotificationApp.showNotification("UPDATED", "Patient updated successfully", NotificationType.SUCCESS);
                     currentPatient.setEmail(email);
                     currentPatient.setFirstname(firstname);
                     currentPatient.setLastname(lastname);

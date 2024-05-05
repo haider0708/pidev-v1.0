@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import org.mindrot.jbcrypt.BCrypt;
+import tray.notification.NotificationType;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -35,7 +36,6 @@ public class password implements Initializable {
     @FXML
     void save(MouseEvent event) throws SQLException {
         Patient currentPatient = SessionManager.getCurrentSession();
-
         if (currentPatient != null) {
             String oldPassword = oldpass.getText();
             String newPassword = newpass.getText();
@@ -46,6 +46,7 @@ public class password implements Initializable {
                     currentPatient.setPassword(hashedPassword);
                     Service service = new Service();
                     service.update(currentPatient);
+                    NotificationApp.showNotification("Success", "Password updated", NotificationType.SUCCESS);
                 } else {
                     passError.setText("New password and confirm password do not match.");
                 }
@@ -53,10 +54,13 @@ public class password implements Initializable {
                 passError.setText("Old password is incorrect.");
             }
         }
+        oldpass.setText(null);
+        newpass.setText(null);
+        confirmpass.setText(null);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Patient currentPatient = SessionManager.getCurrentSession();
+
     }
 }

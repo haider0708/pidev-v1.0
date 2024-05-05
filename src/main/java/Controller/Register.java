@@ -5,6 +5,7 @@ import Service.Service;
 import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
@@ -28,6 +29,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.UUID;
 import org.mindrot.jbcrypt.*;
+import tray.notification.NotificationType;
 
 public class Register {
 
@@ -151,11 +153,19 @@ public class Register {
                 Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
                 String imagePath = targetPath.toAbsolutePath().toString();
                 addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                NotificationApp.showNotification("Success", "Patient Added", NotificationType.SUCCESS);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+                Parent root = loader.load();
+                Scene loginScene = new Scene(root);
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.setScene(loginScene);
+                currentStage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     private void addPatient(String email, String role, String password, String firstname, String lastname, String sexe, String ageText, String number, String img_path, String address) {
         try {

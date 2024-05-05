@@ -11,6 +11,7 @@
           <option value="USER" />
           <option value="USER" />
           <option value="USER" />
+          <option value="USER" />
         </list>
       </option>
       <option name="ignoredPackages">
@@ -21,10 +22,12 @@
           <option value="com.google.oauth-client:google-oauth-client:1.31.1" />
           <option value="commons-codec:commons-codec:1.11" />
           <option value="com.google.guava:guava:31.1-jre" />
+          <option value="junit:junit:4.12" />
         </list>
       </option>
       <option name="ignoredReasons">
         <list>
+          <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />
           <option value="Not exploitable" />

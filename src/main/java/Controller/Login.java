@@ -23,6 +23,7 @@ import javafx.animation.FadeTransition;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import tray.notification.NotificationType;
 
 
 public class Login implements Initializable {
@@ -69,6 +70,7 @@ public class Login implements Initializable {
 
         if (!String.valueOf(captchaNumber).equals(captcha)) {
             System.out.println("Invalid CAPTCHA. Please try again");
+            NotificationApp.showNotification("Invalid CAPTCHA", "Please try again", NotificationType.NOTICE);
             generateCaptcha();
             return;
         }
@@ -78,6 +80,7 @@ public class Login implements Initializable {
 
             if (loggedInUser != null) {
                 System.out.println("Login successful!");
+                NotificationApp.showNotification("Login successful", "SUCCESS", NotificationType.SUCCESS);
                 SessionManager.startSession(loggedInUser);
 
                 FXMLLoader loader;
@@ -88,6 +91,7 @@ public class Login implements Initializable {
                     int twoFactorCode = 100000 + random.nextInt(900000);
                     SessionManager.saveCode(twoFactorCode);
                     emailService.sendMail("2 FACTOR AUTHENTICATOR CODE","here is your code to authenticate :"+twoFactorCode,email);
+                    NotificationApp.showNotification("Two Factor Authenticator", "Check your Email to Authenticate", NotificationType.NOTICE);
                     loader = new FXMLLoader(getClass().getResource("/2FA.fxml"));
                 }
 
@@ -98,6 +102,7 @@ public class Login implements Initializable {
                 stage.show();
             } else {
                 System.out.println("Invalid email or password. Please try again");
+                NotificationApp.showNotification("Login unsuccessful", "Invalid email or password. Please try again", NotificationType.ERROR);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

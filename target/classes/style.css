@@ -2,8 +2,8 @@
 {
     -fx-background-color : #ffffff;
     -fx-text-fill : #656673;
-    -fx-background-radius: 20; /* Rounded corners */
-    -fx-padding: 8 15; /* Adjust padding as needed */
+    -fx-background-radius: 20;
+    -fx-padding: 8 15;
 }
 .button:hover{
     -fx-background-color: #a7cbff;
@@ -49,32 +49,32 @@
 .textarea{
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-background-radius: 20; /* Rounded corners */
-    -fx-border-color: #2196F3; /* Blue border color */
-    -fx-border-radius: 20; /* Rounded corners for border */
-    -fx-border-width: 1px; /* Border width */
+    -fx-background-radius: 20;
+    -fx-border-color: #2196F3;
+    -fx-border-radius: 20;
+    -fx-border-width: 1px;
 }
 .textarea:focused {
-    -fx-border-color: #ffffff; /* Blue border color when focused */
+    -fx-border-color: #ffffff;
 }
 .choicebox {
-    -fx-background-color: transparent; /* Transparent background */
-    -fx-background-insets: 0; /* Remove any background insets */
-    -fx-background-radius: 20; /* Rounded corners */
-    -fx-border-color: #2196F3; /* Blue border color */
-    -fx-border-radius: 20; /* Rounded corners for border */
-    -fx-border-width: 1px; /* Border width */
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 20;
+    -fx-border-color: #2196F3;
+    -fx-border-radius: 20;
+    -fx-border-width: 1px;
 }
 
 .choicebox:hover,
 .choicebox:focused {
-    -fx-border-color: #1976D2; /* Blue border color on hover or focus */
+    -fx-border-color: #1976D2;
 }
-/* Style for the table headers */
+
 .table_view .column-header {
-    -fx-background-color: black; /* Set background color for all headers */
+    -fx-background-color: black;
 }
 .table_view .table-row-cell {
-    -fx-border-color: white; /* Set border color for all cells */
+    -fx-border-color: white;
 }
 

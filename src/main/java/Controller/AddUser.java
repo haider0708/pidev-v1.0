@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
+import tray.notification.NotificationType;
 
 
 public class AddUser implements Initializable {
@@ -139,9 +140,12 @@ public class AddUser implements Initializable {
                 if (update) {
                     System.out.println("updating");
                     updatePatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                    NotificationApp.showNotification("UPDATED", "User updated successfully", NotificationType.SUCCESS);
                     redirectToView();
+
                 } else {
                     addPatient(email, role, hashedPassword, firstname, lastname, sexe, ageText, number, imagePath, address);
+                    NotificationApp.showNotification("ADDED", "User Added successfully", NotificationType.SUCCESS);
                     redirectToView();
                 }
             } catch (NumberFormatException | IOException e) {

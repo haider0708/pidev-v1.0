@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
 import javafx.scene.control.Hyperlink;
+import tray.notification.NotificationType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -73,24 +75,33 @@ public class ForgetPassword implements Initializable {
             ConfirmPassword.setVisible(true);
             NewPassword.setVisible(true);
             confirm.setVisible(true);
-            codeimage.setVisible(true);
+            passwordimage1.setVisible(true);
+            passwordimage2.setVisible(true);
+            NotificationApp.showNotification("Success", "Code is correct.input your new password", NotificationType.SUCCESS);
         } else {
+            NotificationApp.showNotification("INCORRECT CODE", "Please try again", NotificationType.WARNING);
             System.out.println("Incorrect code. Please try again");
         }
     }
 
     @FXML
-    void confirm(ActionEvent event) throws SQLException {
+    void confirm(ActionEvent event) throws SQLException, IOException {
         String newPassword = NewPassword.getText();
         String confirmPassword = ConfirmPassword.getText();
         if (newPassword.equals(confirmPassword)) {
             String hashedPassword = hashPassword(newPassword);
             SessionManager.getCurrentSession().setPassword(hashedPassword);
             Service.update(SessionManager.getCurrentSession());
-            passwordimage1.setVisible(true);
-            passwordimage2.setVisible(true);
+            NotificationApp.showNotification("Success", "Password updated", NotificationType.SUCCESS);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) confirm.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
         } else {
             System.out.println("Passwords do not match. Please try again");
+            NotificationApp.showNotification("Passwords do not match", "Please try again", NotificationType.WARNING);
         }
     }
 
@@ -102,11 +113,15 @@ public class ForgetPassword implements Initializable {
             SessionManager.startSession(patient);
             Code.setVisible(true);
             CodeField.setVisible(true);
+            codeimage.setVisible(true);
             String code = generateCode();
             SessionManager.saveCodeS(code);
             Sms.sendSMS("216"+patient.getNumber(), code);
+            NotificationApp.showNotification("SMS", "Check your phone for your code", NotificationType.SUCCESS);
+
         } else {
             System.out.println("No user found with this email");
+            NotificationApp.showNotification("Missmatch", "No user found with this email", NotificationType.WARNING);
         }
     }
 

@@ -15,3 +15,8 @@
     -fx-background-color: #606060;
 
 }
+.textarea-class {
+    -fx-background-color: transparent;
+    -fx-border-color: #0598ff;
+    -fx-border-width: 0px 0px 2px 0px;
+}

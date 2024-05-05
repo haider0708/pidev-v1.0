@@ -25,6 +25,7 @@ module devlab.user {
     requires mail;
     requires infobip.api.java.client;
     requires okhttp3;
+    requires TrayTester;
 
     opens Test to javafx.fxml;
     exports Test;
