@@ -10,9 +10,8 @@ public class FxMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/file.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
         Parent root = loader.load();
-
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Event Management System");
         stage.setScene(scene);

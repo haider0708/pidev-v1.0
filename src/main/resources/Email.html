@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Invitation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #0056b3;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+
+        .details p, .details ul {
+            margin: 0;
+        }
+
+        .details ul {
+            padding-left: 20px;
+        }
+
+        .details li {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Invitation to Event: {{eventName}}</h1>
+    </div>
+    <div class="content">
+        <p>Dear User,</p>
+        <p>You are invited to the event:</p>
+        <p><strong>Event Name:</strong> {{eventName}}</p>
+        <p><strong>Location:</strong> {{eventLocation}}</p>
+        <p><strong>Date:</strong> {{eventDate}}</p>
+    </div>
+    <div class="footer">
+        <p>We hope to see you there!</p>
+    </div>
+    <a href="URL_DE_VOTRE_EVENEMENT" class="btn">Join Now</a>
+</div>
+</body>
+</html>
+
+
+
+
+

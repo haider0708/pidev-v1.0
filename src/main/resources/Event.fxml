@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventController">
     <Label layoutX="218.0" layoutY="21.0" styleClass="label" text="Event Management" />
 
     <TableView fx:id="eventTable" layoutX="50.0" layoutY="120.0" prefHeight="300.0" prefWidth="500.0" styleClass="table-view">
@@ -42,6 +42,8 @@
     <Button fx:id="deleteButton" layoutX="275.0" layoutY="85.0" onAction="#handleDeleteEvent" styleClass="delete-button" text="Delete Event" />
     <Button fx:id="redirectActivity" layoutX="459.0" layoutY="450.0" onAction="#gotoactivity" styleClass="button" text="Go to Activity" />
     <Button fx:id="switchToClientButton" layoutX="30.0" layoutY="450.0" onAction="#handleSwitchToClientView" text="Switch to Client View" />
+    <TextField fx:id="phoneNumberField" layoutX="50.0" layoutY="430.0" prefWidth="200.0" promptText="Enter Phone Number" styleClass="text-field" />
+    <Button layoutX="260.0" layoutY="430.0" onAction="#handleSendSms" styleClass="button" text="Send SMS" />
 
     <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="label" text="Text" />
 </AnchorPane>

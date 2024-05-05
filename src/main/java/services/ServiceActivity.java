@@ -111,7 +111,6 @@ public class ServiceActivity {
 
     public List<Activity> getActivitiesByEventId(int eventId) throws SQLException {
         List<Activity> activities = new ArrayList<>();
-        // Updated query to include the join with the event table and select the event name
         String query = "SELECT a.*, e.titre as eventName FROM activity a LEFT JOIN event e ON a.evenement_id = e.id WHERE a.evenement_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, eventId);

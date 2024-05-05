@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientViewController" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css">
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientViewController" prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css">
     <VBox spacing="20" fx:id="mainVBox" style="-fx-padding: 10;">
         <TableView fx:id="eventTable" prefHeight="200.0" prefWidth="600.0">
             <columns>
@@ -18,4 +18,3 @@
         <Button text="Open Chatbot" onAction="#handleChatbotButton" style="-fx-pref-width: 100;"/>
     </VBox>
 </AnchorPane>
-

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="701.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ActivityController">
+<AnchorPane prefHeight="400.0" prefWidth="701.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ActivityController">
     <TextField fx:id="nomField" layoutX="27.0" layoutY="50.0" prefWidth="150" promptText="Name" />
     <TextField fx:id="statusField" layoutX="193.0" layoutY="50.0" prefWidth="150" promptText="Status" />
     <TextField fx:id="descriptionField" layoutX="358.0" layoutY="50.0" prefWidth="150" promptText="Description" />

@@ -100,7 +100,7 @@ public class ClientViewController implements Initializable {
     private void handleBackButton() {
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/file.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Event.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
@@ -115,11 +115,11 @@ public class ClientViewController implements Initializable {
     @FXML
     private void handleChatbotButton() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Chatbot.fxml")); // Update the FXML file path as necessary
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Chatbot.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
-            Stage stage = (Stage) eventTable.getScene().getWindow(); // Assuming this is run from the main stage
+            Stage stage = (Stage) eventTable.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {

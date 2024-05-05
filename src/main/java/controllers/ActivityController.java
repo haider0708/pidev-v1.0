@@ -259,7 +259,7 @@ public class ActivityController implements Initializable {
     @FXML
     private void handleBack(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/file.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Home.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
