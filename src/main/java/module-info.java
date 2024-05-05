@@ -26,17 +26,22 @@ module devlab.user {
     requires infobip.api.java.client;
     requires okhttp3;
     requires TrayTester;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+    requires itextpdf;
+    requires stripe.java;
+    requires twilio;
 
-    opens Test to javafx.fxml;
-    exports Test;
-    opens Controller to javafx.fxml;
-    exports Controller;
-    opens Model to javafx.fxml;
-    exports Model;
-    opens Service to javafx.fxml;
-    exports Service;
-    opens Utils to javafx.fxml;
-    exports Utils;
+    opens test to javafx.fxml;
+    exports test;
+    opens controllers to javafx.fxml;
+    exports controllers;
+    opens models to javafx.fxml;
+    exports models;
+    opens services to javafx.fxml;
+    exports services;
+    opens utils to javafx.fxml;
+    exports utils;
 
 
 }

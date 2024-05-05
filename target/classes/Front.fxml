@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1333.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Front">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1333.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.Front">
    <top>
       <HBox prefHeight="60.0" prefWidth="200.0" styleClass="root" stylesheets="@Front.css" BorderPane.alignment="CENTER">
          <children>
@@ -71,7 +71,7 @@
                         <Font name="Arial Rounded MT Bold" size="22.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="230.0" styleClass="mouse-moved" stylesheets="@Front.css">
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#Produit" prefHeight="50.0" prefWidth="230.0" styleClass="mouse-moved" stylesheets="@Front.css">
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -89,7 +89,7 @@
                         <Insets bottom="20.0" left="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="27.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="200.0" styleClass="mouse-moved" stylesheets="@Front.css">
+                  <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="27.0" maxHeight="-Infinity" minHeight="-Infinity" onMouseClicked="#Pharmacie" prefHeight="50.0" prefWidth="200.0" styleClass="mouse-moved" stylesheets="@Front.css">
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
