@@ -1,5 +1,5 @@
 .button-pdf {
-    -fx-background-color: #0D47A1; /* Couleur de fond */
+    -fx-background-color: #006400; /* Couleur de fond */
     -fx-text-fill: white; /* Couleur du texte */
     -fx-font-size: 14px; /* Taille de la police */
     -fx-font-weight: bold; /* Gras */
@@ -9,9 +9,9 @@
 }
 
 .button-pdf:hover {
-    -fx-background-color: #0A3C84; /* Couleur de fond au survol */
+    -fx-background-color: #3CB371; /* Couleur de fond au survol */
 }
 
 .button-pdf:pressed {
-    -fx-background-color: #002171; /* Couleur de fond lorsqu'appuyé */
+    -fx-background-color: #003300; /* Couleur de fond lorsqu'appuyé */
 }

@@ -6,7 +6,7 @@ public class Rendezvous {
     private int id;
     private String lieu, description;
     private Date date;
-
+    private String email;
     public int getId() {
         return id;
     }
@@ -26,6 +26,9 @@ public class Rendezvous {
     public String getDescription() {
         return description;
     }
+    public String getEmail() {
+        return email;
+    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -37,5 +40,9 @@ public class Rendezvous {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

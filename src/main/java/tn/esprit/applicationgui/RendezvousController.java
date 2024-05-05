@@ -1,7 +1,7 @@
 package tn.esprit.applicationgui;
 import org.controlsfx.control.Notifications;
 
-import tn.esprit.applicationgui.Rendezvous;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,13 +17,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.Comparator;
+
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import java.time.LocalDate;
 import java.time.ZoneId;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+
+
 
 public class RendezvousController implements Initializable {
     Connection con = null;
@@ -78,6 +82,7 @@ public class RendezvousController implements Initializable {
     void clearField(ActionEvent event) {
         clear();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showRendezvous();
@@ -113,9 +118,6 @@ public class RendezvousController implements Initializable {
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
     }
-
-
-
 
 
     @FXML
@@ -316,6 +318,7 @@ public class RendezvousController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     void btnsms(ActionEvent event) {
         Rendezvous rendezvous = table.getSelectionModel().getSelectedItem();
@@ -331,7 +334,6 @@ public class RendezvousController implements Initializable {
 
 
     public void handleSendButtonAction(ActionEvent actionEvent) {
-
 
 
         // Récupérer le texte saisi dans le champ de texte
@@ -381,5 +383,8 @@ public class RendezvousController implements Initializable {
                 return "I'm sorry, I didn't understand that.";
         }
     }
+
+
+
 
 }

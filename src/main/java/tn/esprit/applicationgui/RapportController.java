@@ -192,6 +192,8 @@ public class RapportController implements Initializable {
             showSuccessAlert("Rapport enregistré", "Le rapport a été enregistré avec succès.");
             // Actualiser l'affichage après l'ajout
             showRapports();
+            // Mettre à jour les statistiques
+            afficherRepartitionRapport();
         } catch (SQLException e) {
             handleException("Erreur SQL", "Une erreur s'est produite lors de l'insertion du rapport.", e);
         }
@@ -310,6 +312,8 @@ public class RapportController implements Initializable {
 
             // Actualiser l'affichage après la mise à jour dans la base de données
             showRapports();
+            // Mettre à jour les statistiques
+            afficherRepartitionRapport();
         } catch (SQLException e) {
             handleException("Erreur SQL", "Une erreur s'est produite lors de la mise à jour du rapport.", e);
         }
@@ -329,6 +333,8 @@ public class RapportController implements Initializable {
                 showSuccessAlert("Rapport supprimé", "Le rapport a été supprimé avec succès.");
                 // Actualiser l'affichage après la suppression
                 showRapports();
+                // Mettre à jour les statistiques
+                afficherRepartitionRapport();
             } catch (SQLException e) {
                 handleException("Erreur SQL", "Une erreur s'est produite lors de la suppression du rapport.", e);
             }
@@ -471,23 +477,25 @@ public class RapportController implements Initializable {
             }
         }
 
-        // Ajouter les données au graphique circulaire avec les pourcentages
+        // Calculer le total de rapports
         double totalRapports = rapports.size();
+
+        // Ajouter les données au graphique circulaire avec les pourcentages
         if (consultationsCount > 0) {
             double percentage = (consultationsCount / totalRapports) * 100;
-            PieChart.Data consultationsData = new PieChart.Data("Consultations Psychologiques", consultationsCount);
+            PieChart.Data consultationsData = new PieChart.Data("Consultations Psychologiques", percentage);
             consultationsData.nameProperty().bindBidirectional(consultationsData.pieValueProperty(), new NumberStringConverter());
             pieChartData.add(consultationsData);
         }
         if (analysesCount > 0) {
             double percentage = (analysesCount / totalRapports) * 100;
-            PieChart.Data analysesData = new PieChart.Data("Résultats d'Analyses", analysesCount);
+            PieChart.Data analysesData = new PieChart.Data("Résultats d'Analyses", percentage);
             analysesData.nameProperty().bindBidirectional(analysesData.pieValueProperty(), new NumberStringConverter());
             pieChartData.add(analysesData);
         }
         if (diabetiquesCount > 0) {
             double percentage = (diabetiquesCount / totalRapports) * 100;
-            PieChart.Data diabetiquesData = new PieChart.Data("Diabétiques", diabetiquesCount);
+            PieChart.Data diabetiquesData = new PieChart.Data("Diabétiques", percentage);
             diabetiquesData.nameProperty().bindBidirectional(diabetiquesData.pieValueProperty(), new NumberStringConverter());
             pieChartData.add(diabetiquesData);
         }
@@ -495,5 +503,6 @@ public class RapportController implements Initializable {
         // Définir les données dans le PieChart
         pieChart.setData(pieChartData);
     }
+
 
 }
