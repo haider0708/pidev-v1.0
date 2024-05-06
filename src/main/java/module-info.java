@@ -12,6 +12,7 @@ module com.example.demo4 {
     requires javafx.media;
     requires javafx.web;
     requires twilio;
+    requires org.controlsfx.controls;
 
     opens com.example.demo4 to javafx.fxml;
     opens com.example.demo4.entities to javafx.base;

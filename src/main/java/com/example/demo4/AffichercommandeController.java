@@ -37,8 +37,79 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
     import com.example.demo4.services.livreurService;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+
+import com.example.demo4.entities.livreur;
+import com.example.demo4.services.livreurService;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+
+import java.awt.*;
+import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 /**
  * FXML Controller class
  *
@@ -73,6 +144,41 @@ public class AffichercommandeController implements Initializable {
     private TextField numero_clientevField;
     @FXML
     private TextField titreevField;
+    @FXML
+    private Label NAME;
+
+    @FXML
+    private ImageView IMAGE;
+
+    @FXML
+    private Button btnCustomers;
+
+    @FXML
+    private Button btnMenus;
+
+    @FXML
+    private Button btnOrders;
+
+    @FXML
+    private Button btnOverview;
+
+    @FXML
+    private Button btnPackages;
+
+    @FXML
+    private Button btnSettings;
+
+    @FXML
+    private Button btnSignout;
+
+    @FXML
+    private Pane pnlCustomer;
+
+    @FXML
+    private Pane pnlMenus;
+
+    @FXML
+    private Pane pnlOrders;
      @FXML
     private Button ajouter;
     @FXML
@@ -94,9 +200,33 @@ public class AffichercommandeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        getCommande();
-    }    
+
+        getComment();
+    }
+    public void handleClicks(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == btnOrders) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View.fxml"));
+                Pane addUserView = loader.load();
+                pnlOrders.getChildren().setAll(addUserView);
+                pnlOrders.toFront();
+            } catch (IOException ex) {
+                Logger.getLogger(AjouterlivreurController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    @FXML
+    void LOGOUT(MouseEvent event) {
+
+
+
+
+
+
+
+
+
+    }
 
     @FXML
     private void rechercherlivreur(KeyEvent ev) {
@@ -148,6 +278,18 @@ public class AffichercommandeController implements Initializable {
             alert.setHeaderText("Error!");
             alert.setContentText("Fields cannot be empty");
             alert.showAndWait();
+        } else if (nom_clientevField.getText().length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur !");
+            alert.setContentText("Le nom doit contenir au moins 4 caractères.");
+            alert.showAndWait();
+        } else if (!nom_clientevField.getText().matches("^[a-zA-Z]+$")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur !");
+            alert.setContentText("Le nom doit contenir uniquement des lettres.");
+            alert.showAndWait();
         } else if (!numero_clientevField.getText().matches("\\d{8}")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error ");
@@ -185,7 +327,7 @@ public class AffichercommandeController implements Initializable {
         alert.setHeaderText("commande delete");
         alert.setContentText("commande deleted successfully!");
         alert.showAndWait();
-        getCommande();
+        getComment();
      
     }
 
@@ -203,6 +345,16 @@ public class AffichercommandeController implements Initializable {
         //datepartField.setValue((part.getCreated()));
         
     }
+    @FXML
+    private void nav(ActionEvent ev) {
+        try {
+            Parent loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
+            idread.getScene().setRoot(loader);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
 
     public void getCommande(){

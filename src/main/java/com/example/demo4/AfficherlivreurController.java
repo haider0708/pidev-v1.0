@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -18,11 +19,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import com.example.demo4.services.livreurService;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -30,6 +35,9 @@ import com.example.demo4.services.livreurService;
  * @author asus
  */
 public class AfficherlivreurController implements Initializable {
+
+    @FXML
+    private Button stat;
 
     @FXML
     private GridPane gridev;
@@ -43,15 +51,14 @@ public class AfficherlivreurController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        
         afficherlivreur();
-               
-    }    
+    }
 
 
 
-    
+
+
+
     public void afficherlivreur(){
          try {
             List<livreur> livreur = ab.recupererlivreur();
@@ -69,7 +76,7 @@ public class AfficherlivreurController implements Initializable {
                 controller.setIdev(livreur.get(i).getId());
                 gridev.add(pane, column, row);
                 column++;
-                if (column > 1) {
+                if (column > 5) {
                     column = 0;
                     row++;
                 }

@@ -3,6 +3,7 @@ package com.example.demo4.services;
 import com.example.demo4.entities.livreur;
 import com.example.demo4.utils.MyDB;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,8 @@ import javafx.collections.ObservableList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
 
 public class livreurService implements IlivreurService<livreur> {
@@ -161,5 +164,20 @@ public class livreurService implements IlivreurService<livreur> {
             livreur.add(e);
         }
         return livreur;
+    }
+
+
+    public String GenerateQrev(livreur ev) throws FileNotFoundException, IOException {
+        String evName = "livreur name: " + ev.getNom() + "\n" + "livreur prenom: " + ev.getPrenom() + "\n" + "livreur numero: " + ev.getNumero_tel() + "\n" +  "\n";
+        ByteArrayOutputStream out = QRCode.from(evName).to(ImageType.JPG).stream();
+        String filename = ev.getNom() + "_QrCode.jpg";
+        //File f = new File("src\\utils\\img\\" + filename);
+        File f = new File("C:\\xampp\\htdocs\\imgQr\\qrcode" + filename);
+        FileOutputStream fos = new FileOutputStream(f);
+        fos.write(out.toByteArray());
+        fos.flush();
+
+        System.out.println("qr yemshi");
+        return filename;
     }
 }

@@ -22,7 +22,7 @@ public class NewFront extends Application {
    
     @Override
     public void start(Stage primaryStage) throws IOException {
-               Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("afficherlivreur.fxml")));
+               Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Front.fxml")));
         Scene scene = new Scene(root,950,650); 
         primaryStage.setTitle("Gérer livreurs");
         //primaryStage.setIconified(true);

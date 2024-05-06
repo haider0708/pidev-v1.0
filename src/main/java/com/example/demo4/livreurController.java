@@ -7,7 +7,9 @@ package com.example.demo4;
 
 import com.example.demo4.entities.commande;
 import com.example.demo4.entities.livreur;
-
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import com.example.demo4.services.commandeService;
+import org.controlsfx.control.Rating;
 
 /**
  * FXML Controller class
@@ -42,13 +45,19 @@ public class livreurController implements Initializable {
     private Label nomevLabel;
     @FXML
     private Label prenomevLabel;
-
+    @FXML
+    private TextField nom_clientevField;
+    @FXML
+    private TextField addresse_clientevField;
+    @FXML
+    private TextField numero_clientevField;
 
 
     @FXML
     private Label numero_telLabel;
 
-
+    @FXML
+    private Rating rating;
 
     commandeService Ps = new commandeService();
     @FXML
@@ -75,7 +84,9 @@ public class livreurController implements Initializable {
 
         idevF.setVisible(false);
     }
-
+    private final String ACCOUNT_SID = "AC37fe287f749f857986973c4729c39662";
+    private final String AUTH_TOKEN = "a73e44c32e7b94fdc908eea20d24ecfa";
+    private final String TWILIO_PHONE_NUMBER = "+13342316049";
     private livreur eve = new livreur();
 
     public void setlivreur(livreur e) {
@@ -102,18 +113,30 @@ public class livreurController implements Initializable {
 
     @FXML
     private void commanderev(MouseEvent ev) throws SQLException {
-        commande p = new commande( Integer.parseInt(idevF.getText()));
+        double ratingValue = rating.getRating();
+        commande p = new commande( Integer.parseInt(idevF.getText()), nom_clientevField.getText(), addresse_clientevField.getText(), numero_clientevField.getText(), ratingValue);
         Ps.ajoutercommande(p);
         idPartField.setText(String.valueOf(27));
 
+        // Envoi du SMS
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Message message = Message.creator(
+                new PhoneNumber("+21628860682"),  // Numéro de téléphone du destinataire
+                new PhoneNumber(TWILIO_PHONE_NUMBER),   // Numéro Twilio
+                "Vous avez commander!"
+        ).create();
 
-        try {
-            //navigation
-            Parent loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("affichercommande.fxml")));
-            idevF.getScene().setRoot(loader);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+        System.out.println("SMS envoyé avec succès! SID: " + message.getSid());
+        resetPart();
+
+    }
+    public void resetPart() {
+        nom_clientevField.setText("");
+        addresse_clientevField.setText("");
+        numero_clientevField.setText("");
+
+
+
     }
 
 

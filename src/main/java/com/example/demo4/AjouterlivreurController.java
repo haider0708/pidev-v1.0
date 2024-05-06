@@ -8,6 +8,31 @@ package com.example.demo4;
 import com.example.demo4.entities.livreur;
 import com.example.demo4.services.livreurService;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,14 +47,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
+import java.awt.*;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.*;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,9 +71,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
-import java.util.Random;
-import java.util.ResourceBundle;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
@@ -51,7 +78,45 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 public class AjouterlivreurController implements Initializable {
+    @FXML
+    private Label NAME;
 
+    @FXML
+    private ImageView IMAGE;
+
+    @FXML
+    private Button btnCustomers;
+
+    @FXML
+    private Button btnMenus;
+
+    @FXML
+    private Button btnOrders;
+
+    @FXML
+    private Button btnOverview;
+
+    @FXML
+    private Button btnPackages;
+
+    @FXML
+    private Button btnSettings;
+
+    @FXML
+    private Button btnSignout;
+
+    @FXML
+    private Pane pnlCustomer;
+
+    @FXML
+    private Pane pnlMenus;
+
+    @FXML
+    private Pane pnlOrders;
+
+
+    @FXML
+    private Pane pnlOverview;
     @FXML
     private TextField nomevField;
     @FXML
@@ -59,7 +124,8 @@ public class AjouterlivreurController implements Initializable {
     @FXML
     private TextField numerotelField;
 
-
+    @FXML
+    private ImageView QrCode;
 
 
     @FXML
@@ -100,11 +166,34 @@ public class AjouterlivreurController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         getevs();
-        // affichage tableau
 
 
     }
 
+    public void handleClicks(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == btnOrders) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View.fxml"));
+                Pane addUserView = loader.load();
+                pnlOrders.getChildren().setAll(addUserView);
+                pnlOrders.toFront();
+            } catch (IOException ex) {
+                Logger.getLogger(AjouterlivreurController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    @FXML
+    void LOGOUT(MouseEvent event) {
+
+
+
+
+
+
+
+
+
+    }
 
 
     @FXML
@@ -115,6 +204,30 @@ public class AjouterlivreurController implements Initializable {
             alert.setTitle("Error ");
             alert.setHeaderText("Error!");
             alert.setContentText("Fields cannot be empty");
+            alert.showAndWait();
+        } else if (nomevField.getText().length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur !");
+            alert.setContentText("Le nom doit contenir au moins 4 caractères.");
+            alert.showAndWait();
+        } else if (prenomevField.getText().length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur !");
+            alert.setContentText("Le prénom doit contenir au moins 4 caractères.");
+            alert.showAndWait();
+        } else if (!nomevField.getText().matches("^[a-zA-Z]+$")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur !");
+            alert.setContentText("Le nom doit contenir uniquement des lettres.");
+            alert.showAndWait();
+        } else if (!prenomevField.getText().matches("^[a-zA-Z]+$")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Erreur !");
+            alert.setContentText("Le prénom doit contenir uniquement des lettres.");
             alert.showAndWait();
         } else if (!numerotelField.getText().matches("\\d{8}")) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -217,10 +330,40 @@ public class AjouterlivreurController implements Initializable {
     @FXML
     private void afficherlivreur(ActionEvent ev) {
         try {
-            Parent loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("afficherlivreur.fxml")));
+            Parent loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Front.fxml")));
             livreurTv.getScene().setRoot(loader);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    @FXML
+    void stat(MouseEvent event) {
+        try {
+            // Load the FXML file for the new interface
+            Parent loader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Statistics.fxml")));
+
+            // Create a new stage
+            Stage newStage = new Stage();
+
+            // Set the scene of the new stage to the loaded interface
+            newStage.setScene(new Scene(loader));
+
+            // Show the new stage
+            newStage.show();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    @FXML
+    private void nav(ActionEvent ev) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("afficherCommande.fxml"));
+            Pane addUserView = loader.load();
+            pnlMenus.getChildren().setAll(addUserView);
+            pnlMenus.toFront();
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -238,6 +381,16 @@ public class AjouterlivreurController implements Initializable {
         File file = new File(path);
         Image img = new Image(file.toURI().toString());
         imageview.setImage(img);
+
+
+        //////// qr
+        String filename = Ev.GenerateQrev(e);
+        System.out.println("filename lenaaa " + filename);
+        String path1="C:\\xampp\\htdocs\\imgQr\\qrcode"+filename;
+        File file1=new File(path1);
+        Image img1 = new Image(file1.toURI().toString());
+        //Image image = new Image(getClass().getResourceAsStream("src/utils/img/" + filename));
+        QrCode.setImage(img1);
     }
 
     @FXML
@@ -277,8 +430,72 @@ public class AjouterlivreurController implements Initializable {
         ObservableList<livreur> filter = bs.chercherev(rechercher.getText());
         populateTable(filter);
     }
+    @FXML
+    private void pdfabonn(ActionEvent abonn) throws FileNotFoundException, SQLException, IOException {
+        // livreur tab_Recselected = livreurTv.getSelectionModel().getSelectedItem();
+        long millis = System.currentTimeMillis();
+        java.sql.Date DateRapport = new java.sql.Date(millis);
 
-    private void populateTable(ObservableList<livreur> branlist) {
-        livreurTv.setItems(branlist);
+        String DateLyoum = new SimpleDateFormat("yyyyMMddHHmmss", Locale.ENGLISH).format(DateRapport);//yyyyMMddHHmmss
+        System.out.println("Date d'aujourdhui : " + DateLyoum);
+
+        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(String.valueOf(DateLyoum + ".pdf")));//yyyy-MM-dd
+            document.open();
+            Paragraph ph1 = new Paragraph("Voici un rapport détaillé de notre application qui contient tous les livreurs . Pour chaque livreur, nous fournissons des informations telles que la date d'Aujourd'hui :" + DateRapport );
+            Paragraph ph2 = new Paragraph(".");
+            PdfPTable table = new PdfPTable(4);
+            //On créer l'objet cellule.
+            PdfPCell cell;
+            //contenu du tableau.
+            table.addCell("Nom");
+            table.addCell("Prenom");
+            table.addCell("Numero");
+            table.addCell("image");
+
+            livreur r = new livreur();
+            Ev.recupererlivreur().forEach(new Consumer<livreur>() {
+                @Override
+                public void accept(livreur e) {
+                    table.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    table.addCell(String.valueOf(e.getNom()));
+                    table.addCell(String.valueOf(e.getPrenom()));
+                    table.addCell(String.valueOf(e.getNumero_tel()));
+                    try {
+                        // Créer un objet Image à partir de l'image
+                        String path = e.getImage();
+                        com.itextpdf.text.Image img = com.itextpdf.text.Image.getInstance(path);
+
+                        // Définir la taille de l'image dans le tableau
+                        img.scaleToFit(100, 100); // Définir la largeur et la hauteur de l'image
+
+                        // Ajouter l'image à la cellule du tableau
+                        PdfPCell cell = new PdfPCell(img);
+                        table.addCell(cell);
+                    } catch (Exception ex) {
+                        table.addCell("Erreur lors du chargement de l'image");
+                    }
+                }
+            });
+            document.add(ph1);
+            document.add(ph2);
+            document.add(table);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        document.close();
+
+        ///Open FilePdf
+        File file = new File(DateLyoum + ".pdf");
+        Desktop desktop = Desktop.getDesktop();
+        if (file.exists()) //checks file exists or not  
+        {
+            desktop.open(file); //opens the specified file   
+        }
+    }
+
+    private void populateTable(ObservableList<livreur> branlist) {livreurTv.setItems(branlist);
     }
 }

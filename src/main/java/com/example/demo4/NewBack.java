@@ -13,18 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- * @author asus
- */
 public class NewBack extends Application {
    
     @Override
     public void start(Stage primaryStage) throws IOException {
-               Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ajouterlivreur.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Home.fxml")));
         Scene scene = new Scene(root,950,650); 
         primaryStage.setTitle("Gérer livreurs");
-        //primaryStage.setIconified(true);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

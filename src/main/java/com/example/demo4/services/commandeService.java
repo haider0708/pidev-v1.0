@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import com.example.demo4.utils.MyDB;
 
 //**************//
@@ -41,7 +44,7 @@ public class commandeService {
     public void ajoutercommande(commande p) {
         User U = new User();
         livreurService es = new livreurService();
-        String requete = "INSERT INTO `commande` (`id` ,`nom_client`,`addresse_client`,`numero_client`)  VALUES(?,?,?,?) ;";
+        String requete = "INSERT INTO `commande` (`id` ,`nom_client`,`addresse_client`,`numero_client`,`rating`)  VALUES(?,?,?,?,?) ;";
 
         try {
             livreur tempev = es.FetchOneev(p.getId());
@@ -59,7 +62,7 @@ public class commandeService {
             pst.setString(2, p.getNom_client());
             pst.setString(3, p.getAddresse_client());
             pst.setString(4, p.getNumero_client());
-
+            pst.setDouble(5, p.getRating());
 
 
 
@@ -180,6 +183,26 @@ public class commandeService {
 
         ps.executeUpdate();
     }
+    public Map<Integer, Integer> countCommandesParLivreur() throws SQLException {
+        Map<Integer, Integer> commandesParLivreur = new HashMap<>();
 
+        // Récupérer toutes les commandes
+        List<commande> commandes = recupererComment();
+
+        // Parcourir les commandes pour compter le nombre de commandes par livreur
+        for (commande cmd : commandes) {
+            int idLivreur = cmd.getId();
+            // Si l'ID du livreur est déjà dans la map, incrémenter le compteur
+            if (commandesParLivreur.containsKey(idLivreur)) {
+                int count = commandesParLivreur.get(idLivreur);
+                commandesParLivreur.put(idLivreur, count + 1);
+            } else {
+                // Sinon, initialiser le compteur à 1
+                commandesParLivreur.put(idLivreur, 1);
+            }
+        }
+
+        return commandesParLivreur;
+    }
 
 }
