@@ -3,8 +3,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
+<?import javafx.scene.image.ImageView?>
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ClientViewController" prefHeight="400.0" prefWidth="600.0" stylesheets="@Style.css">
     <VBox spacing="20" fx:id="mainVBox" style="-fx-padding: 10;">
+        <Label fx:id="weatherLabel" text="Weather will display here" layoutX="10" layoutY="10" />
+        <ImageView fx:id="weatherIcon" fitWidth="100" fitHeight="100" />
         <TableView fx:id="eventTable" prefHeight="200.0" prefWidth="600.0">
             <columns>
                 <TableColumn text="Title" fx:id="colTitle" prefWidth="150.0" />
@@ -17,6 +20,5 @@
         <Button text="Back" onAction="#handleBackButton" layoutX="689.0" style="-fx-pref-width: 200;" layoutY="57.0"/>
         <Button text="Open Chatbot" onAction="#handleChatbotButton" layoutX="689.0" style="-fx-pref-width: 200;" layoutY="57.0" />
         <Button fx:id="btnmap" layoutX="689.0" style="-fx-pref-width: 200;" layoutY="57.0" mnemonicParsing="false" text="Find us here !" onAction="#showmap" />
-        <Label fx:id="weatherLabel" text="Weather will display here" layoutX="10" layoutY="10" />
     </VBox>
 </AnchorPane>

@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -19,10 +21,13 @@ import services.ServiceActivity;
 import services.ServiceEvent;
 import services.WeatherService;
 
+import java.awt.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class ClientViewController implements Initializable {
 
@@ -195,6 +200,8 @@ public class ClientViewController implements Initializable {
 
     @FXML
     private Label weatherLabel;
+    @FXML
+    private ImageView weatherIcon;
 
     private void updateWeatherDisplay(String city) {
         WeatherService weatherService = new WeatherService();
@@ -205,6 +212,9 @@ public class ClientViewController implements Initializable {
                 double tempKelvin = jsonObject.getJSONObject("main").getDouble("temp");
                 double tempCelsius = tempKelvin - 273.15; // Convert Kelvin to Celsius
                 String weatherDescription = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
+                String iconCode = jsonObject.getJSONArray("weather").getJSONObject(0).getString("icon");
+                Image image = new Image("http://openweathermap.org/img/w/" + iconCode + ".png");
+                weatherIcon.setImage(image);
                 weatherLabel.setText(String.format("Temperature: %.2f°C, Condition: %s", tempCelsius, weatherDescription));
             } catch (Exception e) {
                 weatherLabel.setText("Weather Info: Error parsing data");
