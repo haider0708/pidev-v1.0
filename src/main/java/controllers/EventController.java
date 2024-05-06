@@ -8,8 +8,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import com.twilio.Twilio;
@@ -26,7 +24,9 @@ import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import models.Event;
 import services.ServiceEvent;
@@ -64,6 +64,7 @@ public class EventController implements Initializable {
     @FXML
     private ImageView qrCodeView;
 
+
     private ServiceEvent ServiceEvent = new ServiceEvent();
 
     @Override
@@ -71,6 +72,7 @@ public class EventController implements Initializable {
         loadEvents();
         setupTableSelection();
         afficherRepartitionParDate();
+        
     }
 
     private void setupTableSelection() {
@@ -113,34 +115,32 @@ public class EventController implements Initializable {
             try {
                 String titre = titreField.getText();
                 String localisation = localisationField.getText();
-                String date = datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                Event event = new Event(titre, localisation, date);
-                ServiceEvent.addEvent(event);
+                LocalDate date = datePicker.getValue(); // Get the date from the DatePicker
+                String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                Event event = new Event(titre, localisation, formattedDate);
+                ServiceEvent.addEvent(event); // Add the event to the database or list
 
                 // Regenerate QR code with new event details
                 Image qrCode = generateQRCodeImage(event.getTitre() + " - " + event.getLocalisation() + " - " + event.getDate(), 250, 250);
                 qrCodeView.setImage(qrCode);
 
-                // Load HTML content from file
+                // Load HTML content from file and prepare email content
                 String htmlContent = loadHtmlContent("src/main/resources/Email.html");
-
-                // Replace placeholders with actual values
                 htmlContent = htmlContent.replace("{{eventName}}", titre)
                         .replace("{{eventLocation}}", localisation)
-                        .replace("{{eventDate}}", date);
+                        .replace("{{eventDate}}", formattedDate);
 
-                // Compose invitation email with HTML content
                 String inviteSubject = "Invitation to Event: " + titre;
-
-                // Send invitation email
                 sendEmail("malekbenslamacontact@gmail.com", inviteSubject, htmlContent);
 
-                loadEvents();
-                clearFields();
-                showSuccessAlert();
+                loadEvents(); // Reload the events list to update the table view
+                clearFields(); // Clear the input fields
+                showSuccessAlert(); // Show success message
+
             } catch (SQLException | IOException | WriterException e) {
                 e.printStackTrace();
-                showErrorAlert(e.getMessage());
+                showErrorAlert(e.getMessage()); // Show error message if something goes wrong
             }
         }
     }

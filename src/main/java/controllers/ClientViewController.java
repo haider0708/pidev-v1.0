@@ -14,8 +14,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import models.Activity;
 import models.Event;
+import org.json.JSONObject;
 import services.ServiceActivity;
 import services.ServiceEvent;
+import services.WeatherService;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -49,7 +52,7 @@ public class ClientViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         serviceEvent = new ServiceEvent();
         serviceActivity = new ServiceActivity();
-
+        updateWeatherDisplay("Tunis");
         colTitle.setCellValueFactory(new PropertyValueFactory<>("titre"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colLocation.setCellValueFactory(new PropertyValueFactory<>("localisation"));
@@ -189,4 +192,27 @@ public class ClientViewController implements Initializable {
         mapStage.setTitle("Google Map");
         mapStage.show();
     }
+
+    @FXML
+    private Label weatherLabel;
+
+    private void updateWeatherDisplay(String city) {
+        WeatherService weatherService = new WeatherService();
+        String weatherData = weatherService.getWeather(city);
+        if (weatherData != null && !weatherData.isEmpty()) {
+            try {
+                JSONObject jsonObject = new JSONObject(weatherData);
+                double tempKelvin = jsonObject.getJSONObject("main").getDouble("temp");
+                double tempCelsius = tempKelvin - 273.15; // Convert Kelvin to Celsius
+                String weatherDescription = jsonObject.getJSONArray("weather").getJSONObject(0).getString("description");
+                weatherLabel.setText(String.format("Temperature: %.2f°C, Condition: %s", tempCelsius, weatherDescription));
+            } catch (Exception e) {
+                weatherLabel.setText("Weather Info: Error parsing data");
+                e.printStackTrace();
+            }
+        } else {
+            weatherLabel.setText("Weather Info: Unable to retrieve data");
+        }
+    }
+
 }
